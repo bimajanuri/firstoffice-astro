@@ -1,0 +1,489 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CityCard from "../components/CityCard.astro";
+import OfficeCard from "../components/OfficeCard.astro";
+import OfficeCardSkeleton from "../components/OfficeCardSkeleton.astro";
+import cities from "../data/cities.json";
+import offices from "../data/offices.json";
+import { Image } from "astro:assets";
+
+// Hero Assets
+import crownIcon from "../assets/images/icons/crown-white.svg";
+import sliderIcon from "../assets/images/icons/slider-horizontal-white.svg";
+import videoIcon from "../assets/images/icons/video-octagon.svg";
+import bannerImage from "../assets/images/backgrounds/banner.webp";
+
+// Logos
+import teslaLogo from "../assets/images/logos/TESLA.svg";
+import libraLogo from "../assets/images/logos/Libra 2.svg";
+import binanceLogo from "../assets/images/logos/Binance logo.svg";
+import facebookLogo from "../assets/images/logos/Facebook 7.svg";
+import microsoftLogo from "../assets/images/logos/Microsoft 6.svg";
+
+// Benefits Icons
+import securityIcon from "../assets/images/icons/security-user.svg";
+import groupIcon from "../assets/images/icons/group.svg";
+import cubeIcon from "../assets/images/icons/3dcube.svg";
+import cupIcon from "../assets/images/icons/cup.svg";
+import coffeeIcon from "../assets/images/icons/coffee.svg";
+import trendIcon from "../assets/images/icons/home-trend-up.svg";
+
+import "swiper/css";
+
+const title = "FirstOffice - Find Your Dream Office";
+---
+
+<BaseLayout title={title}>
+    <header class="flex flex-col w-full">
+        <section
+            id="Hero-Banner"
+            class="relative flex flex-col lg:block lg:h-[720px] lg:-mb-[93px]"
+        >
+            <div
+                id="Hero-Text"
+                class="relative z-10 flex flex-col w-full px-4 mt-8 lg:mt-[70px] lg:ml-[calc((100%-1130px)/2)] lg:w-full lg:max-w-[650px] h-fit rounded-[30px] border border-[#E0DEF7] p-6 lg:p-10 gap-6 lg:gap-[30px] bg-white"
+            >
+                <div
+                    class="flex items-center w-fit rounded-full py-2 px-4 gap-[10px] bg-[#000929]"
+                >
+                    <Image src={crownIcon} class="w-5 h-5" alt="icon" />
+                    <span class="font-semibold text-white text-sm lg:text-base"
+                        >We’ve won top productivity 500 fortunes</span
+                    >
+                </div>
+                <h1
+                    class="font-extrabold text-[36px] lg:text-[50px] leading-[46px] lg:leading-[60px]"
+                >
+                    All Great Offices.<br />Grow Your Business.
+                </h1>
+                <p
+                    class="text-base lg:text-lg leading-7 lg:leading-8 text-[#000929]"
+                >
+                    The right office can have a better and healthier impact on
+                    your work and career growth.
+                </p>
+                <div
+                    class="flex flex-col sm:flex-row items-center gap-4 lg:gap-5"
+                >
+                    <a
+                        href="#"
+                        class="flex items-center justify-center w-full sm:w-auto rounded-full p-[16px_26px] lg:p-[20px_26px] gap-3 bg-[#0D903A]"
+                    >
+                        <Image
+                            src={sliderIcon}
+                            class="w-6 h-6 lg:w-[30px] lg:h-[30px]"
+                            alt="icon"
+                        />
+                        <span
+                            class="font-bold text-lg lg:text-xl leading-[30px] text-[#F7F7FD]"
+                            >Explore Now</span
+                        >
+                    </a>
+                    <a
+                        href="#"
+                        class="flex items-center justify-center w-full sm:w-auto rounded-full border border-[#000929] p-[16px_26px] lg:p-[20px_26px] gap-3 bg-white"
+                    >
+                        <Image
+                            src={videoIcon}
+                            class="w-6 h-6 lg:w-[30px] lg:h-[30px]"
+                            alt="icon"
+                        />
+                        <span
+                            class="font-semibold text-lg lg:text-xl leading-[30px]"
+                            >Watch Story</span
+                        >
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hero Image: Stacked on mobile, Absolute on desktop -->
+            <div
+                id="Hero-Image"
+                class="mt-8 px-4 lg:px-0 lg:mt-0 w-full lg:absolute lg:right-0 lg:top-0 lg:w-[calc(100%-((100%-1130px)/2)-305px)] h-[300px] lg:h-[720px] rounded-[30px] lg:rounded-bl-[40px] overflow-hidden"
+            >
+                <Image
+                    src={bannerImage}
+                    class="w-full h-full object-cover"
+                    alt="hero background"
+                />
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <div
+            class="flex flex-col pt-10 pb-10 px-4 lg:pt-[150px] lg:px-[120px] gap-10 bg-[#0D903A]"
+        >
+            <div
+                class="logo-contianer flex items-center justify-center flex-wrap w-full max-w-[1130px] mx-auto gap-8 lg:gap-[60px]"
+            >
+                <Image
+                    src={teslaLogo}
+                    alt="clients logo"
+                    class="h-6 lg:h-auto"
+                />
+                <Image
+                    src={libraLogo}
+                    alt="clients logo"
+                    class="h-6 lg:h-auto"
+                />
+                <Image
+                    src={binanceLogo}
+                    alt="clients logo"
+                    class="h-6 lg:h-auto"
+                />
+                <Image
+                    src={facebookLogo}
+                    alt="clients logo"
+                    class="h-6 lg:h-auto"
+                />
+                <Image
+                    src={microsoftLogo}
+                    alt="clients logo"
+                    class="h-6 lg:h-auto"
+                />
+            </div>
+            <div
+                class="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-[50px] text-center"
+            >
+                <div class="flex flex-col gap-[2px]">
+                    <p class="text-lg lg:text-xl leading-[30px] text-[#F7F7FD]">
+                        Comfortable Space
+                    </p>
+                    <p
+                        class="font-bold text-[28px] lg:text-[38px] leading-[40px] lg:leading-[57px] text-white"
+                    >
+                        580M+
+                    </p>
+                </div>
+                <div class="flex flex-col gap-[2px]">
+                    <p class="text-lg lg:text-xl leading-[30px] text-[#F7F7FD]">
+                        Startups Succeed
+                    </p>
+                    <p
+                        class="font-bold text-[28px] lg:text-[38px] leading-[40px] lg:leading-[57px] text-white"
+                    >
+                        98%
+                    </p>
+                </div>
+                <div class="flex flex-col gap-[2px]">
+                    <p class="text-lg lg:text-xl leading-[30px] text-[#F7F7FD]">
+                        Countries
+                    </p>
+                    <p
+                        class="font-bold text-[28px] lg:text-[38px] leading-[40px] lg:leading-[57px] text-white"
+                    >
+                        90+
+                    </p>
+                </div>
+                <div class="flex flex-col gap-[2px]">
+                    <p class="text-lg lg:text-xl leading-[30px] text-[#F7F7FD]">
+                        Supportive Events
+                    </p>
+                    <p
+                        class="font-bold text-[28px] lg:text-[38px] leading-[40px] lg:leading-[57px] text-white"
+                    >
+                        139M+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section
+        id="Cities"
+        class="flex flex-col gap-[30px] mt-10 lg:mt-[100px] px-4"
+    >
+        <div
+            class="w-full max-w-screen-xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0"
+        >
+            <h2
+                class="font-bold text-[28px] lg:text-[32px] leading-[40px] lg:leading-[48px] text-center sm:text-left text-nowrap"
+            >
+                You Can Choose <br />Our Favorite Cities
+            </h2>
+            <a href="#" class="rounded-full py-3 px-5 bg-white font-bold">
+                Explore All City
+            </a>
+        </div>
+        <div class="swiper w-full">
+            <div class="swiper-wrapper">
+                {
+                    cities.map((city) => (
+                        <div class="swiper-slide !w-fit first-of-type:pl-[calc((100%_-_1130px_-_60px)_/_2)] last-of-type:pr-[calc((100%_-_1130px_-_60px)_/_2)]">
+                            <CityCard city={city} />
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+    <section
+        id="Benefits"
+        class="flex flex-col lg:flex-row items-center justify-center w-full max-w-screen-xl mx-auto gap-10 lg:gap-[100px] mt-10 lg:mt-[100px] px-4"
+    >
+        <h2
+            class="font-bold text-[28px] lg:text-[32px] leading-[40px] lg:leading-[48px] text-center lg:text-left text-nowrap"
+        >
+            We Might Good <br />For Your Business
+        </h2>
+        <div
+            class="grid grid-cols-1 md:grid-cols-2 gap-[30px] w-full lg:w-auto"
+        >
+            <div class="flex items-center gap-4">
+                <div
+                    class="flex items-center justify-center shrink-0 w-[70px] h-[70px] rounded-[23px] bg-white overflow-hidden"
+                >
+                    <Image
+                        src={securityIcon}
+                        class="w-[34px] h-[34px]"
+                        alt="icon"
+                    />
+                </div>
+                <div class="flex flex-col gap-[5px]">
+                    <p class="font-bold text-lg leading-[27px]">
+                        Privacy-First Design
+                    </p>
+                    <p class="text-sm leading-[24px]">
+                        Soundproof glass and private zones ensure your
+                        conversations stay confidential.
+                    </p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <div
+                    class="flex items-center justify-center shrink-0 w-[70px] h-[70px] rounded-[23px] bg-white overflow-hidden"
+                >
+                    <Image
+                        src={groupIcon}
+                        class="w-[34px] h-[34px]"
+                        alt="icon"
+                    />
+                </div>
+                <div class="flex flex-col gap-[5px]">
+                    <p class="font-bold text-lg leading-[27px]">
+                        Easy Move Access
+                    </p>
+                    <p class="text-sm leading-[24px]">
+                        Located near major transport hubs for effortless
+                        commuting and client visits.
+                    </p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <div
+                    class="flex items-center justify-center shrink-0 w-[70px] h-[70px] rounded-[23px] bg-white overflow-hidden"
+                >
+                    <Image
+                        src={cubeIcon}
+                        class="w-[34px] h-[34px]"
+                        alt="icon"
+                    />
+                </div>
+                <div class="flex flex-col gap-[5px]">
+                    <p class="font-bold text-lg leading-[27px]">
+                        Flexibility Spaces
+                    </p>
+                    <p class="text-sm leading-[24px]">
+                        Scale up or down easily with adaptable layouts that grow
+                        with your team.
+                    </p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <div
+                    class="flex items-center justify-center shrink-0 w-[70px] h-[70px] rounded-[23px] bg-white overflow-hidden"
+                >
+                    <Image src={cupIcon} class="w-[34px] h-[34px]" alt="icon" />
+                </div>
+                <div class="flex flex-col gap-[5px]">
+                    <p class="font-bold text-lg leading-[27px]">
+                        Top-Rated Office
+                    </p>
+                    <p class="text-sm leading-[24px]">
+                        Voted best-in-class for amenities, design, and
+                        professional community.
+                    </p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <div
+                    class="flex items-center justify-center shrink-0 w-[70px] h-[70px] rounded-[23px] bg-white overflow-hidden"
+                >
+                    <Image
+                        src={coffeeIcon}
+                        class="w-[34px] h-[34px]"
+                        alt="icon"
+                    />
+                </div>
+                <div class="flex flex-col gap-[5px]">
+                    <p class="font-bold text-lg leading-[27px]">
+                        Extra Snacks Available
+                    </p>
+                    <p class="text-sm leading-[24px]">
+                        Unlimited premium coffee, tea, and healthy snacks to
+                        keep you fueled all day.
+                    </p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <div
+                    class="flex items-center justify-center shrink-0 w-[70px] h-[70px] rounded-[23px] bg-white overflow-hidden"
+                >
+                    <Image
+                        src={trendIcon}
+                        class="w-[34px] h-[34px]"
+                        alt="icon"
+                    />
+                </div>
+                <div class="flex flex-col gap-[5px]">
+                    <p class="font-bold text-lg leading-[27px]">
+                        Sustain for Business
+                    </p>
+                    <p class="text-sm leading-[24px]">
+                        Eco-friendly environments designed for long-term
+                        productivity and growth.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section
+        id="Fresh-Space"
+        class="flex flex-col gap-[30px] w-full max-w-screen-xl mx-auto mt-10 lg:mt-[100px] mb-10 lg:mb-[120px] px-4"
+    >
+        <h2
+            class="font-bold text-[28px] lg:text-[32px] leading-[40px] lg:leading-[48px] text-nowrap text-center"
+        >
+            Browse Our Fresh Space.<br />For Your Better Productivity.
+        </h2>
+        <div
+            id="office-grid"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px]"
+        >
+            {
+                offices
+                    .slice(0, 9)
+                    .map((office) => <OfficeCard office={office} />)
+            }
+
+            <!-- Sentinel & Loading Indicator -->
+            <div
+                id="sentinel"
+                class="col-span-1 sm:col-span-2 lg:col-span-3 h-10"
+            >
+            </div>
+        </div>
+
+        <!-- Loading Skeletons (Hidden by default, toggled via JS) -->
+        <div
+            id="loading-indicator"
+            class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px] mt-[30px]"
+        >
+            <OfficeCardSkeleton />
+            <OfficeCardSkeleton />
+            <OfficeCardSkeleton />
+        </div>
+    </section>
+
+    <script>
+        import Swiper from "swiper";
+
+        let swiperInstance;
+
+        function initSwiper() {
+            if (swiperInstance) {
+                swiperInstance.destroy(true, true);
+            }
+
+            swiperInstance = new Swiper(".swiper", {
+                // Optional parameters
+                direction: "horizontal",
+                spaceBetween: 30,
+                slidesPerView: "auto",
+                slidesOffsetAfter: 30,
+                slidesOffsetBefore: 30,
+                loop: true,
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", initSwiper);
+        document.addEventListener("astro:page-load", initSwiper);
+
+        // Infinite Scroll Logic
+        let page = 2; // Start from page 2 since page 1 is server-rendered
+        const limit = 9;
+        let isLoading = false;
+        let hasMore = true;
+
+        const container = document.getElementById("office-grid");
+        const sentinel = document.getElementById("sentinel");
+        const loadingIndicator = document.getElementById("loading-indicator");
+
+        const fetchOffices = async () => {
+            if (isLoading || !hasMore) return;
+            isLoading = true;
+
+            // Show loading state
+            if (loadingIndicator) loadingIndicator.classList.remove("hidden");
+
+            try {
+                const response = await fetch(`/partials/office-list/${page}`);
+
+                if (!response.ok) {
+                    hasMore = false;
+                    if (loadingIndicator)
+                        loadingIndicator.classList.add("hidden");
+                    return;
+                }
+
+                const html = await response.text();
+
+                if (html.trim().length === 0) {
+                    hasMore = false;
+                    if (loadingIndicator)
+                        loadingIndicator.classList.add("hidden");
+                    return;
+                }
+
+                // Append new offices before the sentinel/loader
+                // creating a temp container to convert string to nodes
+                const tempDiv = document.createElement("div");
+                tempDiv.innerHTML = html;
+
+                if (container) {
+                    while (tempDiv.firstChild) {
+                        container.insertBefore(tempDiv.firstChild, sentinel);
+                    }
+                }
+
+                page++;
+            } catch (error) {
+                console.error("Error fetching offices:", error);
+            } finally {
+                isLoading = false;
+                if (loadingIndicator) loadingIndicator.classList.add("hidden");
+            }
+        };
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    fetchOffices();
+                }
+            },
+            { rootMargin: "200px" },
+        );
+
+        function initInfiniteScroll() {
+            const newSentinel = document.getElementById("sentinel");
+            if (newSentinel) {
+                observer.observe(newSentinel);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", initInfiniteScroll);
+        document.addEventListener("astro:page-load", initInfiniteScroll);
+    </script>
+</BaseLayout>

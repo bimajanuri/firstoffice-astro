@@ -1,0 +1,180 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import OfficeCard from "../components/OfficeCard.astro";
+import offices from "../data/offices.json";
+import { Image } from "astro:assets";
+import bannerImage from "../assets/images/backgrounds/banner.webp";
+
+const title = "Browse Offices - FirstOffice";
+---
+
+<BaseLayout title={title}>
+    <header class="flex flex-col w-full">
+        <section
+            id="Hero-Banner"
+            class="relative flex flex-col lg:block lg:h-[434px]"
+        >
+            <div
+                id="Hero-Text"
+                class="relative z-10 flex flex-col w-full px-4 mt-8 lg:mt-[70px] lg:ml-[calc((100%-1130px)/2)] lg:w-full lg:max-w-[650px] h-fit rounded-[30px] border border-[#E0DEF7] p-6 lg:p-10 gap-6 lg:gap-[30px] bg-white"
+            >
+                <div
+                    class="flex items-center w-fit rounded-full py-2 px-4 gap-[10px] bg-[#000929]"
+                >
+                    <span class="font-semibold text-white text-sm lg:text-base"
+                        >Browse Offices</span
+                    >
+                </div>
+                <h1
+                    class="font-extrabold text-[36px] lg:text-[50px] leading-[46px] lg:leading-[60px]"
+                >
+                    Find Your Perfect <br />
+                    <span class="text-[#0D903A]">Workspace</span>
+                </h1>
+                <p
+                    class="text-base lg:text-lg leading-7 lg:leading-8 text-[#000929]"
+                >
+                    Search specifically for what you need. From location to
+                    amenities, find the office that fits your business style.
+                </p>
+            </div>
+            <div
+                id="Hero-Image"
+                class="mt-8 lg:mt-0 w-full lg:absolute lg:right-0 lg:top-0 lg:w-[calc(100%-((100%-1130px)/2)-305px)] h-[300px] lg:h-[434px] rounded-[30px] lg:rounded-bl-[40px] overflow-hidden"
+            >
+                <Image
+                    src={bannerImage}
+                    class="w-full h-full object-cover"
+                    alt="hero background"
+                />
+            </div>
+        </section>
+    </header>
+
+    <section
+        id="Search-Section"
+        class="flex flex-col gap-[30px] w-full max-w-screen-xl mx-auto mt-10 px-4"
+    >
+        <div class="w-full max-w-[800px] mx-auto">
+            <div class="relative flex items-center w-full">
+                <!-- Search Icon -->
+                <div class="absolute left-6 pointer-events-none">
+                    <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
+                            stroke="#000929"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                        <path
+                            d="M22 22L20 20"
+                            stroke="#000929"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                    </svg>
+                </div>
+                <input
+                    type="text"
+                    id="search-input"
+                    placeholder="Search by name, city, location..."
+                    class="w-full h-[60px] pl-[60px] pr-6 rounded-full border border-[#E0DEF7] bg-white font-semibold text-lg text-[#000929] placeholder-[#A0A3BD] focus:outline-none focus:ring-2 focus:ring-[#0D903A] transition-all"
+                />
+            </div>
+        </div>
+    </section>
+
+    <section
+        id="Results-Section"
+        class="flex flex-col gap-[30px] w-full max-w-screen-xl mx-auto mt-10 lg:mt-[50px] mb-10 lg:mb-[120px] px-4"
+    >
+        <div
+            id="results-grid"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px]"
+        >
+            {
+                offices.map((office) => (
+                    <div
+                        class="office-card-item hidden"
+                        data-slug={office.slug}
+                    >
+                        <OfficeCard office={office} />
+                    </div>
+                ))
+            }
+        </div>
+        <p
+            id="no-results-msg"
+            class="hidden text-center text-xl text-gray-500 mt-10"
+        >
+            No offices found matching your search.
+        </p>
+        <p id="initial-msg" class="text-center text-xl text-gray-500 mt-10">
+            Start typing to find your dream office.
+        </p>
+    </section>
+</BaseLayout>
+
+<script define:vars={{ offices }}>
+    window.officeData = offices;
+</script>
+
+<script>
+    import Fuse from "fuse.js";
+
+    const searchInput = document.getElementById("search-input");
+    const noResultsMsg = document.getElementById("no-results-msg");
+    const initialMsg = document.getElementById("initial-msg");
+    const allCards = document.querySelectorAll(".office-card-item");
+
+    // Initialize Fuse with the data passed from the server
+    // @ts-ignore
+    const fuse = new Fuse(window.officeData, {
+        keys: ["name", "location", "address", "description"],
+        threshold: 0.4,
+    });
+
+    if (searchInput && initialMsg && noResultsMsg) {
+        searchInput.addEventListener("input", (e) => {
+            const target = e.target as HTMLInputElement;
+            const query = target.value.trim();
+
+            if (query.length === 0) {
+                // Empty state: Show initial message, hide results
+                initialMsg.classList.remove("hidden");
+                noResultsMsg.classList.add("hidden");
+                allCards.forEach((card) => card.classList.add("hidden"));
+                return;
+            }
+
+            initialMsg.classList.add("hidden");
+
+            const results = fuse.search(query);
+
+            if (results.length === 0) {
+                // No matches
+                noResultsMsg.classList.remove("hidden");
+                allCards.forEach((card) => card.classList.add("hidden"));
+            } else {
+                // Matches found
+                noResultsMsg.classList.add("hidden");
+                const matchedSlugs = new Set(results.map((r) => r.item.slug));
+
+                allCards.forEach((card) => {
+                    const slug = card.getAttribute("data-slug");
+                    if (slug && matchedSlugs.has(slug)) {
+                        card.classList.remove("hidden");
+                    } else {
+                        card.classList.add("hidden");
+                    }
+                });
+            }
+        });
+    }
+</script>

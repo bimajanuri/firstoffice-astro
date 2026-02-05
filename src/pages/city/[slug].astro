@@ -1,0 +1,195 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import OfficeCard from "../../components/OfficeCard.astro";
+import OfficeCardSkeleton from "../../components/OfficeCardSkeleton.astro";
+import cities from "../../data/cities.json";
+import offices from "../../data/offices.json";
+import { Image } from "astro:assets";
+
+export async function getStaticPaths() {
+    return cities.map((city) => ({
+        params: { slug: city.slug },
+        props: { city },
+    }));
+}
+
+interface Props {
+    city: {
+        id: number;
+        name: string;
+        slug: string;
+        count: number;
+        thumbnail: string;
+        description: string;
+    };
+}
+
+const { city } = Astro.props;
+const filteredOffices = offices.filter(
+    (office) => office.location === city.name,
+);
+
+// Dynamic Image Load
+const images = import.meta.glob<{ default: ImageMetadata }>(
+    "../../assets/images/thumbnails/*.{png,jpg,jpeg,webp}",
+);
+const imagePath = `../../assets/images/thumbnails/thumbnail-details-4.png`; // Using default hero for now or could be city specific
+if (!images[imagePath])
+    throw new Error(
+        `"${imagePath}" does not exist in glob: "src/assets/images/thumbnails/*.{png,jpg,jpeg,webp}"`,
+    );
+const heroImageSrc = images[imagePath]();
+
+const title = `Great Office in ${city.name} - FirstOffice`;
+---
+
+<BaseLayout title={title}>
+    <header class="flex flex-col w-full">
+        <section
+            id="Hero-Banner"
+            class="relative flex flex-col lg:block lg:h-[434px]"
+        >
+            <div
+                id="Hero-Text"
+                class="relative z-10 flex flex-col w-full px-4 mt-8 lg:mt-[70px] lg:ml-[calc((100%-1130px)/2)] lg:w-full lg:max-w-[650px] h-fit rounded-[30px] border border-[#E0DEF7] p-6 lg:p-10 gap-6 lg:gap-[30px] bg-white"
+            >
+                <h1
+                    class="font-extrabold text-[36px] lg:text-[50px] leading-[46px] lg:leading-[60px]"
+                >
+                    Great Office in <br />
+                    <span class="text-[#0D903A]">{city.name} City</span>
+                </h1>
+                <p
+                    class="text-base lg:text-lg leading-7 lg:leading-8 text-[#000929]"
+                >
+                    {city.description}
+                </p>
+            </div>
+            <div
+                id="Hero-Image"
+                class="mt-8 lg:mt-0 w-full lg:absolute lg:right-0 lg:top-0 lg:w-[calc(100%-((100%-1130px)/2)-305px)] h-[300px] lg:h-[434px] rounded-[30px] lg:rounded-bl-[40px] overflow-hidden"
+            >
+                <Image
+                    src={heroImageSrc}
+                    class="w-full h-full object-cover"
+                    alt="hero background"
+                />
+            </div>
+        </section>
+    </header>
+    <section
+        id="Fresh-Space"
+        class="flex flex-col gap-[30px] w-full max-w-screen-xl mx-auto mt-10 lg:mt-[70px] mb-10 lg:mb-[120px] px-4"
+    >
+        <h2
+            class="font-bold text-[28px] lg:text-[32px] leading-[40px] lg:leading-[48px] text-nowrap text-center lg:text-left"
+        >
+            Browse Offices
+        </h2>
+        <div
+            id="office-grid"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px]"
+        >
+            {
+                filteredOffices.length > 0 ? (
+                    filteredOffices
+                        .slice(0, 9)
+                        .map((office) => <OfficeCard office={office} />)
+                ) : (
+                    <p class="col-span-1 sm:col-span-2 lg:col-span-3 text-center text-xl text-gray-500">
+                        No offices found in this city yet.
+                    </p>
+                )
+            }
+            <!-- Sentinel & Loading Indicator -->
+            <div
+                id="sentinel"
+                class="col-span-1 sm:col-span-2 lg:col-span-3 h-10"
+            >
+            </div>
+        </div>
+
+        <!-- Loading Skeletons (Hidden by default, toggled via JS) -->
+        <div
+            id="loading-indicator"
+            class={`hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px] mt-[30px]`}
+        >
+            <OfficeCardSkeleton />
+            <OfficeCardSkeleton />
+            <OfficeCardSkeleton />
+        </div>
+    </section>
+
+    <script is:inline define:vars={{ citySlug: city.slug }}>
+        // Infinite Scroll Logic
+        let page = 2; // Start from page 2 since page 1 is server-rendered
+        const limit = 9;
+        let isLoading = false;
+        let hasMore = true;
+
+        const container = document.getElementById("office-grid");
+        const sentinel = document.getElementById("sentinel");
+        const loadingIndicator = document.getElementById("loading-indicator");
+
+        const fetchOffices = async () => {
+            if (isLoading || !hasMore) return;
+            isLoading = true;
+
+            // Show loading state
+            if (loadingIndicator) loadingIndicator.classList.remove("hidden");
+
+            try {
+                const response = await fetch(
+                    `/partials/city/${citySlug}/${page}`,
+                );
+
+                if (!response.ok) {
+                    hasMore = false;
+                    if (loadingIndicator)
+                        loadingIndicator.classList.add("hidden");
+                    return;
+                }
+
+                const html = await response.text();
+
+                if (html.trim().length === 0) {
+                    hasMore = false;
+                    if (loadingIndicator)
+                        loadingIndicator.classList.add("hidden");
+                    return;
+                }
+
+                // Append new offices before the sentinel/loader
+                // creating a temp container to convert string to nodes
+                const tempDiv = document.createElement("div");
+                tempDiv.innerHTML = html;
+
+                if (container) {
+                    while (tempDiv.firstChild) {
+                        container.insertBefore(tempDiv.firstChild, sentinel);
+                    }
+                }
+
+                page++;
+            } catch (error) {
+                console.error("Error fetching offices:", error);
+            } finally {
+                isLoading = false;
+                if (loadingIndicator) loadingIndicator.classList.add("hidden");
+            }
+        };
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    fetchOffices();
+                }
+            },
+            { rootMargin: "200px" },
+        );
+
+        if (sentinel) {
+            observer.observe(sentinel);
+        }
+    </script>
+</BaseLayout>

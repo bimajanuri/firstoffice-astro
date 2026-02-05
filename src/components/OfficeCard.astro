@@ -1,0 +1,80 @@
+---
+import { Image } from "astro:assets";
+// Import icons
+import clockIcon from "../assets/images/icons/clock.svg";
+import locationIcon from "../assets/images/icons/location.svg";
+import starIcon from "../assets/images/icons/Star 1.svg";
+import wifiIcon from "../assets/images/icons/wifi.svg";
+import securityIcon from "../assets/images/icons/security-user.svg";
+
+const { office } = Astro.props;
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+    "../assets/images/thumbnails/*.{png,jpg,jpeg,webp}",
+);
+const imagePath = `../assets/images/thumbnails/${office.thumbnail}`;
+if (!images[imagePath])
+    throw new Error(
+        `"${imagePath}" does not exist in glob: "src/assets/images/thumbnails/*.{png,jpg,jpeg,webp}"`,
+    );
+const imageSrc = images[imagePath]();
+---
+
+<a href={`/office/${office.slug}`} class="card">
+    <div
+        class="flex flex-col rounded-[20px] border border-[#E0DEF7] bg-white overflow-hidden"
+    >
+        <div class="thumbnail-container relative w-full h-[200px]">
+            {
+                office.isPopular && (
+                    <p class="absolute top-5 left-5 w-fit rounded-full p-[6px_16px] bg-[#0D903A] font-bold text-sm leading-[21px] text-[#F7F7FD]">
+                        Popular
+                    </p>
+                )
+            }
+            <Image
+                src={imageSrc}
+                class="w-full h-full object-cover"
+                alt="thumbnails"
+            />
+        </div>
+        <div class="card-detail-container flex flex-col p-5 pb-[30px] gap-4">
+            <h3
+                class="line-clamp-2 font-bold text-[22px] leading-[36px] h-[72px]"
+            >
+                {office.name}
+            </h3>
+            <div class="flex items-center justify-between">
+                <p class="font-semibold text-xl leading-[30px]">
+                    {office.price}
+                </p>
+                <div class="flex items-center justify-end gap-[6px]">
+                    <p class="font-semibold">{office.duration} days</p>
+                    <Image src={clockIcon} class="w-6 h-6" alt="icon" />
+                </div>
+            </div>
+            <hr class="border-[#F6F5FD]" />
+            <div class="flex items-center justify-between">
+                <div class="flex items-center justify-end gap-[6px]">
+                    <Image src={locationIcon} class="w-6 h-6" alt="icon" />
+                    <p class="font-semibold">{office.location}</p>
+                </div>
+                <div class="flex items-center justify-end gap-[6px]">
+                    <p class="font-semibold">{office.rating}/5</p>
+                    <Image src={starIcon} class="w-6 h-6" alt="icon" />
+                </div>
+            </div>
+            <hr class="border-[#F6F5FD]" />
+            <div class="flex items-center justify-between">
+                <div class="flex items-center justify-end gap-[6px]">
+                    <Image src={wifiIcon} class="w-6 h-6" alt="icon" />
+                    <p class="font-semibold">Fast-Connection</p>
+                </div>
+                <div class="flex items-center justify-end gap-[6px]">
+                    <Image src={securityIcon} class="w-6 h-6" alt="icon" />
+                    <p class="font-semibold">Secure 100%</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>

@@ -1,0 +1,136 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import OfficeCard from "../components/OfficeCard.astro";
+import offices from "../data/offices.json";
+import { Image } from "astro:assets";
+import bannerImage from "../assets/images/backgrounds/banner.webp";
+
+// Filter offices by category
+const servicedOffices = offices.filter(
+    (office) => office.category === "Serviced Office",
+);
+const virtualOffices = offices.filter(
+    (office) => office.category === "Virtual Office",
+);
+const shellAndCoreOffices = offices.filter(
+    (office) => office.category === "Shell and Core",
+);
+const managedOffices = offices.filter(
+    (office) => office.category === "Managed Office",
+);
+
+const categories = [
+    {
+        title: "Serviced Office",
+        description: "Ready-to-use offices with all amenities included.",
+        data: servicedOffices,
+    },
+    {
+        title: "Virtual Office",
+        description:
+            "Professional address and services without physical space.",
+        data: virtualOffices,
+    },
+    {
+        title: "Shell and Core",
+        description: "Unfurnished spaces ready for your custom fit-out.",
+        data: shellAndCoreOffices,
+    },
+    {
+        title: "Managed Office",
+        description: "Tailored workspaces managed by a third-party provider.",
+        data: managedOffices,
+    },
+];
+
+const title = "Office Categories - FirstOffice";
+---
+
+<BaseLayout title={title}>
+    <header class="flex flex-col w-full">
+        <section
+            id="Hero-Banner"
+            class="relative flex flex-col lg:block lg:h-[434px]"
+        >
+            <div
+                id="Hero-Text"
+                class="relative z-10 flex flex-col w-full px-4 mt-8 lg:mt-[70px] lg:ml-[calc((100%-1130px)/2)] lg:w-full lg:max-w-[650px] h-fit rounded-[30px] border border-[#E0DEF7] p-6 lg:p-10 gap-6 lg:gap-[30px] bg-white"
+            >
+                <div
+                    class="flex items-center w-fit rounded-full py-2 px-4 gap-[10px] bg-[#000929]"
+                >
+                    <span class="font-semibold text-white text-sm lg:text-base"
+                        >Explore by Category</span
+                    >
+                </div>
+                <h1
+                    class="font-extrabold text-[36px] lg:text-[50px] leading-[46px] lg:leading-[60px]"
+                >
+                    Choose The Right <br />
+                    <span class="text-[#0D903A]">Office Type</span>
+                </h1>
+                <p
+                    class="text-base lg:text-lg leading-7 lg:leading-8 text-[#000929]"
+                >
+                    From flexible serviced offices to custom shell and core
+                    spaces. Find the perfect configuration for your team.
+                </p>
+            </div>
+            <div
+                id="Hero-Image"
+                class="mt-8 lg:mt-0 w-full lg:absolute lg:right-0 lg:top-0 lg:w-[calc(100%-((100%-1130px)/2)-305px)] h-[300px] lg:h-[434px] rounded-[30px] lg:rounded-bl-[40px] overflow-hidden"
+            >
+                <Image
+                    src={bannerImage}
+                    class="w-full h-full object-cover"
+                    alt="hero background"
+                />
+            </div>
+        </section>
+    </header>
+
+    <div
+        class="flex flex-col gap-[60px] lg:gap-[100px] mb-[100px] mt-10 lg:mt-[70px]"
+    >
+        {
+            categories.map((category) => (
+                <section class="flex flex-col w-full max-w-screen-xl mx-auto px-4 gap-[30px]">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
+                        <div class="flex flex-col gap-2">
+                            <h2 class="font-bold text-[28px] lg:text-[32px] leading-[40px] lg:leading-[48px] text-nowrap">
+                                {category.title}
+                            </h2>
+                            <p class="text-[#000929] text-lg">
+                                {category.description}
+                            </p>
+                        </div>
+                        <a
+                            href="#"
+                            class="hidden sm:block font-bold text-base text-[#0D903A] hover:underline"
+                        >
+                            View All {category.title}s
+                        </a>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px]">
+                        {category.data.length > 0 ? (
+                            category.data
+                                .slice(0, 3)
+                                .map((office) => <OfficeCard office={office} />)
+                        ) : (
+                            <p class="col-span-1 sm:col-span-2 lg:col-span-3 text-center text-xl text-gray-500">
+                                No offices found in this category.
+                            </p>
+                        )}
+                    </div>
+                    <a
+                        href="#"
+                        class="sm:hidden w-full text-center font-bold text-base text-[#0D903A] mt-2"
+                    >
+                        View All {category.title}s
+                    </a>
+                </section>
+            ))
+        }
+    </div>
+</BaseLayout>

@@ -1,0 +1,46 @@
+---
+import OfficeCard from "../../../../components/OfficeCard.astro";
+import cities from "../../../../data/cities.json";
+import offices from "../../../../data/offices.json";
+
+export async function getStaticPaths() {
+    const limit = 9;
+    const paths = [];
+
+    cities.forEach((city) => {
+        const cityOffices = offices.filter(
+            (office) => office.location === city.name,
+        );
+        const totalPages = Math.ceil(cityOffices.length / limit);
+
+        // Generate paths for pages 2 to totalPages
+        for (let i = 2; i <= totalPages; i++) {
+            paths.push({
+                params: {
+                    slug: city.slug,
+                    page: i.toString(),
+                },
+                props: {
+                    currentCityName: city.name,
+                },
+            });
+        }
+    });
+
+    return paths;
+}
+
+const { page } = Astro.params;
+const { currentCityName } = Astro.props;
+const pageNumber = parseInt(page);
+const limit = 9;
+
+const cityOffices = offices.filter(
+    (office) => office.location === currentCityName,
+);
+const start = (pageNumber - 1) * limit;
+const end = start + limit;
+const paginatedOffices = cityOffices.slice(start, end);
+---
+
+{paginatedOffices.map((office) => <OfficeCard office={office} />)}

@@ -1,0 +1,1 @@
+import{S as e}from"./swiper-core.CR1rOV8c.js";/* empty css                       */new e(".swiper",{direction:"horizontal",spaceBetween:10,slidesPerView:"auto",slidesOffsetAfter:10,slidesOffsetBefore:10});

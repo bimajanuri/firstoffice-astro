@@ -1,0 +1,31 @@
+---
+import OfficeCard from "../../../components/OfficeCard.astro";
+import offices from "../../../data/offices.json";
+
+export async function getStaticPaths() {
+    const limit = 9;
+    const totalOffices = offices.length;
+    const totalPages = Math.ceil(totalOffices / limit);
+
+    // Generate paths for all pages (e.g., page 2, 3, etc.)
+    // We start from 2 because page 1 is rendered on the homepage server-side
+    // But for completeness/flexibility, we can generate all.
+    // However, the client script starts fetching from page 2.
+
+    const paths = [];
+    for (let i = 2; i <= totalPages; i++) {
+        paths.push({ params: { page: i.toString() } });
+    }
+    return paths;
+}
+
+const { page } = Astro.params;
+const pageNumber = parseInt(page);
+const limit = 9;
+
+const start = (pageNumber - 1) * limit;
+const end = start + limit;
+const paginatedOffices = offices.slice(start, end);
+---
+
+{paginatedOffices.map((office) => <OfficeCard office={office} />)}

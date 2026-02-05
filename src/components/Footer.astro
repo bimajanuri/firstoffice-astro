@@ -1,0 +1,109 @@
+---
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import logo from "../assets/images/logos/logo.svg";
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-white border-t border-[#E0DEF7] mt-auto">
+    <div
+        class="flex flex-col gap-[30px] w-full max-w-screen-xl mx-auto py-[100px] px-4 sm:px-8"
+    >
+        <div
+            class="flex flex-col sm:flex-row items-center justify-between gap-10"
+        >
+            <div class="flex flex-col gap-[30px]">
+                <a href="/" class="shrink-0">
+                    <Image src={logo} alt="FirstOffice Logo" />
+                </a>
+                <p class="text-[#000929] text-base leading-8 max-w-[360px]">
+                    FirstOffice provides thousands of the best workspaces for
+                    your growing team securely and comfortably.
+                </p>
+                <div class="flex items-center gap-[14px]">
+                    <a
+                        href="#"
+                        class="w-[45px] h-[45px] flex shrink-0 items-center justify-center rounded-full border border-[#E0DEF7] hover:border-[#0D903A] transition-all duration-300"
+                    >
+                        <Icon name="simple-icons:facebook" class="w-6 h-6" />
+                    </a>
+                    <a
+                        href="#"
+                        class="w-[45px] h-[45px] flex shrink-0 items-center justify-center rounded-full border border-[#E0DEF7] hover:border-[#0D903A] transition-all duration-300"
+                    >
+                        <Icon name="simple-icons:instagram" class="w-6 h-6" />
+                    </a>
+                    <a
+                        href="#"
+                        class="w-[45px] h-[45px] flex shrink-0 items-center justify-center rounded-full border border-[#E0DEF7] hover:border-[#0D903A] transition-all duration-300"
+                    >
+                        <Icon name="simple-icons:x" class="w-6 h-6" />
+                    </a>
+                    <a
+                        href="#"
+                        class="w-[45px] h-[45px] flex shrink-0 items-center justify-center rounded-full border border-[#E0DEF7] hover:border-[#0D903A] transition-all duration-300"
+                    >
+                        <Icon name="simple-icons:tiktok" class="w-6 h-6" />
+                    </a>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-10 md:gap-[100px]">
+                <div class="flex flex-col gap-5">
+                    <p class="font-bold text-lg text-[#000929]">Our Services</p>
+                    <div class="flex flex-col gap-3">
+                        <a
+                            href="#"
+                            class="text-[#000929] hover:text-[#0D903A] hover:underline underline-offset-4 transition-all duration-300"
+                            >Browse</a
+                        >
+                        <a
+                            href="#"
+                            class="text-[#000929] hover:text-[#0D903A] hover:underline underline-offset-4 transition-all duration-300"
+                            >Popular</a
+                        >
+                        <a
+                            href="#"
+                            class="text-[#000929] hover:text-[#0D903A] hover:underline underline-offset-4 transition-all duration-300"
+                            >Categories</a
+                        >
+                    </div>
+                </div>
+                <div class="flex flex-col gap-5">
+                    <p class="font-bold text-lg text-[#000929]">Resources</p>
+                    <div class="flex flex-col gap-3">
+                        <a
+                            href="#"
+                            class="text-[#000929] hover:text-[#0D903A] hover:underline underline-offset-4 transition-all duration-300"
+                            >Help Center</a
+                        >
+                        <a
+                            href="#"
+                            class="text-[#000929] hover:text-[#0D903A] hover:underline underline-offset-4 transition-all duration-300"
+                            >Privacy Policy</a
+                        >
+                        <a
+                            href="#"
+                            class="text-[#000929] hover:text-[#0D903A] hover:underline underline-offset-4 transition-all duration-300"
+                            >Terms & Conditions</a
+                        >
+                    </div>
+                </div>
+                <div class="flex flex-col gap-5">
+                    <p class="font-bold text-lg text-[#000929]">Contact</p>
+                    <div class="flex flex-col gap-3">
+                        <p class="text-[#000929]">+62 812 3456 7899</p>
+                        <p class="text-[#000929]">support@firstoffice.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="border-[#E0DEF7]" />
+        <div class="text-center">
+            <p class="text-[#000929] text-base">
+                &copy; {currentYear} FirstOffice. All Rights Reserved.
+            </p>
+        </div>
+    </div>
+</footer>

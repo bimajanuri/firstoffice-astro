@@ -1,0 +1,31 @@
+---
+import OfficeCard from "../../../components/OfficeCard.astro";
+import offices from "../../../data/offices.json";
+
+export async function getStaticPaths() {
+    const limit = 9;
+    const popularOffices = offices.filter((office) => office.isPopular);
+    const totalPages = Math.ceil(popularOffices.length / limit);
+    const paths = [];
+
+    // Generate paths for pages 2 to totalPages
+    for (let i = 2; i <= totalPages; i++) {
+        paths.push({
+            params: { page: i.toString() },
+        });
+    }
+
+    return paths;
+}
+
+const { page } = Astro.params;
+const pageNumber = parseInt(page);
+const limit = 9;
+
+const popularOffices = offices.filter((office) => office.isPopular);
+const start = (pageNumber - 1) * limit;
+const end = start + limit;
+const paginatedOffices = popularOffices.slice(start, end);
+---
+
+{paginatedOffices.map((office) => <OfficeCard office={office} />)}

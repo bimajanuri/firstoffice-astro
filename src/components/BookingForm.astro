@@ -1,0 +1,47 @@
+---
+import { Image } from "astro:assets";
+import receiptIcon from "../assets/images/icons/receipt-text-black.svg";
+import callBlackIcon from "../assets/images/icons/call-black.svg";
+---
+
+<form
+    action=""
+    class="flex items-end rounded-[20px] border border-[#E0DEF7] p-[30px] gap-[16px] bg-white"
+>
+    <div class="flex flex-col w-full gap-2">
+        <label for="name" class="font-semibold">Booking TRX ID</label>
+        <div
+            class="flex items-center rounded-full border border-[#000929] px-5 gap-[10px] transition-all duration-300 focus-within:ring-2 focus-within:ring-[#0D903A]"
+        >
+            <Image src={receiptIcon} class="w-6 h-6" alt="icon" />
+            <input
+                type="text"
+                name="name"
+                id="name"
+                class="appearance-none outline-none w-full py-3 font-semibold placeholder:font-normal placeholder:text-[#000929]"
+                placeholder="Write your booking trx id"
+            />
+        </div>
+    </div>
+    <div class="flex flex-col w-full gap-2">
+        <label for="phone" class="font-semibold">Phone Number</label>
+        <div
+            class="flex items-center rounded-full border border-[#000929] px-5 gap-[10px] transition-all duration-300 focus-within:ring-2 focus-within:ring-[#0D903A]"
+        >
+            <Image src={callBlackIcon} class="w-6 h-6" alt="icon" />
+            <input
+                type="tel"
+                name="phone"
+                id="phone"
+                class="appearance-none outline-none w-full py-3 font-semibold placeholder:font-normal placeholder:text-[#000929]"
+                placeholder="Write your valid number"
+            />
+        </div>
+    </div>
+    <button
+        type="submit"
+        class="flex items-center justify-center rounded-full p-[12px_30px] gap-3 bg-[#0D903A] font-bold text-[#F7F7FD]"
+    >
+        <span class="text-nowrap">Check Booking</span>
+    </button>
+</form>

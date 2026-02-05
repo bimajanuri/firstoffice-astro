@@ -1,0 +1,76 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/images/logos/logo.svg";
+import callIcon from "../assets/images/icons/call.svg";
+---
+
+<nav class="bg-white relative z-50">
+    <div
+        class="flex flex-wrap items-center justify-between w-full max-w-[1130px] py-[22px] px-4 mx-auto"
+    >
+        <a href="/">
+            <Image src={logo} alt="logo" />
+        </a>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="lg:hidden p-2">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-8 h-8"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+            </svg>
+        </button>
+
+        <!-- Navigation Links -->
+        <div
+            id="nav-links"
+            class="hidden w-full lg:flex lg:w-auto lg:items-center lg:gap-[50px] mt-4 lg:mt-0"
+        >
+            <ul
+                class="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-[50px] w-full lg:w-fit"
+            >
+                <li>
+                    <a href="/browse">Browse</a>
+                </li>
+                <li>
+                    <a href="/popular">Popular</a>
+                </li>
+                <li>
+                    <a href="/categories">Categories</a>
+                </li>
+                <li>
+                    <a href="#">Events</a>
+                </li>
+                <li>
+                    <a href="/view-booking-details">My Booking</a>
+                </li>
+            </ul>
+            <a
+                href="#"
+                class="flex items-center gap-[10px] rounded-full border border-[#000929] py-3 px-5 mt-4 lg:mt-0 w-fit"
+            >
+                <Image src={callIcon} class="w-6 h-6" alt="icon" />
+                <span class="font-semibold">Contact Us</span>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<script>
+    const menuBtn = document.getElementById("mobile-menu-btn");
+    const navLinks = document.getElementById("nav-links");
+
+    if (menuBtn && navLinks) {
+        menuBtn.addEventListener("click", () => {
+            navLinks.classList.toggle("hidden");
+        });
+    }
+</script>

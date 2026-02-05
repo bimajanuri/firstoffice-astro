@@ -1,0 +1,416 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import offices from "../../data/offices.json";
+import { Image } from "astro:assets";
+
+// Icons
+import locationIcon from "../../assets/images/icons/location.svg";
+import starIcon from "../../assets/images/icons/Star 1.svg";
+import securityIcon from "../../assets/images/icons/security-user.svg";
+import cupIcon from "../../assets/images/icons/cup.svg";
+import trendIcon from "../../assets/images/icons/home-trend-up.svg";
+import coffeeIcon from "../../assets/images/icons/coffee.svg";
+import cubeIcon from "../../assets/images/icons/3dcube.svg";
+import groupIcon from "../../assets/images/icons/group.svg";
+import verifyIcon from "../../assets/images/icons/verify.svg";
+import sliderIcon from "../../assets/images/icons/slider-horizontal-white.svg";
+import saveIcon from "../../assets/images/icons/save-add.svg";
+import callIcon from "../../assets/images/icons/call-green.svg";
+import chatIcon from "../../assets/images/icons/chat-green.svg";
+
+// Check photos
+import photo1 from "../../assets/images/photos/photo-1.png";
+import photo2 from "../../assets/images/photos/photo-2.png";
+
+// Gallery Placeholders (using same valid images for all offices for now)
+import gallery1 from "../../assets/images/thumbnails/thumbnail-details-1.png";
+import gallery2 from "../../assets/images/thumbnails/thumbnail-details-2.png";
+import gallery3 from "../../assets/images/thumbnails/thumbnail-details-3.png";
+
+export async function getStaticPaths() {
+    return offices.map((office) => ({
+        params: { slug: office.slug },
+        props: { office },
+    }));
+}
+
+interface Props {
+    office: {
+        slug: string;
+        name: string;
+        price: string;
+        duration: number;
+        location: string;
+        rating: number;
+        thumbnail: string;
+        isPopular: boolean;
+        status: string;
+        description: string;
+        address: string;
+    };
+}
+
+const { office } = Astro.props;
+
+// Dynamic main thumbnail if needed, but here we use gallery
+// We could also dynamically load the office thumbnail if we wanted to show it.
+---
+
+<BaseLayout title={`FirstOffice - ${office.name}`}>
+    <section id="Gallery" class="-mb-[50px] px-4 lg:px-0">
+        <div class="swiper w-full">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide !w-fit">
+                    <div
+                        class="w-full sm:w-[700px] h-[300px] sm:h-[550px] overflow-hidden rounded-[20px] lg:rounded-none"
+                    >
+                        <Image
+                            src={gallery1}
+                            class="w-full h-full object-cover"
+                            alt="thumbnail"
+                        />
+                    </div>
+                </div>
+                <div class="swiper-slide !w-fit">
+                    <div
+                        class="w-full sm:w-[700px] h-[300px] sm:h-[550px] overflow-hidden rounded-[20px] lg:rounded-none"
+                    >
+                        <Image
+                            src={gallery2}
+                            class="w-full h-full object-cover"
+                            alt="thumbnail"
+                        />
+                    </div>
+                </div>
+                <div class="swiper-slide !w-fit">
+                    <div
+                        class="w-full sm:w-[700px] h-[300px] sm:h-[550px] overflow-hidden rounded-[20px] lg:rounded-none"
+                    >
+                        <Image
+                            src={gallery3}
+                            class="w-full h-full object-cover"
+                            alt="thumbnail"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section
+        id="Details"
+        class="relative flex flex-col lg:flex-row w-full max-w-screen-xl mx-auto gap-[30px] mb-20 z-10 px-4 mt-10 lg:mt-0"
+    >
+        <div
+            class="flex flex-col w-full rounded-[20px] border border-[#E0DEF7] p-6 lg:p-[30px] gap-[30px] bg-white"
+        >
+            {
+                office.isPopular && (
+                    <p class="w-fit rounded-full p-[6px_16px] bg-[#0D903A] font-bold text-sm leading-[21px] text-[#F7F7FD]">
+                        Popular
+                    </p>
+                )
+            }
+            <div
+                class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0"
+            >
+                <div>
+                    <h1
+                        class="font-extrabold text-[28px] lg:text-[32px] leading-[40px] lg:leading-[44px]"
+                    >
+                        {office.name}
+                    </h1>
+                    <div class="flex items-center gap-[6px] mt-[10px]">
+                        <Image src={locationIcon} class="w-6 h-6" alt="icon" />
+                        <p class="font-semibold">{office.location}</p>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-[6px]">
+                    <div class="flex items-center gap-1">
+                        <Image src={starIcon} class="w-5 h-5" alt="star" />
+                        <Image src={starIcon} class="w-5 h-5" alt="star" />
+                        <Image src={starIcon} class="w-5 h-5" alt="star" />
+                        <Image src={starIcon} class="w-5 h-5" alt="star" />
+                        <Image src={starIcon} class="w-5 h-5" alt="star" />
+                    </div>
+                    <p class="font-semibold text-left sm:text-right">
+                        {office.rating}/5 (19,384)
+                    </p>
+                </div>
+            </div>
+            <p class="leading-[30px]">
+                {office.description}
+            </p>
+            <hr class="border-[#F6F5FD]" />
+            <h2 class="font-bold">You Get What You Need Most</h2>
+            <div
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-[30px]"
+            >
+                <div class="flex items-center gap-4">
+                    <Image
+                        src={securityIcon}
+                        class="w-[34px] h-[34px]"
+                        alt="icon"
+                    />
+                    <div class="flex flex-col gap-[2px]">
+                        <p class="font-bold text-lg leading-[24px]">Privacy</p>
+                        <p class="text-sm leading-[21px]">For Yourself</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <Image src={cupIcon} class="w-[34px] h-[34px]" alt="icon" />
+                    <div class="flex flex-col gap-[2px]">
+                        <p class="font-bold text-lg leading-[24px]">
+                            Global Event
+                        </p>
+                        <p class="text-sm leading-[21px]">Startup Contest</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <Image
+                        src={trendIcon}
+                        class="w-[34px] h-[34px]"
+                        alt="icon"
+                    />
+                    <div class="flex flex-col gap-[2px]">
+                        <p class="font-bold text-lg leading-[24px]">
+                            Sustainbility
+                        </p>
+                        <p class="text-sm leading-[21px]">Long-term Goals</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <Image
+                        src={coffeeIcon}
+                        class="w-[34px] h-[34px]"
+                        alt="icon"
+                    />
+                    <div class="flex flex-col gap-[2px]">
+                        <p class="font-bold text-lg leading-[24px]">
+                            Extra Snacks
+                        </p>
+                        <p class="text-sm leading-[21px]">Work-Life Balance</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <Image
+                        src={cubeIcon}
+                        class="w-[34px] h-[34px]"
+                        alt="icon"
+                    />
+                    <div class="flex flex-col gap-[2px]">
+                        <p class="font-bold text-lg leading-[24px]">Compact</p>
+                        <p class="text-sm leading-[21px]">Good for Focus</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <Image
+                        src={groupIcon}
+                        class="w-[34px] h-[34px]"
+                        alt="icon"
+                    />
+                    <div class="flex flex-col gap-[2px]">
+                        <p class="font-bold text-lg leading-[24px]">
+                            Free Move
+                        </p>
+                        <p class="text-sm leading-[21px]">Anytime 24/7</p>
+                    </div>
+                </div>
+            </div>
+            <hr class="border-[#F6F5FD]" />
+            <div class="flex flex-col gap-[6px]">
+                <h2 class="font-bold">Office Address</h2>
+                <p>{office.name}</p>
+                <p>{office.address}</p>
+            </div>
+            <div class="overflow-hidden w-full h-[280px] rounded-[20px]">
+                <div
+                    id="my-map-display"
+                    class="h-full w-full max-w-[none] bg-none"
+                >
+                    <iframe
+                        class="h-full w-full border-0"
+                        frameborder="0"
+                        src={`https://www.google.com/maps/embed/v1/place?q=${office.address ? encodeURIComponent(office.address) : "Monumen+Nasional,+DKI+Jakarta"}&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`}
+                    ></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar / Booking Box -->
+        <div class="w-full lg:w-[392px] flex flex-col shrink-0 gap-[30px]">
+            <div
+                class="flex flex-col rounded-[20px] border border-[#E0DEF7] p-[30px] gap-[30px] bg-white"
+            >
+                <div>
+                    <p
+                        class="font-extrabold text-[32px] leading-[48px] text-[#0D903A]"
+                    >
+                        {office.price}
+                    </p>
+                    <p class="font-semibold mt-1">
+                        For {office.duration} days working
+                    </p>
+                </div>
+                <hr class="border-[#F6F5FD]" />
+                <div class="flex flex-col gap-5">
+                    <div class="flex items-center gap-3">
+                        <Image
+                            src={verifyIcon}
+                            class="w-[30px] h-[30px]"
+                            alt="icon"
+                        />
+                        <p class="font-semibold leading-[28px]">
+                            Access to the latest learning resources regarding
+                            the startup world
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <Image
+                            src={verifyIcon}
+                            class="w-[30px] h-[30px]"
+                            alt="icon"
+                        />
+                        <p class="font-semibold leading-[28px]">
+                            Access to the latest learning resources regarding
+                            the startup world
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <Image
+                            src={verifyIcon}
+                            class="w-[30px] h-[30px]"
+                            alt="icon"
+                        />
+                        <p class="font-semibold leading-[28px]">
+                            Access to the latest learning resources regarding
+                            the startup world
+                        </p>
+                    </div>
+                </div>
+                <hr class="border-[#F6F5FD]" />
+                <div class="flex flex-col gap-[14px]">
+                    {
+                        office.status === "Booked" ? (
+                            <button
+                                class="flex items-center justify-center w-full rounded-full p-[16px_26px] gap-3 bg-gray-400 font-bold text-[#F7F7FD] cursor-not-allowed"
+                                disabled
+                            >
+                                <span>Fully Booked</span>
+                            </button>
+                        ) : (
+                            <a
+                                href={`/booking/${office.slug}`}
+                                class="flex items-center justify-center w-full rounded-full p-[16px_26px] gap-3 bg-[#0D903A] font-bold text-[#F7F7FD] hover:bg-[#096b2b] transition-all duration-300"
+                            >
+                                <Image
+                                    src={sliderIcon}
+                                    class="w-6 h-6"
+                                    alt="icon"
+                                />
+                                <span>Book This Office</span>
+                            </a>
+                        )
+                    }
+                    <button
+                        class="flex items-center justify-center w-full rounded-full border border-[#000929] p-[16px_26px] gap-3 bg-white font-semibold"
+                    >
+                        <Image src={saveIcon} class="w-6 h-6" alt="icon" />
+                        <span>Save for Later</span>
+                    </button>
+                </div>
+            </div>
+            <div
+                class="flex flex-col rounded-[20px] border border-[#E0DEF7] p-[30px] gap-[20px] bg-white"
+            >
+                <h2 class="font-bold">Contact Our Sales</h2>
+                <div class="flex flex-col gap-[30px]">
+                    <div class="flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-[60px] h-[60px] rounded-full overflow-hidden"
+                            >
+                                <Image
+                                    src={photo1}
+                                    class="w-full h-full object-cover"
+                                    alt="photo"
+                                />
+                            </div>
+                            <div class="flex flex-col gap-[2px]">
+                                <p class="font-bold">Masayoshi</p>
+                                <p class="text-sm leading-[21px]">
+                                    Sales Manager
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <a href="#">
+                                <Image
+                                    src={callIcon}
+                                    class="w-10 h-10"
+                                    alt="icon"
+                                />
+                            </a>
+                            <a href="#">
+                                <Image
+                                    src={chatIcon}
+                                    class="w-10 h-10"
+                                    alt="icon"
+                                />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-[60px] h-[60px] rounded-full overflow-hidden"
+                            >
+                                <Image
+                                    src={photo2}
+                                    class="w-full h-full object-cover"
+                                    alt="photo"
+                                />
+                            </div>
+                            <div class="flex flex-col gap-[2px]">
+                                <p class="font-bold">Fuji Ovina</p>
+                                <p class="text-sm leading-[21px]">
+                                    Sales Manager
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <a href="#">
+                                <Image
+                                    src={callIcon}
+                                    class="w-10 h-10"
+                                    alt="icon"
+                                />
+                            </a>
+                            <a href="#">
+                                <Image
+                                    src={chatIcon}
+                                    class="w-10 h-10"
+                                    alt="icon"
+                                />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        import Swiper from "swiper";
+        import "swiper/css";
+
+        const swiper = new Swiper(".swiper", {
+            // Optional parameters
+            direction: "horizontal",
+            spaceBetween: 10,
+            slidesPerView: "auto",
+            slidesOffsetAfter: 10,
+            slidesOffsetBefore: 10,
+        });
+    </script>
+</BaseLayout>

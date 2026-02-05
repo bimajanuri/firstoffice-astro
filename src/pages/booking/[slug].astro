@@ -1,0 +1,49 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BookingForm from "../../components/BookingForm.astro";
+import BookingInformation from "../../components/BookingInformation.astro";
+import { Image } from "astro:assets";
+import offices from "../../data/offices.json";
+
+// Assets
+import thumbnailDetails5 from "../../assets/images/thumbnails/thumbnail-details-5.png";
+
+export async function getStaticPaths() {
+    return offices.map((office) => ({
+        params: { slug: office.slug },
+        props: { office },
+    }));
+}
+
+const { office } = Astro.props;
+const title = "Booking Details - FirstOffice";
+---
+
+<BaseLayout title={title}>
+    <div
+        id="Banner"
+        class="relative w-full h-[240px] flex items-center shrink-0 overflow-hidden -mb-[50px]"
+    >
+        <h1
+            class="text-center mx-auto font-extrabold text-[40px] leading-[60px] text-white mb-5 z-20"
+        >
+            View Your Booking Details
+        </h1>
+        <div
+            class="absolute w-full h-full bg-[linear-gradient(180deg,_rgba(0,0,0,0)_0%,#000000_91.83%)] z-10"
+        >
+        </div>
+        <Image
+            src={thumbnailDetails5}
+            class="absolute w-full h-full object-cover object-top"
+            alt=""
+        />
+    </div>
+    <section
+        id="Check-Booking"
+        class="relative flex flex-col w-full max-w-[930px] shrink-0 gap-[30px] mx-auto mb-[100px] z-20 px-4"
+    >
+        <BookingForm />
+        <BookingInformation office={office} />
+    </section>
+</BaseLayout>

@@ -1,0 +1,58 @@
+[
+    {
+        "id": 1,
+        "name": "Jakarta Pusat",
+        "slug": "jakarta-pusat",
+        "count": 9,
+        "thumbnail": "thumbnails-2.png",
+        "description": "The heart of Indonesia's capital, offering premium office spaces surrounded by major business districts and government institutions."
+    },
+    {
+        "id": 2,
+        "name": "Jakarta Selatan",
+        "slug": "jakarta-selatan",
+        "count": 9,
+        "thumbnail": "thumbnails-1.png",
+        "description": "A trendy business hub with a perfect blend of modern skyscrapers, lush residential areas, and vibrant lifestyle centers."
+    },
+    {
+        "id": 3,
+        "name": "Bandung Utara",
+        "slug": "bandung-utara",
+        "count": 9,
+        "thumbnail": "thumbnails-3.png",
+        "description": "Enjoy a refreshing work environment in the cooler northern part of Bandung, known for its creative atmosphere and scenic views."
+    },
+    {
+        "id": 4,
+        "name": "Jakarta Barat",
+        "slug": "jakarta-barat",
+        "count": 9,
+        "thumbnail": "thumbnails-4.png",
+        "description": "A bustling commercial center with rapid development, providing accessible office locations and diverse business opportunities."
+    },
+    {
+        "id": 5,
+        "name": "Bandung Selatan",
+        "slug": "bandung-selatan",
+        "count": 9,
+        "thumbnail": "thumbnails-5.png",
+        "description": "A growing economic zone offering affordable and flexible workspace options in the southern region of Bandung."
+    },
+    {
+        "id": 6,
+        "name": "Jakarta Timur",
+        "slug": "jakarta-timur",
+        "count": 9,
+        "thumbnail": "thumbnails-6.png",
+        "description": "An emerging industrial and business area with great connectivity and plenty of potential for growing enterprises."
+    },
+    {
+        "id": 7,
+        "name": "Bandung Wetan",
+        "slug": "bandung-wetan",
+        "count": 9,
+        "thumbnail": "thumbnails-7.png",
+        "description": "Located in the city center, offering easy access to heritage sites, government offices, and vibrant culinary scenes."
+    }
+]

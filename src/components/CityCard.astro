@@ -1,0 +1,35 @@
+---
+import { Image } from "astro:assets";
+
+const { city } = Astro.props;
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+    "../assets/images/thumbnails/*.{png,jpg,jpeg,webp}",
+);
+const imagePath = `../assets/images/thumbnails/${city.thumbnail}`;
+if (!images[imagePath])
+    throw new Error(
+        `"${imagePath}" does not exist in glob: "src/assets/images/thumbnails/*.{png,jpg,jpeg,webp}"`,
+    );
+const imageSrc = images[imagePath]();
+---
+
+<a href={`/city/${city.slug}`} class="card">
+    <div
+        class="relative flex shrink-0 w-[230px] h-[300px] rounded-[20px] overflow-hidden"
+    >
+        <div
+            class="relative flex flex-col justify-end w-full h-full p-5 gap-[2px] bg-[linear-gradient(180deg,_rgba(0,0,0,0)_49.87%,_rgba(0,0,0,0.8)_100%)] z-10"
+        >
+            <h3 class="font-bold text-xl leading-[30px] text-white">
+                {city.name}
+            </h3>
+            <p class="text-white">{city.count} Offices</p>
+        </div>
+        <Image
+            src={imageSrc}
+            class="absolute w-full h-full object-cover"
+            alt="thumbnails"
+        />
+    </div>
+</a>

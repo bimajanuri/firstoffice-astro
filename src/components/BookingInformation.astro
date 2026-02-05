@@ -1,0 +1,162 @@
+---
+import { Image } from "astro:assets";
+import locationIcon from "../assets/images/icons/location.svg";
+import securityUserBlackIcon from "../assets/images/icons/security-user-black.svg";
+import callBlackIcon from "../assets/images/icons/call-black.svg";
+import calendarBlackIcon from "../assets/images/icons/calendar-black.svg";
+import shieldTickIcon from "../assets/images/icons/shield-tick.svg";
+import coffeeIcon from "../assets/images/icons/coffee.svg";
+import groupIcon from "../assets/images/icons/group.svg";
+
+const { office } = Astro.props;
+
+// Dynamic Images
+const images = import.meta.glob<{ default: ImageMetadata }>(
+    "../assets/images/thumbnails/*.{png,jpg,jpeg,webp}",
+);
+const imagePath = `../assets/images/thumbnails/${office.thumbnail}`;
+if (!images[imagePath])
+    throw new Error(
+        `"${imagePath}" does not exist in glob: "src/assets/images/thumbnails/*.{png,jpg,jpeg,webp}"`,
+    );
+const imageSrc = images[imagePath]();
+---
+
+<div id="Result" class="grid grid-cols-2 gap-[30px]">
+    <div
+        class="flex flex-col h-fit shrink-0 rounded-[20px] border border-[#E0DEF7] p-[30px] gap-[30px] bg-white"
+    >
+        <div class="flex items-center gap-4">
+            <div
+                class="flex shrink-0 w-[140px] h-[100px] rounded-[20px] overflow-hidden"
+            >
+                <Image
+                    src={imageSrc}
+                    class="w-full h-full object-cover"
+                    alt="thumbnail"
+                />
+            </div>
+            <div class="flex flex-col gap-2">
+                <p class="font-bold text-xl leading-[30px]">{office.name}</p>
+                <div class="flex items-center gap-[6px]">
+                    <Image src={locationIcon} class="w-6 h-6" alt="icon" />
+                    <p class="font-semibold">{office.location}</p>
+                </div>
+            </div>
+        </div>
+        <hr class="border-[#F6F5FD]" />
+        <div class="flex flex-col gap-4">
+            <h2 class="font-bold">Customer Details</h2>
+            <div class="flex flex-col gap-2">
+                <h3 class="font-semibold">Full Name</h3>
+                <div
+                    class="flex items-center rounded-full px-5 py-3 gap-[10px] bg-[#F7F7FD]"
+                >
+                    <Image
+                        src={securityUserBlackIcon}
+                        class="w-6 h-6"
+                        alt="icon"
+                    />
+                    <p class="font-semibold">Angga Risky Setiawan</p>
+                </div>
+            </div>
+            <div class="flex flex-col gap-2">
+                <h3 class="font-semibold">Phone Number</h3>
+                <div
+                    class="flex items-center rounded-full px-5 py-3 gap-[10px] bg-[#F7F7FD]"
+                >
+                    <Image src={callBlackIcon} class="w-6 h-6" alt="icon" />
+                    <p class="font-semibold">6289123981239</p>
+                </div>
+            </div>
+            <div class="flex flex-col gap-2">
+                <h3 class="font-semibold">Started At</h3>
+                <div
+                    class="flex items-center rounded-full px-5 py-3 gap-[10px] bg-[#F7F7FD]"
+                >
+                    <Image src={calendarBlackIcon} class="w-6 h-6" alt="icon" />
+                    <p class="font-semibold">12 July 2024</p>
+                </div>
+            </div>
+            <div class="flex flex-col gap-2">
+                <h3 class="font-semibold">Ended At</h3>
+                <div
+                    class="flex items-center rounded-full px-5 py-3 gap-[10px] bg-[#F7F7FD]"
+                >
+                    <Image src={calendarBlackIcon} class="w-6 h-6" alt="icon" />
+                    <p class="font-semibold">20 July 2024</p>
+                </div>
+            </div>
+        </div>
+        <hr class="border-[#F6F5FD]" />
+        <div class="flex items-center gap-3">
+            <Image src={shieldTickIcon} class="w-[30px] h-[30px]" alt="icon" />
+            <p class="font-semibold leading-[28px]">
+                Privasi Anda aman bersama kami.
+            </p>
+        </div>
+    </div>
+    <div
+        class="flex flex-col h-fit shrink-0 rounded-[20px] border border-[#E0DEF7] p-[30px] gap-[30px] bg-white"
+    >
+        <h2 class="font-bold">Order Details</h2>
+        <div class="flex flex-col gap-5">
+            <div class="flex items-center justify-between">
+                <p class="font-semibold">Status Pembayaran</p>
+                <p
+                    class="rounded-full w-fit p-[6px_16px] bg-[#FF852D] font-bold text-sm leading-[21px] text-[#F7F7FD]"
+                >
+                    PENDING
+                </p>
+            </div>
+            <div class="flex items-center justify-between">
+                <p class="font-semibold">Status Pembayaran</p>
+                <p
+                    class="rounded-full w-fit p-[6px_16px] bg-[#0D903A] font-bold text-sm leading-[21px] text-[#F7F7FD]"
+                >
+                    SUCCESS
+                </p>
+            </div>
+            <div class="flex items-center justify-between">
+                <p class="font-semibold">Booking TRX ID</p>
+                <p class="font-bold">FO1239812938</p>
+            </div>
+            <div class="flex items-center justify-between">
+                <p class="font-semibold">Duration</p>
+                <p class="font-bold">{office.duration} Days Working</p>
+            </div>
+            <div class="flex items-center justify-between">
+                <p class="font-semibold">Total Amount</p>
+                <p class="font-bold text-[22px] leading-[33px] text-[#0D903A]">
+                    {office.price}
+                </p>
+            </div>
+        </div>
+        <hr class="border-[#F6F5FD]" />
+        <h2 class="font-bold">Bonus Packages For You</h2>
+        <div class="flex justify-between">
+            <div class="flex items-center gap-4">
+                <Image src={coffeeIcon} class="w-[34px] h-[34px]" alt="icon" />
+                <div class="flex flex-col gap-[2px]">
+                    <p class="font-bold">Extra Snacks</p>
+                    <p class="text-sm leading-[21px]">Work-Life Balance</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <Image src={groupIcon} class="w-[34px] h-[34px]" alt="icon" />
+                <div class="flex flex-col gap-[2px]">
+                    <p class="font-bold">Free Move</p>
+                    <p class="text-sm leading-[21px]">Anytime 24/7</p>
+                </div>
+            </div>
+        </div>
+        <hr class="border-[#F6F5FD]" />
+        <a
+            href=""
+            class="flex items-center justify-center w-full rounded-full border border-[#000929] p-[12px_20px] gap-3 bg-white font-semibold"
+        >
+            <Image src={callBlackIcon} class="w-6 h-6" alt="icon" />
+            <span>Call Customer Service</span>
+        </a>
+    </div>
+</div>
