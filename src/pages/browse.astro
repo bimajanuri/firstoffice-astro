@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import OfficeCard from "../components/OfficeCard.astro";
 import offices from "../data/offices.json";
 import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 import bannerImage from "../assets/images/backgrounds/banner.webp";
 
 // Get search query from URL parameter
@@ -100,6 +101,34 @@ const title = searchQuery
         class="flex flex-col gap-[30px] w-full max-w-screen-xl mx-auto mt-10 lg:mt-[50px] mb-10 lg:mb-[120px] px-4"
     >
         <div
+            class="flex flex-col md:flex-row items-center justify-between gap-4 hidden"
+            id="results-header"
+        >
+            <h2 class="font-bold text-xl leading-[30px] text-[#000929]">
+                Showing <span id="result-count" class="text-[#0D903A]">0</span> Offices
+            </h2>
+            <div class="flex items-center gap-3">
+                <span class="text-[#000929] font-medium">Sort by:</span>
+                <div class="relative">
+                    <select
+                        id="sort-select"
+                        class="appearance-none bg-white border border-[#E0DEF7] rounded-full px-5 py-3 pr-10 text-[#000929] font-semibold focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+                    >
+                        <option value="recommended">Recommended</option>
+                        <option value="price-low">Lowest Price</option>
+                        <option value="price-high">Highest Price</option>
+                        <option value="rating">Highest Rating</option>
+                    </select>
+                    <div
+                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]"
+                    >
+                        <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div
             id="results-grid"
             class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px]"
         >
@@ -138,6 +167,13 @@ const title = searchQuery
     const noResultsMsg = document.getElementById("no-results-msg");
     const initialMsg = document.getElementById("initial-msg");
     const allCards = document.querySelectorAll(".office-card-item");
+    const sortSelect = document.getElementById("sort-select");
+    const resultsHeader = document.getElementById("results-header");
+    const resultCount = document.getElementById("result-count");
+    const resultsGrid = document.getElementById("results-grid");
+
+    // Store current search results to allow sorting
+    let currentResults = [];
 
     // Initialize Fuse with the data passed from the server
     // @ts-ignore
@@ -146,7 +182,64 @@ const title = searchQuery
         threshold: 0.4,
     });
 
-    if (searchInput && initialMsg && noResultsMsg) {
+    // Helper to parse price string "Rp 18.560.000" -> 18560000
+    const parsePrice = (priceStr) => {
+        if (!priceStr) return 0;
+        return parseInt(priceStr.replace(/[^0-9]/g, ""));
+    };
+
+    const renderResults = () => {
+        const criteria = sortSelect.value;
+        let sortedResults = [...currentResults];
+
+        // Apply sorting
+        if (criteria === "price-low") {
+            sortedResults.sort(
+                (a, b) => parsePrice(a.item.price) - parsePrice(b.item.price),
+            );
+        } else if (criteria === "price-high") {
+            sortedResults.sort(
+                (a, b) => parsePrice(b.item.price) - parsePrice(a.item.price),
+            );
+        } else if (criteria === "rating") {
+            sortedResults.sort((a, b) => b.item.rating - a.item.rating);
+        }
+        // 'recommended' uses original order from Fuse
+
+        if (sortedResults.length === 0) {
+            noResultsMsg.classList.remove("hidden");
+            resultsHeader.classList.add("hidden");
+            allCards.forEach((card) => card.classList.add("hidden"));
+        } else {
+            noResultsMsg.classList.add("hidden");
+            resultsHeader.classList.remove("hidden");
+            if (resultCount)
+                resultCount.textContent = sortedResults.length.toString();
+
+            // Reorder DOM
+            // First, map available cards (we have them in allCards)
+            const cardMap = {};
+            allCards.forEach((card) => {
+                const slug = card.getAttribute("data-slug");
+                if (slug) cardMap[slug] = card;
+                // Detach all cards initially (or just the ones we are about to move?
+                // Appending moves them, so it's fine).
+                // But we need to hide the ones not in results.
+                card.classList.add("hidden");
+            });
+
+            // Append/Show in sorted order
+            sortedResults.forEach((r) => {
+                const card = cardMap[r.item.slug];
+                if (card) {
+                    card.classList.remove("hidden");
+                    resultsGrid.appendChild(card);
+                }
+            });
+        }
+    };
+
+    if (searchInput && initialMsg && noResultsMsg && sortSelect) {
         // Read query from URL parameters (client-side)
         const urlParams = new URLSearchParams(window.location.search);
         const queryFromUrl = urlParams.get("q") || "";
@@ -156,27 +249,10 @@ const title = searchQuery
             // Set the input value
             (searchInput as HTMLInputElement).value = queryFromUrl;
 
-            const query = queryFromUrl;
             initialMsg.classList.add("hidden");
 
-            const results = fuse.search(query);
-
-            if (results.length === 0) {
-                noResultsMsg.classList.remove("hidden");
-                allCards.forEach((card) => card.classList.add("hidden"));
-            } else {
-                noResultsMsg.classList.add("hidden");
-                const matchedSlugs = new Set(results.map((r) => r.item.slug));
-
-                allCards.forEach((card) => {
-                    const slug = card.getAttribute("data-slug");
-                    if (slug && matchedSlugs.has(slug)) {
-                        card.classList.remove("hidden");
-                    } else {
-                        card.classList.add("hidden");
-                    }
-                });
-            }
+            currentResults = fuse.search(queryFromUrl);
+            renderResults();
         }
 
         searchInput.addEventListener("input", (e) => {
@@ -187,31 +263,20 @@ const title = searchQuery
                 // Empty state: Show initial message, hide results
                 initialMsg.classList.remove("hidden");
                 noResultsMsg.classList.add("hidden");
+                resultsHeader.classList.add("hidden");
                 allCards.forEach((card) => card.classList.add("hidden"));
                 return;
             }
 
             initialMsg.classList.add("hidden");
 
-            const results = fuse.search(query);
+            currentResults = fuse.search(query);
+            renderResults();
+        });
 
-            if (results.length === 0) {
-                // No matches
-                noResultsMsg.classList.remove("hidden");
-                allCards.forEach((card) => card.classList.add("hidden"));
-            } else {
-                // Matches found
-                noResultsMsg.classList.add("hidden");
-                const matchedSlugs = new Set(results.map((r) => r.item.slug));
-
-                allCards.forEach((card) => {
-                    const slug = card.getAttribute("data-slug");
-                    if (slug && matchedSlugs.has(slug)) {
-                        card.classList.remove("hidden");
-                    } else {
-                        card.classList.add("hidden");
-                    }
-                });
+        sortSelect.addEventListener("change", () => {
+            if (currentResults.length > 0) {
+                renderResults();
             }
         });
     }

@@ -21,6 +21,8 @@ FirstOffice adalah website yang memungkinkan pengguna untuk menjelajahi berbagai
 - 📍 Filter berdasarkan lokasi/kota
 - ⭐ Halaman office populer
 - 🏷️ Halaman categories (Serviced, Virtual, Shell & Core, Managed)
+- 🏷️ Halaman categories (Serviced, Virtual, Shell & Core, Managed)
+- ↕️ **Smart Sorting** - Fitur pengurutan canggih di semua halaman listing
 - 🔗 Shareable search URLs - Simpan dan bagikan hasil pencarian via URL
 
 ### Booking System
@@ -87,7 +89,41 @@ Browse Page: Search input = "jakarta" + 36 hasil ditampilkan
 URL ini dapat:
 - Di-bookmark untuk quick access
 - Dibagikan ke user lain
+- Di-bookmark untuk quick access
+- Dibagikan ke user lain
 - Disimpan dalam browser history
+
+## ↕️ Advanced Sorting System
+
+Project ini sekarang dilengkapi dengan sistem sorting yang komprehensif di seluruh halaman listing kantor.
+
+### Fitur Sorting
+
+- ✅ **Universal Availability** - Tersedia di:
+  - Homepage (`/`)
+  - Browse Page (`/browse`)
+  - Popular Page (`/popular`)
+  - Category Pages (`/categories/[slug]`)
+  - City Pages (`/city/[slug]`)
+  - My Bookings (`/my-booking`)
+
+### Opsi Pengurutan
+
+1. **Office Listings**:
+   - **Recommended**: Urutan default/relevansi pencarian
+   - **Lowest Price**: Mengurutkan dari harga terendah
+   - **Highest Price**: Mengurutkan dari harga tertinggi
+   - **Highest Rating**: Mengurutkan berdasarkan rating bintang
+
+2. **My Bookings**:
+   - **Newest**: Booking terbaru di paling atas
+   - **Oldest**: Booking terlama di paling atas
+   - **Status**: Prioritas status (Paid → Pending → Failed)
+
+### Teknologi
+- **Client-Side Sorting**: Sorting dilakukan instan di sisi client tanpa reload halaman
+- **DOM Manipulation**: Reordering elemen HTML secara efisien
+- **State Preservation**: Mempertahankan hasil pencarian saat melakukan sorting
 
 ## 🎨 Icon System
 

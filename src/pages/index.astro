@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import CityCard from "../components/CityCard.astro";
 import OfficeCard from "../components/OfficeCard.astro";
-import OfficeCardSkeleton from "../components/OfficeCardSkeleton.astro";
+
 import cities from "../data/cities.json";
 import offices from "../data/offices.json";
 import { Image } from "astro:assets";
@@ -321,42 +321,68 @@ const title = "FirstOffice - Find Your Dream Office";
         id="Fresh-Space"
         class="flex flex-col gap-[30px] w-full max-w-screen-xl mx-auto mt-10 lg:mt-[100px] mb-10 lg:mb-[120px] px-4"
     >
-        <h2
-            class="font-bold text-[28px] lg:text-[32px] leading-[40px] lg:leading-[48px] text-nowrap text-center"
+        <div
+            class="flex flex-col md:flex-row items-center justify-between gap-4"
         >
-            Browse Our Fresh Space.<br />For Your Better Productivity.
-        </h2>
+            <h2
+                class="font-bold text-[28px] lg:text-[32px] leading-[40px] lg:leading-[48px] text-nowrap text-center"
+            >
+                Browse Our Fresh Space.<br />For Your Better Productivity.
+            </h2>
+            <div class="flex items-center gap-3">
+                <span class="text-[#000929] font-medium">Sort by:</span>
+                <div class="relative">
+                    <select
+                        id="sort-select"
+                        class="appearance-none bg-white border border-[#E0DEF7] rounded-full px-5 py-3 pr-10 text-[#000929] font-semibold focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+                    >
+                        <option value="recommended">Recommended</option>
+                        <option value="price-low">Lowest Price</option>
+                        <option value="price-high">Highest Price</option>
+                        <option value="rating">Highest Rating</option>
+                    </select>
+                    <div
+                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]"
+                    >
+                        <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                    </div>
+                </div>
+            </div>
+        </div>
         <div
             id="office-grid"
             class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px]"
         >
             {
-                offices
-                    .slice(0, 9)
-                    .map((office) => <OfficeCard office={office} />)
+                offices.map((office, index) => (
+                    <div
+                        class={`office-card-item ${index >= 9 ? "hidden" : ""}`}
+                        data-price={office.price}
+                        data-rating={office.rating}
+                    >
+                        <OfficeCard office={office} />
+                    </div>
+                ))
             }
-
-            <!-- Sentinel & Loading Indicator -->
-            <div
-                id="sentinel"
-                class="col-span-1 sm:col-span-2 lg:col-span-3 h-10"
-            >
-            </div>
         </div>
 
-        <!-- Loading Skeletons (Hidden by default, toggled via JS) -->
-        <div
-            id="loading-indicator"
-            class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px] mt-[30px]"
-        >
-            <OfficeCardSkeleton />
-            <OfficeCardSkeleton />
-            <OfficeCardSkeleton />
-        </div>
+        {
+            offices.length > 9 && (
+                <div class="flex justify-center mt-10">
+                    <button
+                        id="load-more-btn"
+                        class="px-8 py-4 bg-white border border-[#E0DEF7] rounded-full font-bold text-[#000929] hover:bg-gray-50 transition-colors"
+                    >
+                        View More Offices
+                    </button>
+                </div>
+            )
+        }
     </section>
 
     <script>
         import Swiper from "swiper";
+        import "swiper/css";
 
         let swiperInstance;
 
@@ -379,79 +405,96 @@ const title = "FirstOffice - Find Your Dream Office";
         document.addEventListener("DOMContentLoaded", initSwiper);
         document.addEventListener("astro:page-load", initSwiper);
 
-        // Infinite Scroll Logic
-        let page = 2; // Start from page 2 since page 1 is server-rendered
-        const limit = 9;
-        let isLoading = false;
-        let hasMore = true;
+        // Sorting & Load More Logic
+        const sortSelect = document.getElementById(
+            "sort-select",
+        ) as HTMLSelectElement;
+        const officeGrid = document.getElementById("office-grid");
+        const loadMoreBtn = document.getElementById("load-more-btn");
 
-        const container = document.getElementById("office-grid");
-        const sentinel = document.getElementById("sentinel");
-        const loadingIndicator = document.getElementById("loading-indicator");
+        // Use module-scoped variable or attach to window if needed for persistence across swaps?
+        // Actually, on page load visibleCount reset is fine.
+        let visibleCount = 9;
+        const ITEMS_PER_PAGE = 9;
 
-        const fetchOffices = async () => {
-            if (isLoading || !hasMore) return;
-            isLoading = true;
+        if (sortSelect && officeGrid) {
+            const cards = Array.from(
+                officeGrid.querySelectorAll(".office-card-item"),
+            ) as HTMLElement[];
 
-            // Show loading state
-            if (loadingIndicator) loadingIndicator.classList.remove("hidden");
+            const parsePrice = (priceStr: string) => {
+                if (!priceStr) return 0;
+                return parseInt(priceStr.replace(/[^0-9]/g, ""));
+            };
 
-            try {
-                const response = await fetch(`/partials/office-list/${page}`);
+            const updateVisibility = (sortedCards: HTMLElement[]) => {
+                sortedCards.forEach((card, index) => {
+                    officeGrid.appendChild(card);
+                    if (index < visibleCount) {
+                        card.classList.remove("hidden");
+                    } else {
+                        card.classList.add("hidden");
+                    }
+                });
 
-                if (!response.ok) {
-                    hasMore = false;
-                    if (loadingIndicator)
-                        loadingIndicator.classList.add("hidden");
-                    return;
-                }
-
-                const html = await response.text();
-
-                if (html.trim().length === 0) {
-                    hasMore = false;
-                    if (loadingIndicator)
-                        loadingIndicator.classList.add("hidden");
-                    return;
-                }
-
-                // Append new offices before the sentinel/loader
-                // creating a temp container to convert string to nodes
-                const tempDiv = document.createElement("div");
-                tempDiv.innerHTML = html;
-
-                if (container) {
-                    while (tempDiv.firstChild) {
-                        container.insertBefore(tempDiv.firstChild, sentinel);
+                if (loadMoreBtn) {
+                    if (visibleCount >= sortedCards.length) {
+                        loadMoreBtn.classList.add("hidden");
+                    } else {
+                        loadMoreBtn.classList.remove("hidden");
                     }
                 }
+            };
 
-                page++;
-            } catch (error) {
-                console.error("Error fetching offices:", error);
-            } finally {
-                isLoading = false;
-                if (loadingIndicator) loadingIndicator.classList.add("hidden");
-            }
-        };
+            const sortAndRender = () => {
+                const criteria = sortSelect.value;
+                const currentCards = [...cards];
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                if (entries[0].isIntersecting) {
-                    fetchOffices();
+                if (criteria === "price-low") {
+                    currentCards.sort((a, b) => {
+                        const priceA = parsePrice(
+                            a.getAttribute("data-price") || "0",
+                        );
+                        const priceB = parsePrice(
+                            b.getAttribute("data-price") || "0",
+                        );
+                        return priceA - priceB;
+                    });
+                } else if (criteria === "price-high") {
+                    currentCards.sort((a, b) => {
+                        const priceA = parsePrice(
+                            a.getAttribute("data-price") || "0",
+                        );
+                        const priceB = parsePrice(
+                            b.getAttribute("data-price") || "0",
+                        );
+                        return priceB - priceA;
+                    });
+                } else if (criteria === "rating") {
+                    currentCards.sort((a, b) => {
+                        const ratingA = parseFloat(
+                            a.getAttribute("data-rating") || "0",
+                        );
+                        const ratingB = parseFloat(
+                            b.getAttribute("data-rating") || "0",
+                        );
+                        return ratingB - ratingA;
+                    });
                 }
-            },
-            { rootMargin: "200px" },
-        );
 
-        function initInfiniteScroll() {
-            const newSentinel = document.getElementById("sentinel");
-            if (newSentinel) {
-                observer.observe(newSentinel);
+                updateVisibility(currentCards);
+            };
+
+            sortSelect.addEventListener("change", () => {
+                sortAndRender();
+            });
+
+            if (loadMoreBtn) {
+                loadMoreBtn.addEventListener("click", () => {
+                    visibleCount += ITEMS_PER_PAGE;
+                    sortAndRender();
+                });
             }
         }
-
-        document.addEventListener("DOMContentLoaded", initInfiniteScroll);
-        document.addEventListener("astro:page-load", initInfiniteScroll);
     </script>
 </BaseLayout>

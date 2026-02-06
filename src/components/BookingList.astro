@@ -57,19 +57,57 @@ const bookingsWithOffice = await Promise.all(
 <div
     class="flex flex-col gap-[30px] rounded-[20px] border border-[#E0DEF7] p-[30px] bg-white"
 >
-    <div class="flex items-center justify-between">
-        <h2 class="font-bold text-xl">All Bookings</h2>
-        <p class="text-sm text-gray-600">
-            {bookings.length} booking{bookings.length !== 1 ? "s" : ""} found
-        </p>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+            <h2 class="font-bold text-xl">All Bookings</h2>
+            <p class="text-sm text-gray-600">
+                {bookings.length} booking{bookings.length !== 1 ? "s" : ""} found
+            </p>
+        </div>
+        <div class="flex items-center gap-3">
+            <span class="text-[#000929] font-medium text-sm">Sort by:</span>
+            <div class="relative">
+                <select
+                    id="booking-sort-select"
+                    class="appearance-none bg-white border border-[#E0DEF7] rounded-full px-4 py-2 pr-10 text-[#000929] text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+                >
+                    <option value="newest">Newest</option>
+                    <option value="oldest">Oldest</option>
+                    <option value="status">Status (Paid First)</option>
+                </select>
+                <!-- Arrow Icon (using SVG directly to avoid import issues if Icon not available in script scope context) -->
+                <div
+                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-[#000929]"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="lucide lucide-chevron-down"
+                        ><path d="m6 9 6 6 6-6"></path></svg
+                    >
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    <div
+        id="booking-grid"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+    >
         {
             bookingsWithOffice.map((booking) => (
                 <a
                     href={`/booking/${booking.bookingTrxId}`}
-                    class="flex flex-col rounded-[20px] border border-[#E0DEF7] overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] bg-white group"
+                    class="booking-card flex flex-col rounded-[20px] border border-[#E0DEF7] overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] bg-white group"
+                    data-date={booking.startedAt}
+                    data-status={booking.paymentStatus}
                 >
                     {/* Thumbnail */}
                     {booking.imageSrc && (
@@ -142,3 +180,69 @@ const bookingsWithOffice = await Promise.all(
         }
     </div>
 </div>
+
+<script>
+    const sortSelect = document.getElementById(
+        "booking-sort-select",
+    ) as HTMLSelectElement;
+    const bookingGrid = document.getElementById("booking-grid");
+
+    if (sortSelect && bookingGrid) {
+        const cards = Array.from(
+            bookingGrid.querySelectorAll(".booking-card"),
+        ) as HTMLElement[];
+
+        const getStatusPriority = (status: string) => {
+            switch (status.toLowerCase()) {
+                case "paid":
+                    return 1;
+                case "pending":
+                    return 2;
+                case "failed":
+                    return 3;
+                default:
+                    return 4;
+            }
+        };
+
+        const sortCards = () => {
+            const criteria = sortSelect.value;
+            const sortedCards = [...cards];
+
+            if (criteria === "newest") {
+                sortedCards.sort((a, b) => {
+                    const dateA = new Date(
+                        a.getAttribute("data-date") || 0,
+                    ).getTime();
+                    const dateB = new Date(
+                        b.getAttribute("data-date") || 0,
+                    ).getTime();
+                    return dateB - dateA;
+                });
+            } else if (criteria === "oldest") {
+                sortedCards.sort((a, b) => {
+                    const dateA = new Date(
+                        a.getAttribute("data-date") || 0,
+                    ).getTime();
+                    const dateB = new Date(
+                        b.getAttribute("data-date") || 0,
+                    ).getTime();
+                    return dateA - dateB;
+                });
+            } else if (criteria === "status") {
+                sortedCards.sort((a, b) => {
+                    const statusA = a.getAttribute("data-status") || "";
+                    const statusB = b.getAttribute("data-status") || "";
+                    return (
+                        getStatusPriority(statusA) - getStatusPriority(statusB)
+                    );
+                });
+            }
+
+            // Re-append to DOM
+            sortedCards.forEach((card) => bookingGrid.appendChild(card));
+        };
+
+        sortSelect.addEventListener("change", sortCards);
+    }
+</script>

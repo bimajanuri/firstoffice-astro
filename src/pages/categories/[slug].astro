@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import OfficeCard from "../../components/OfficeCard.astro";
 import offices from "../../data/offices.json";
 import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 import bannerImage from "../../assets/images/backgrounds/banner.webp";
 
 // Get category from params
@@ -106,13 +107,59 @@ export async function getStaticPaths() {
     </header>
 
     <!-- Offices Grid -->
-    <section class="w-full max-w-screen-xl mx-auto px-4 my-10 lg:my-[70px]">
+    <section
+        class="w-full max-w-screen-xl mx-auto px-4 my-10 lg:my-[70px] flex flex-col gap-[30px]"
+    >
+        {
+            filteredOffices.length > 0 && (
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <h2 class="font-bold text-xl leading-[30px] text-[#000929]">
+                        Showing{" "}
+                        <span id="result-count" class="text-[#0D903A]">
+                            {filteredOffices.length}
+                        </span>{" "}
+                        Offices
+                    </h2>
+                    <div class="flex items-center gap-3">
+                        <span class="text-[#000929] font-medium">Sort by:</span>
+                        <div class="relative">
+                            <select
+                                id="sort-select"
+                                class="appearance-none bg-white border border-[#E0DEF7] rounded-full px-5 py-3 pr-10 text-[#000929] font-semibold focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+                            >
+                                <option value="recommended">Recommended</option>
+                                <option value="price-low">Lowest Price</option>
+                                <option value="price-high">
+                                    Highest Price
+                                </option>
+                                <option value="rating">Highest Rating</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]">
+                                <Icon
+                                    name="lucide:chevron-down"
+                                    class="w-4 h-4"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
         {
             filteredOffices.length > 0 ? (
                 <>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px]">
+                    <div
+                        id="office-grid"
+                        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px]"
+                    >
                         {filteredOffices.map((office) => (
-                            <OfficeCard office={office} />
+                            <div
+                                class="office-card-item"
+                                data-price={office.price}
+                                data-rating={office.rating}
+                            >
+                                <OfficeCard office={office} />
+                            </div>
                         ))}
                     </div>
                 </>
@@ -135,3 +182,74 @@ export async function getStaticPaths() {
         }
     </section>
 </BaseLayout>
+
+<script>
+    const sortSelect = document.getElementById(
+        "sort-select",
+    ) as HTMLSelectElement;
+    const officeGrid = document.getElementById("office-grid");
+
+    if (sortSelect && officeGrid) {
+        // Collect all card elements once
+        const cards = Array.from(officeGrid.children) as HTMLElement[];
+
+        // Helper to parse price string "Rp 18.560.000" -> 18560000
+        const parsePrice = (priceStr: string) => {
+            if (!priceStr) return 0;
+            return parseInt(priceStr.replace(/[^0-9]/g, ""));
+        };
+
+        const sortCards = () => {
+            const criteria = sortSelect.value;
+            const sortedCards = [...cards];
+
+            if (criteria === "price-low") {
+                sortedCards.sort((a, b) => {
+                    const priceA = parsePrice(
+                        a.getAttribute("data-price") || "0",
+                    );
+                    const priceB = parsePrice(
+                        b.getAttribute("data-price") || "0",
+                    );
+                    return priceA - priceB;
+                });
+            } else if (criteria === "price-high") {
+                sortedCards.sort((a, b) => {
+                    const priceA = parsePrice(
+                        a.getAttribute("data-price") || "0",
+                    );
+                    const priceB = parsePrice(
+                        b.getAttribute("data-price") || "0",
+                    );
+                    return priceB - priceA;
+                });
+            } else if (criteria === "rating") {
+                sortedCards.sort((a, b) => {
+                    const ratingA = parseFloat(
+                        a.getAttribute("data-rating") || "0",
+                    );
+                    const ratingB = parseFloat(
+                        b.getAttribute("data-rating") || "0",
+                    );
+                    return ratingB - ratingA;
+                });
+            }
+            // 'recommended' - use original DOM order?
+            // Since we captured `cards` from initial DOM state, if we sort by index in `cards` array
+            // we can restore original order.
+            else {
+                // Restore original order based on initial `cards` array index
+                // Actually `cards` IS the original order array.
+                // So just use `cards` directly.
+                // But wait, `sortedCards` was initialized with `[...cards]`, so if criteria is recommended,
+                // it stays as is (original order).
+            }
+
+            // Re-append in new order
+            // Note: If criteria is 'recommended', sortedCards is a copy of cards in original order.
+            sortedCards.forEach((card) => officeGrid.appendChild(card));
+        };
+
+        sortSelect.addEventListener("change", sortCards);
+    }
+</script>
