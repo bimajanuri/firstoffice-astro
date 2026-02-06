@@ -290,7 +290,8 @@ const { office, relatedBooking } = Astro.props;
                         )
                     }
                     <button
-                        class="flex items-center justify-center w-full rounded-full border border-[#000929] p-[16px_26px] gap-3 bg-white font-semibold"
+                        id="save-button"
+                        class="flex items-center justify-center w-full rounded-full border border-[#000929] p-[16px_26px] gap-3 bg-white font-semibold hover:bg-gray-50 transition-colors duration-300"
                     >
                         <Icon name="lucide:bookmark-plus" class="w-6 h-6" />
                         <span>Save for Later</span>
@@ -321,13 +322,9 @@ const { office, relatedBooking } = Astro.props;
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <a href="#">
-                                <Icon
-                                    name="lucide:phone"
-                                    class="w-10 h-10 text-green-600"
-                                />
-                            </a>
-                            <a href="#">
+                            <a
+                                href="https://wa.me/6281234567899?text=Hello%2C%20I%20would%20like%20to%20know%20how%20to%20rent%20an%20office%20at%20FirstOffice."
+                            >
                                 <Icon
                                     name="lucide:message-circle"
                                     class="w-10 h-10 text-green-600"
@@ -354,13 +351,9 @@ const { office, relatedBooking } = Astro.props;
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <a href="#">
-                                <Icon
-                                    name="lucide:phone"
-                                    class="w-10 h-10 text-green-600"
-                                />
-                            </a>
-                            <a href="#">
+                            <a
+                                href="https://wa.me/6281234567899?text=Hello%2C%20I%20would%20like%20to%20know%20how%20to%20rent%20an%20office%20at%20FirstOffice."
+                            >
                                 <Icon
                                     name="lucide:message-circle"
                                     class="w-10 h-10 text-green-600"
@@ -372,6 +365,31 @@ const { office, relatedBooking } = Astro.props;
             </div>
         </div>
     </section>
+
+    <!-- Toast Notification -->
+    <div
+        id="toast"
+        class="fixed top-4 right-4 z-50 transform translate-x-[500px] transition-all duration-300 ease-out"
+    >
+        <div
+            class="flex items-center gap-3 bg-white rounded-[20px] border border-[#E0DEF7] shadow-lg p-4 min-w-[300px]"
+        >
+            <div
+                class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center flex-shrink-0"
+            >
+                <Icon
+                    name="lucide:check-circle"
+                    class="w-6 h-6 text-[#0D903A]"
+                />
+            </div>
+            <div class="flex-1">
+                <p class="font-semibold text-[#000929]">Saved Successfully!</p>
+                <p class="text-sm text-gray-600">
+                    Office has been saved for later
+                </p>
+            </div>
+        </div>
+    </div>
 
     <script>
         import Swiper from "swiper";
@@ -385,5 +403,23 @@ const { office, relatedBooking } = Astro.props;
             slidesOffsetAfter: 10,
             slidesOffsetBefore: 10,
         });
+
+        // Save for Later functionality
+        const saveButton = document.getElementById("save-button");
+        const toast = document.getElementById("toast");
+
+        if (saveButton && toast) {
+            saveButton.addEventListener("click", () => {
+                // Show toast
+                toast.classList.remove("translate-x-[500px]");
+                toast.classList.add("translate-x-0");
+
+                // Auto hide after 3 seconds
+                setTimeout(() => {
+                    toast.classList.remove("translate-x-0");
+                    toast.classList.add("translate-x-[500px]");
+                }, 3000);
+            });
+        }
     </script>
 </BaseLayout>

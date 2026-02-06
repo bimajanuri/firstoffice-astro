@@ -1,0 +1,137 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import OfficeCard from "../../components/OfficeCard.astro";
+import offices from "../../data/offices.json";
+import { Image } from "astro:assets";
+import bannerImage from "../../assets/images/backgrounds/banner.webp";
+
+// Get category from params
+const { slug } = Astro.params;
+
+// Define category mappings
+const categoryMap: Record<string, string> = {
+    "serviced-office": "Serviced Office",
+    "virtual-office": "Virtual Office",
+    "shell-and-core": "Shell and Core",
+    "managed-office": "Managed Office",
+};
+
+const categoryDescriptions: Record<string, string> = {
+    "serviced-office": "Ready-to-use offices with all amenities included.",
+    "virtual-office":
+        "Professional address and services without physical space.",
+    "shell-and-core": "Unfurnished spaces ready for your custom fit-out.",
+    "managed-office": "Tailored workspaces managed by a third-party provider.",
+};
+
+// Get the actual category name from slug
+const categoryName = categoryMap[slug || ""];
+const categoryDescription = categoryDescriptions[slug || ""];
+
+// Check if category exists
+if (!categoryName) {
+    return Astro.redirect("/categories");
+}
+
+// Filter offices by category
+const filteredOffices = offices.filter(
+    (office) => office.category === categoryName,
+);
+
+const title = `${categoryName} - FirstOffice`;
+
+// Generate static paths for build
+export async function getStaticPaths() {
+    return [
+        { params: { slug: "serviced-office" } },
+        { params: { slug: "virtual-office" } },
+        { params: { slug: "shell-and-core" } },
+        { params: { slug: "managed-office" } },
+    ];
+}
+---
+
+<BaseLayout title={title}>
+    <header class="flex flex-col w-full">
+        <section
+            id="Hero-Banner"
+            class="relative flex flex-col lg:block lg:h-[434px]"
+        >
+            <div
+                id="Hero-Text"
+                class="relative z-10 flex flex-col w-full px-4 mt-8 lg:mt-[70px] lg:ml-[calc((100%-1130px)/2)] lg:w-full lg:max-w-[650px] h-fit rounded-[30px] border border-[#E0DEF7] p-6 lg:p-10 gap-6 lg:gap-[30px] bg-white"
+            >
+                <div
+                    class="flex items-center w-fit rounded-full py-2 px-4 gap-[10px] bg-[#000929]"
+                >
+                    <span class="font-semibold text-white text-sm lg:text-base"
+                        >{categoryName}</span
+                    >
+                </div>
+                <h1
+                    class="font-extrabold text-[36px] lg:text-[50px] leading-[46px] lg:leading-[60px]"
+                >
+                    Browse <br />
+                    <span class="text-[#0D903A]">{categoryName}s</span>
+                </h1>
+                <p
+                    class="text-base lg:text-lg leading-7 lg:leading-8 text-[#000929]"
+                >
+                    {categoryDescription}
+                </p>
+                <div
+                    class="flex items-center gap-2 text-sm lg:text-base text-gray-600"
+                >
+                    <span class="font-semibold text-[#0D903A]"
+                        >{filteredOffices.length}</span
+                    >
+                    {
+                        filteredOffices.length === 1
+                            ? "office available"
+                            : "offices available"
+                    }
+                </div>
+            </div>
+            <div
+                id="Hero-Image"
+                class="mt-8 lg:mt-0 w-full lg:absolute lg:right-0 lg:top-0 lg:w-[calc(100%-((100%-1130px)/2)-305px)] h-[300px] lg:h-[434px] rounded-[30px] lg:rounded-bl-[40px] overflow-hidden"
+            >
+                <Image
+                    src={bannerImage}
+                    class="w-full h-full object-cover"
+                    alt="hero background"
+                />
+            </div>
+        </section>
+    </header>
+
+    <!-- Offices Grid -->
+    <section class="w-full max-w-screen-xl mx-auto px-4 my-10 lg:my-[70px]">
+        {
+            filteredOffices.length > 0 ? (
+                <>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px]">
+                        {filteredOffices.map((office) => (
+                            <OfficeCard office={office} />
+                        ))}
+                    </div>
+                </>
+            ) : (
+                <div class="flex flex-col items-center justify-center py-20 gap-4">
+                    <p class="text-2xl text-gray-500 font-semibold">
+                        No offices found in this category
+                    </p>
+                    <p class="text-lg text-gray-400">
+                        Please check back later for new listings
+                    </p>
+                    <a
+                        href="/categories"
+                        class="mt-4 px-6 py-3 bg-[#0D903A] text-white rounded-full font-semibold hover:bg-[#096b2b] transition-colors duration-300"
+                    >
+                        Back to Categories
+                    </a>
+                </div>
+            )
+        }
+    </section>
+</BaseLayout>

@@ -5,7 +5,12 @@ import offices from "../data/offices.json";
 import { Image } from "astro:assets";
 import bannerImage from "../assets/images/backgrounds/banner.webp";
 
-const title = "Browse Offices - FirstOffice";
+// Get search query from URL parameter
+const searchQuery = Astro.url.searchParams.get("q") || "";
+
+const title = searchQuery
+    ? `Search: ${searchQuery} - FirstOffice`
+    : "Browse Offices - FirstOffice";
 ---
 
 <BaseLayout title={title}>
@@ -121,8 +126,9 @@ const title = "Browse Offices - FirstOffice";
     </section>
 </BaseLayout>
 
-<script define:vars={{ offices }}>
+<script define:vars={{ offices, searchQuery }}>
     window.officeData = offices;
+    window.initialSearchQuery = searchQuery;
 </script>
 
 <script>
@@ -141,6 +147,38 @@ const title = "Browse Offices - FirstOffice";
     });
 
     if (searchInput && initialMsg && noResultsMsg) {
+        // Read query from URL parameters (client-side)
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryFromUrl = urlParams.get("q") || "";
+
+        // Auto-search if query parameter exists
+        if (queryFromUrl && queryFromUrl.length > 0) {
+            // Set the input value
+            (searchInput as HTMLInputElement).value = queryFromUrl;
+
+            const query = queryFromUrl;
+            initialMsg.classList.add("hidden");
+
+            const results = fuse.search(query);
+
+            if (results.length === 0) {
+                noResultsMsg.classList.remove("hidden");
+                allCards.forEach((card) => card.classList.add("hidden"));
+            } else {
+                noResultsMsg.classList.add("hidden");
+                const matchedSlugs = new Set(results.map((r) => r.item.slug));
+
+                allCards.forEach((card) => {
+                    const slug = card.getAttribute("data-slug");
+                    if (slug && matchedSlugs.has(slug)) {
+                        card.classList.remove("hidden");
+                    } else {
+                        card.classList.add("hidden");
+                    }
+                });
+            }
+        }
+
         searchInput.addEventListener("input", (e) => {
             const target = e.target as HTMLInputElement;
             const query = target.value.trim();

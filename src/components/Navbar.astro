@@ -20,14 +20,32 @@ import logo from "../assets/images/logos/logo.svg";
         <!-- Navigation Links -->
         <div
             id="nav-links"
-            class="hidden w-full lg:flex lg:w-auto lg:items-center lg:gap-[50px] mt-4 lg:mt-0"
+            class="hidden w-full lg:flex lg:w-auto lg:items-center lg:gap-[30px] mt-4 lg:mt-0"
         >
-            <ul
-                class="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-[50px] w-full lg:w-fit"
+            <!-- Search Bar (Mobile & Desktop) -->
+            <form
+                id="navbar-search-form"
+                action="/browse"
+                method="get"
+                class="w-full lg:w-auto"
             >
-                <li>
-                    <a href="/browse">Browse</a>
-                </li>
+                <div class="relative flex items-center">
+                    <Icon
+                        name="lucide:search"
+                        class="absolute left-4 w-5 h-5 text-gray-400 pointer-events-none"
+                    />
+                    <input
+                        type="text"
+                        name="q"
+                        placeholder="Search offices..."
+                        class="w-full lg:w-[280px] h-[45px] pl-11 pr-4 rounded-full border border-[#E0DEF7] bg-white text-sm text-[#000929] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0D903A] focus:border-transparent transition-all"
+                    />
+                </div>
+            </form>
+
+            <ul
+                class="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-[30px] w-full lg:w-fit"
+            >
                 <li>
                     <a href="/popular">Popular</a>
                 </li>
@@ -39,7 +57,9 @@ import logo from "../assets/images/logos/logo.svg";
                 </li>
             </ul>
             <a
-                href="#"
+                href="https://wa.me/6281234567899?text=Hello%2C%20I%20would%20like%20to%20know%20how%20to%20rent%20an%20office%20at%20FirstOffice."
+                target="_blank"
+                rel="noopener noreferrer"
                 class="flex items-center gap-[10px] rounded-full border border-[#000929] py-3 px-5 mt-4 lg:mt-0 w-fit"
             >
                 <Icon name="lucide:phone" class="w-6 h-6" />

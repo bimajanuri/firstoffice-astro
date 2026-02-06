@@ -14,10 +14,14 @@ FirstOffice adalah website yang memungkinkan pengguna untuk menjelajahi berbagai
 
 ### Pencarian & Katalog
 - 🏢 Katalog kantor dengan berbagai kategori
-- 🔍 Fitur pencarian dengan fuzzy search menggunakan Fuse.js
+- 🔍 **Navbar Search Bar** - Search bar terintegrasi di navigation bar (desktop & mobile)
+- 🔗 **Query Parameter Auto-Fill** - URL dengan query parameter otomatis mengisi search dan menampilkan hasil
+- 📱 **Mobile-Ready Search** - Search bar tersedia di semua ukuran layar
+- 🎯 Fuzzy search menggunakan Fuse.js untuk hasil yang akurat
 - 📍 Filter berdasarkan lokasi/kota
 - ⭐ Halaman office populer
 - 🏷️ Halaman categories (Serviced, Virtual, Shell & Core, Managed)
+- 🔗 Shareable search URLs - Simpan dan bagikan hasil pencarian via URL
 
 ### Booking System
 - 📋 Detail booking dengan informasi lengkap
@@ -42,6 +46,48 @@ FirstOffice adalah website yang memungkinkan pengguna untuk menjelajahi berbagai
 - **Search**: Fuse.js v7.1.0
 - **Carousel**: Swiper v12.1.0
 - **Language**: TypeScript
+
+## 🔍 Navbar Search Bar
+
+Project ini dilengkapi dengan **integrated search bar** yang terintegrasi langsung di navigation bar untuk pengalaman pencarian yang seamless.
+
+### Fitur Search Bar
+
+- ✅ **Desktop & Mobile Support** - Search bar tersedia di semua ukuran layar
+- ✅ **Auto-Population** - Query parameter dari URL otomatis mengisi search bar
+- ✅ **Instant Results** - Hasil pencarian langsung ditampilkan tanpa refresh
+- ✅ **Shareable URLs** - Hasil pencarian dapat dibagikan via URL
+- ✅ **Fuzzy Search** - Menggunakan Fuse.js untuk hasil yang akurat
+
+### Cara Kerja
+
+1. **Dari Navbar**: Ketik query di search bar navbar → tekan Enter
+2. **Redirect**: Otomatis redirect ke `/browse?q=your-query`
+3. **Auto-Fill**: Search bar di browse page terisi otomatis dengan query
+4. **Display Results**: Hasil filtering langsung ditampilkan
+
+### Contoh Penggunaan
+
+```
+Navbar Search: "jakarta"
+       ↓
+Redirect: /browse?q=jakarta
+       ↓
+Browse Page: Search input = "jakarta" + 36 hasil ditampilkan
+```
+
+### URL Format
+
+```
+/browse?q=office          # Search "office"
+/browse?q=jakarta         # Search "jakarta"
+/browse?q=virtual+office  # Search "virtual office"
+```
+
+URL ini dapat:
+- Di-bookmark untuk quick access
+- Dibagikan ke user lain
+- Disimpan dalam browser history
 
 ## 🎨 Icon System
 
@@ -98,6 +144,7 @@ Berikut adalah mapping icon yang digunakan di project:
 | Lucide Icon | Digunakan Di | Keterangan |
 |------------|-------------|-----------|
 | `lucide:star` | OfficeCard, Office Detail | Rating bintang |
+| `lucide:search` | **Navbar, Browse Page** | **Search icon** |
 | `lucide:map-pin` | OfficeCard, Office Detail, Booking Info | Lokasi |
 | `lucide:clock` | OfficeCard | Durasi |
 | `lucide:wifi` | OfficeCard | Fasilitas WiFi |
@@ -262,9 +309,11 @@ firstoffice-astro/
 | Route | Deskripsi |
 |-------|----------|
 | `/` | Homepage dengan hero, popular offices, dan cities |
-| `/browse` | Browse semua kantor dengan search dan filter |
+| `/browse` | Browse semua kantor dengan **navbar search integration** dan auto-search dari query parameter |
+| `/browse?q=jakarta` | Browse dengan query parameter - otomatis terisi dan menampilkan hasil |
 | `/popular` | Daftar kantor populer |
 | `/categories` | Kantor dikelompokkan berdasarkan kategori |
+| `/categories/[slug]` | Daftar kantor berdasarkan kategori tertentu |
 | `/my-booking` | Halaman My Booking dengan search dan list |
 | `/office/[slug]` | Detail office dengan galeri dan informasi lengkap |
 | `/city/[slug]` | Daftar kantor berdasarkan kota |
@@ -361,6 +410,22 @@ Pastikan semua dependencies sudah terinstall dengan menjalankan `npm install`
 
 ### Swiper tidak bekerja
 Pastikan client-side script sudah dimuat dengan benar. Gunakan `<script>` tag dengan `is:inline` atau client directives.
+
+### Search tidak auto-populate dari URL parameter
+Jika search bar tidak terisi otomatis saat mengakses `/browse?q=query`:
+1. Clear browser cache dan reload
+2. Restart dev server:
+   ```bash
+   pkill -f 'vite'
+   npm run dev
+   ```
+3. Check browser console untuk error Fuse.js atau JavaScript
+
+### Vite 504 Error (Outdated Optimize Dep)
+Jika muncul error 504 untuk dependencies seperti `fuse.js`:
+1. Stop dev server (Ctrl+C)
+2. Hapus folder `.astro/` dan `node_modules/.vite/`
+3. Restart dev server dengan `npm run dev`
 
 ### Build error
 Hapus folder `.astro/` dan `node_modules/`, kemudian install ulang dependencies.

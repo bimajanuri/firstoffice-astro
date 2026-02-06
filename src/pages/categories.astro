@@ -22,22 +22,26 @@ const managedOffices = offices.filter(
 const categories = [
     {
         title: "Serviced Office",
+        slug: "serviced-office",
         description: "Ready-to-use offices with all amenities included.",
         data: servicedOffices,
     },
     {
         title: "Virtual Office",
+        slug: "virtual-office",
         description:
             "Professional address and services without physical space.",
         data: virtualOffices,
     },
     {
         title: "Shell and Core",
+        slug: "shell-and-core",
         description: "Unfurnished spaces ready for your custom fit-out.",
         data: shellAndCoreOffices,
     },
     {
         title: "Managed Office",
+        slug: "managed-office",
         description: "Tailored workspaces managed by a third-party provider.",
         data: managedOffices,
     },
@@ -105,7 +109,7 @@ const title = "Office Categories - FirstOffice";
                             </p>
                         </div>
                         <a
-                            href="#"
+                            href={`/categories/${category.slug}`}
                             class="hidden sm:block font-bold text-base text-[#0D903A] hover:underline"
                         >
                             View All {category.title}s
@@ -124,7 +128,7 @@ const title = "Office Categories - FirstOffice";
                         )}
                     </div>
                     <a
-                        href="#"
+                        href={`/categories/${category.slug}`}
                         class="sm:hidden w-full text-center font-bold text-base text-[#0D903A] mt-2"
                     >
                         View All {category.title}s

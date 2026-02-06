@@ -1,0 +1,307 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { Icon } from "astro-icon/components";
+
+const title = "Help Center - FirstOffice";
+
+// Popular topics data
+const popularTopics = [
+    {
+        icon: "lucide:calendar-check",
+        title: "Booking Process",
+        description: "Learn how to book your perfect office space",
+        color: "bg-blue-50",
+        iconColor: "text-blue-600",
+    },
+    {
+        icon: "lucide:credit-card",
+        title: "Payment Methods",
+        description: "Understand our payment options and process",
+        color: "bg-green-50",
+        iconColor: "text-green-600",
+    },
+    {
+        icon: "lucide:building-2",
+        title: "Office Types",
+        description: "Explore different office categories we offer",
+        color: "bg-purple-50",
+        iconColor: "text-purple-600",
+    },
+    {
+        icon: "lucide:user-circle",
+        title: "Account Settings",
+        description: "Managing your account and preferences",
+        color: "bg-orange-50",
+        iconColor: "text-orange-600",
+    },
+];
+
+// FAQ data
+const faqs = [
+    {
+        category: "General",
+        questions: [
+            {
+                q: "What is FirstOffice?",
+                a: "FirstOffice is a modern office space search and booking platform that makes it easy for you to find offices that suit your business needs. We provide various types of office spaces ranging from Serviced Office, Virtual Office, Shell and Core, to Managed Office.",
+            },
+            {
+                q: "How do I search for an office?",
+                a: "You can use the search feature on the Browse page to search for offices by location, category, or office name. We also provide filters to help you find offices that match your needs and budget.",
+            },
+        ],
+    },
+    {
+        category: "Booking Process",
+        questions: [
+            {
+                q: "How do I book an office?",
+                a: "To book an office, select the office you want from the catalog page, then click the 'Book This Office' or 'View Booking Details' button if there is an existing booking. You will be directed to the booking detail page to continue the process.",
+            },
+            {
+                q: "Can I cancel my booking?",
+                a: "Yes, bookings can be cancelled according to our cancellation policy. Please contact our support team via phone or email for the cancellation process. Refund policy will be adjusted based on the cancellation time.",
+            },
+            {
+                q: "How do I check my booking status?",
+                a: "You can check your booking status on the 'My Booking' page. Enter your Booking TRX ID and phone number that you used during booking to view your booking details and status.",
+            },
+        ],
+    },
+    {
+        category: "Payment",
+        questions: [
+            {
+                q: "What payment methods are accepted?",
+                a: "We accept various payment methods including bank transfer, credit card, and e-wallet. All transactions are processed with a secure system to protect your data.",
+            },
+            {
+                q: "When will I receive my invoice?",
+                a: "The invoice will be sent to your email immediately after the payment is successfully verified. You can also download the invoice from your booking detail page.",
+            },
+        ],
+    },
+    {
+        category: "Office Information",
+        questions: [
+            {
+                q: "What facilities are included?",
+                a: "Facilities vary depending on the type and location of the office. Generally includes WiFi, AC, 24/7 access, pantry area, and meeting rooms. Check the office detail page for complete information about available facilities.",
+            },
+            {
+                q: "Can I visit the office before booking?",
+                a: "Of course! We highly recommend doing a site visit before booking. Contact the sales manager listed on the office detail page to schedule a visit.",
+            },
+        ],
+    },
+];
+---
+
+<BaseLayout title={title}>
+    <!-- Hero Section -->
+    <section
+        class="relative bg-gradient-to-br from-[#0D903A] to-[#096b2b] py-16 lg:py-24"
+    >
+        <div class="container max-w-[1130px] mx-auto px-4">
+            <div class="flex flex-col items-center text-center gap-6">
+                <h1
+                    class="font-bold text-3xl lg:text-5xl text-white leading-tight"
+                >
+                    How Can We Help You?
+                </h1>
+                <p class="text-lg lg:text-xl text-white/90 max-w-2xl">
+                    Find answers to your questions, learn how to use our
+                    platform, or get in touch with our support team
+                </p>
+
+                <!-- Search Bar -->
+                <div class="w-full max-w-2xl mt-4">
+                    <div class="relative">
+                        <input
+                            type="text"
+                            placeholder="Search for help topics..."
+                            class="w-full px-6 py-4 lg:py-5 pr-14 rounded-full border-2 border-white/20 bg-white/10 backdrop-blur-sm text-white placeholder-white/60 focus:outline-none focus:border-white/40 transition-all duration-300"
+                        />
+                        <button
+                            class="absolute right-2 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white text-[#0D903A] hover:bg-white/90 transition-all duration-300"
+                        >
+                            <Icon name="lucide:search" class="w-5 h-5" />
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Topics -->
+    <section class="py-16 lg:py-20 bg-[#F7F7FD]">
+        <div class="container max-w-[1130px] mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="font-bold text-2xl lg:text-4xl mb-3">
+                    Popular Topics
+                </h2>
+                <p class="text-lg text-gray-600">
+                    Quick access to commonly searched help topics
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {
+                    popularTopics.map((topic) => (
+                        <div
+                            class={`${topic.color} rounded-[20px] p-6 hover:shadow-lg transition-all duration-300 cursor-pointer group`}
+                        >
+                            <div
+                                class={`w-14 h-14 ${topic.iconColor} bg-white rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}
+                            >
+                                <Icon name={topic.icon} class="w-7 h-7" />
+                            </div>
+                            <h3 class="font-bold text-xl mb-2">
+                                {topic.title}
+                            </h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                {topic.description}
+                            </p>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 lg:py-20">
+        <div class="container max-w-[1130px] mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="font-bold text-2xl lg:text-4xl mb-3">
+                    Frequently Asked Questions
+                </h2>
+                <p class="text-lg text-gray-600">
+                    Find answers to common questions about our services
+                </p>
+            </div>
+
+            <div class="max-w-4xl mx-auto space-y-8">
+                {
+                    faqs.map((category, categoryIndex) => (
+                        <div>
+                            <h3 class="font-bold text-xl lg:text-2xl mb-4 text-[#000929]">
+                                {category.category}
+                            </h3>
+                            <div class="space-y-3">
+                                {category.questions.map((faq, faqIndex) => (
+                                    <details class="group bg-white rounded-[20px] border border-[#E0DEF7] overflow-hidden hover:shadow-md transition-all duration-300">
+                                        <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                                            <span class="font-semibold text-lg pr-4">
+                                                {faq.q}
+                                            </span>
+                                            <Icon
+                                                name="lucide:chevron-down"
+                                                class="w-5 h-5 text-gray-500 flex-shrink-0 group-open:rotate-180 transition-transform duration-300"
+                                            />
+                                        </summary>
+                                        <div class="px-6 pb-6 pt-0">
+                                            <p class="text-gray-600 leading-relaxed">
+                                                {faq.a}
+                                            </p>
+                                        </div>
+                                    </details>
+                                ))}
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Support -->
+    <section class="py-16 lg:py-20 bg-[#F7F7FD]">
+        <div class="container max-w-[1130px] mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="font-bold text-2xl lg:text-4xl mb-3">
+                    Still Need Help?
+                </h2>
+                <p class="text-lg text-gray-600">
+                    Our support team is here to assist you
+                </p>
+            </div>
+
+            <div
+                class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto"
+            >
+                <!-- Phone Support -->
+                <div
+                    class="bg-white rounded-[20px] p-8 text-center hover:shadow-lg transition-all duration-300"
+                >
+                    <div
+                        class="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4"
+                    >
+                        <Icon
+                            name="lucide:phone"
+                            class="w-8 h-8 text-[#0D903A]"
+                        />
+                    </div>
+                    <h3 class="font-bold text-xl mb-2">Phone Support</h3>
+                    <p class="text-gray-600 mb-4">Talk to our team directly</p>
+                    <a
+                        href="tel:+622150100200"
+                        class="text-[#0D903A] font-semibold hover:underline"
+                    >
+                        +62 21 5010 0200
+                    </a>
+                    <p class="text-sm text-gray-500 mt-2">
+                        Mon-Fri: 9AM - 6PM WIB
+                    </p>
+                </div>
+
+                <!-- Email Support -->
+                <div
+                    class="bg-white rounded-[20px] p-8 text-center hover:shadow-lg transition-all duration-300"
+                >
+                    <div
+                        class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4"
+                    >
+                        <Icon
+                            name="lucide:mail"
+                            class="w-8 h-8 text-blue-600"
+                        />
+                    </div>
+                    <h3 class="font-bold text-xl mb-2">Email Support</h3>
+                    <p class="text-gray-600 mb-4">Send us your questions</p>
+                    <a
+                        href="mailto:support@firstoffice.id"
+                        class="text-blue-600 font-semibold hover:underline"
+                    >
+                        support@firstoffice.id
+                    </a>
+                    <p class="text-sm text-gray-500 mt-2">
+                        Response within 24 hours
+                    </p>
+                </div>
+
+                <!-- Live Chat -->
+                <div
+                    class="bg-white rounded-[20px] p-8 text-center hover:shadow-lg transition-all duration-300"
+                >
+                    <div
+                        class="w-16 h-16 bg-purple-50 rounded-full flex items-center justify-center mx-auto mb-4"
+                    >
+                        <Icon
+                            name="lucide:message-circle"
+                            class="w-8 h-8 text-purple-600"
+                        />
+                    </div>
+                    <h3 class="font-bold text-xl mb-2">Live Chat</h3>
+                    <p class="text-gray-600 mb-4">Chat with an agent</p>
+                    <button
+                        class="text-purple-600 font-semibold hover:underline"
+                    >
+                        Start Chat
+                    </button>
+                    <p class="text-sm text-gray-500 mt-2">Available 24/7</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</BaseLayout>

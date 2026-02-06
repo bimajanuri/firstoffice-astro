@@ -1,0 +1,449 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { Icon } from "astro-icon/components";
+
+const title = "Terms & Conditions - FirstOffice";
+const lastUpdated = "February 6, 2026";
+---
+
+<BaseLayout title={title}>
+    <!-- Hero Section -->
+    <section
+        class="relative bg-gradient-to-br from-[#0D903A] to-[#096b2b] py-12 lg:py-16"
+    >
+        <div class="container max-w-[1130px] mx-auto px-4">
+            <div class="flex flex-col items-center text-center gap-4">
+                <h1
+                    class="font-bold text-3xl lg:text-5xl text-white leading-tight"
+                >
+                    Terms & Conditions
+                </h1>
+                <p class="text-lg text-white/90">
+                    Last Updated: {lastUpdated}
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="py-16 lg:py-20">
+        <div class="container max-w-[900px] mx-auto px-4">
+            <!-- Introduction -->
+            <div class="mb-12">
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    Welcome to FirstOffice. These Terms and Conditions ("Terms")
+                    govern your use of our office space booking platform and
+                    services. By accessing or using our platform, you agree to
+                    be bound by these Terms.
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    Please read these Terms carefully before using our services.
+                    If you do not agree with any part of these Terms, you should
+                    not use our platform.
+                </p>
+            </div>
+
+            <!-- Terms Sections -->
+            <div class="space-y-10">
+                <!-- Section 1 -->
+                <div>
+                    <h2
+                        class="font-bold text-2xl lg:text-3xl text-[#000929] mb-4 flex items-center gap-3"
+                    >
+                        <Icon
+                            name="lucide:book-open"
+                            class="w-7 h-7 text-[#0D903A]"
+                        />
+                        Acceptance of Terms
+                    </h2>
+                    <div class="space-y-4 text-gray-700 leading-relaxed">
+                        <p>
+                            By creating an account, making a booking, or using
+                            any of our services, you acknowledge that you have
+                            read, understood, and agree to be bound by these
+                            Terms, as well as our Privacy Policy.
+                        </p>
+                        <p>
+                            We reserve the right to modify these Terms at any
+                            time. Your continued use of our platform after any
+                            changes constitutes acceptance of those changes.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section 2 -->
+                <div>
+                    <h2
+                        class="font-bold text-2xl lg:text-3xl text-[#000929] mb-4 flex items-center gap-3"
+                    >
+                        <Icon
+                            name="lucide:users"
+                            class="w-7 h-7 text-[#0D903A]"
+                        />
+                        User Accounts
+                    </h2>
+                    <div class="space-y-4 text-gray-700 leading-relaxed">
+                        <p>
+                            To use certain features of our platform, you must:
+                        </p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>
+                                Provide accurate, current, and complete
+                                information during registration
+                            </li>
+                            <li>
+                                Maintain and promptly update your account
+                                information
+                            </li>
+                            <li>
+                                Maintain the security of your account
+                                credentials
+                            </li>
+                            <li>
+                                Accept responsibility for all activities under
+                                your account
+                            </li>
+                            <li>
+                                Notify us immediately of any unauthorized use of
+                                your account
+                            </li>
+                        </ul>
+                        <p>
+                            You must be at least 18 years old to create an
+                            account and use our services. You represent and
+                            warrant that you have the legal capacity to enter
+                            into these Terms.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section 3 -->
+                <div>
+                    <h2
+                        class="font-bold text-2xl lg:text-3xl text-[#000929] mb-4 flex items-center gap-3"
+                    >
+                        <Icon
+                            name="lucide:building-2"
+                            class="w-7 h-7 text-[#0D903A]"
+                        />
+                        Office Space Bookings
+                    </h2>
+                    <div class="space-y-4 text-gray-700 leading-relaxed">
+                        <p>
+                            <strong>Booking Process:</strong> All bookings are subject
+                            to availability and confirmation. We reserve the right
+                            to refuse or cancel any booking at our discretion.
+                        </p>
+                        <p>
+                            <strong>Booking Confirmation:</strong> A booking is only
+                            confirmed when you receive a confirmation email from us
+                            with your booking details and transaction ID.
+                        </p>
+                        <p>
+                            <strong>Accuracy of Information:</strong> You are responsible
+                            for ensuring that all booking information is accurate,
+                            including dates, office type, and requirements.
+                        </p>
+                        <p>
+                            <strong>Cancellation Policy:</strong> Cancellations must
+                            be made in accordance with our cancellation policy. Cancellation
+                            fees may apply depending on the timing of your cancellation.
+                        </p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>
+                                More than 7 days before booking date: Full
+                                refund
+                            </li>
+                            <li>3-7 days before booking date: 50% refund</li>
+                            <li>
+                                Less than 3 days before booking date: No refund
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Section 4 -->
+                <div>
+                    <h2
+                        class="font-bold text-2xl lg:text-3xl text-[#000929] mb-4 flex items-center gap-3"
+                    >
+                        <Icon
+                            name="lucide:credit-card"
+                            class="w-7 h-7 text-[#0D903A]"
+                        />
+                        Payment Terms
+                    </h2>
+                    <div class="space-y-4 text-gray-700 leading-relaxed">
+                        <p>
+                            <strong>Pricing:</strong> All prices are listed in Indonesian
+                            Rupiah (IDR) and are subject to change without notice.
+                            The price quoted at the time of booking will be honored.
+                        </p>
+                        <p>
+                            <strong>Payment Methods:</strong> We accept various payment
+                            methods including bank transfer, credit cards, and e-wallets.
+                            Payment must be received before your booking is confirmed.
+                        </p>
+                        <p>
+                            <strong>Failed Payments:</strong> If payment fails or
+                            is declined, your booking may be cancelled automatically.
+                        </p>
+                        <p>
+                            <strong>Refunds:</strong> Refunds, if applicable, will
+                            be processed within 7-14 business days to your original
+                            payment method.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section 5 -->
+                <div>
+                    <h2
+                        class="font-bold text-2xl lg:text-3xl text-[#000929] mb-4 flex items-center gap-3"
+                    >
+                        <Icon
+                            name="lucide:alert-circle"
+                            class="w-7 h-7 text-[#0D903A]"
+                        />
+                        User Conduct
+                    </h2>
+                    <div class="space-y-4 text-gray-700 leading-relaxed">
+                        <p>You agree NOT to:</p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>
+                                Use our platform for any unlawful or fraudulent
+                                purpose
+                            </li>
+                            <li>Violate any applicable laws or regulations</li>
+                            <li>
+                                Interfere with or disrupt our platform or
+                                servers
+                            </li>
+                            <li>
+                                Attempt to gain unauthorized access to any part
+                                of our platform
+                            </li>
+                            <li>
+                                Use automated systems to access our platform
+                                without permission
+                            </li>
+                            <li>
+                                Harass, abuse, or harm other users or office
+                                providers
+                            </li>
+                            <li>
+                                Post or transmit any harmful, offensive, or
+                                illegal content
+                            </li>
+                        </ul>
+                        <p>
+                            Violation of these conduct rules may result in
+                            immediate termination of your account and legal
+                            action if necessary.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section 6 -->
+                <div>
+                    <h2
+                        class="font-bold text-2xl lg:text-3xl text-[#000929] mb-4 flex items-center gap-3"
+                    >
+                        <Icon
+                            name="lucide:shield"
+                            class="w-7 h-7 text-[#0D903A]"
+                        />
+                        Limitation of Liability
+                    </h2>
+                    <div class="space-y-4 text-gray-700 leading-relaxed">
+                        <p>
+                            <strong>Platform Availability:</strong> We strive to maintain
+                            continuous availability of our platform, but we do not
+                            guarantee uninterrupted or error-free service.
+                        </p>
+                        <p>
+                            <strong>Third-Party Services:</strong> We are not responsible
+                            for the quality, safety, or legality of office spaces
+                            listed on our platform. Our role is to facilitate connections
+                            between users and office providers.
+                        </p>
+                        <p>
+                            <strong>Damages:</strong> To the fullest extent permitted
+                            by law, FirstOffice shall not be liable for any indirect,
+                            incidental, special, consequential, or punitive damages
+                            arising from your use of our services.
+                        </p>
+                        <p>
+                            <strong>Maximum Liability:</strong> Our total liability
+                            to you for any claims arising from these Terms or your
+                            use of our services shall not exceed the amount you paid
+                            us in the twelve (12) months preceding the claim.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section 7 -->
+                <div>
+                    <h2
+                        class="font-bold text-2xl lg:text-3xl text-[#000929] mb-4 flex items-center gap-3"
+                    >
+                        <Icon
+                            name="lucide:file-text"
+                            class="w-7 h-7 text-[#0D903A]"
+                        />
+                        Intellectual Property
+                    </h2>
+                    <div class="space-y-4 text-gray-700 leading-relaxed">
+                        <p>
+                            All content on our platform, including but not
+                            limited to text, graphics, logos, images, software,
+                            and compilation, is the property of FirstOffice or
+                            its content suppliers and is protected by copyright,
+                            trademark, and other intellectual property laws.
+                        </p>
+                        <p>
+                            You may not reproduce, distribute, modify, create
+                            derivative works of, publicly display, or exploit
+                            any content from our platform without our express
+                            written permission.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section 8 -->
+                <div>
+                    <h2
+                        class="font-bold text-2xl lg:text-3xl text-[#000929] mb-4 flex items-center gap-3"
+                    >
+                        <Icon
+                            name="lucide:scale"
+                            class="w-7 h-7 text-[#0D903A]"
+                        />
+                        Dispute Resolution
+                    </h2>
+                    <div class="space-y-4 text-gray-700 leading-relaxed">
+                        <p>
+                            <strong>Governing Law:</strong> These Terms shall be governed
+                            by and construed in accordance with the laws of Indonesia.
+                        </p>
+                        <p>
+                            <strong>Dispute Settlement:</strong> Any disputes arising
+                            from these Terms or your use of our services shall first
+                            be attempted to be resolved through good faith negotiations.
+                        </p>
+                        <p>
+                            <strong>Jurisdiction:</strong> If negotiations fail, disputes
+                            shall be subject to the exclusive jurisdiction of the
+                            courts of Jakarta, Indonesia.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section 9 -->
+                <div>
+                    <h2
+                        class="font-bold text-2xl lg:text-3xl text-[#000929] mb-4 flex items-center gap-3"
+                    >
+                        <Icon
+                            name="lucide:x-circle"
+                            class="w-7 h-7 text-[#0D903A]"
+                        />
+                        Termination
+                    </h2>
+                    <div class="space-y-4 text-gray-700 leading-relaxed">
+                        <p>
+                            We reserve the right to suspend or terminate your
+                            access to our platform at any time, without notice,
+                            for conduct that we believe violates these Terms or
+                            is harmful to other users, us, or third parties, or
+                            for any other reason at our sole discretion.
+                        </p>
+                        <p>
+                            Upon termination, your right to use our services
+                            will immediately cease. Any provisions of these
+                            Terms that by their nature should survive
+                            termination shall survive.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section 10 -->
+                <div>
+                    <h2
+                        class="font-bold text-2xl lg:text-3xl text-[#000929] mb-4 flex items-center gap-3"
+                    >
+                        <Icon
+                            name="lucide:mail"
+                            class="w-7 h-7 text-[#0D903A]"
+                        />
+                        Contact Information
+                    </h2>
+                    <div class="space-y-4 text-gray-700 leading-relaxed">
+                        <p>
+                            If you have questions about these Terms or need to
+                            contact us regarding any matter related to our
+                            services, please reach out:
+                        </p>
+                        <div
+                            class="bg-[#F7F7FD] rounded-[20px] p-6 space-y-3 border border-[#E0DEF7]"
+                        >
+                            <div class="flex items-start gap-3">
+                                <Icon
+                                    name="lucide:mail"
+                                    class="w-5 h-5 text-[#0D903A] mt-1 flex-shrink-0"
+                                />
+                                <div>
+                                    <p class="font-semibold mb-1">Email</p>
+                                    <a
+                                        href="mailto:support@firstoffice.id"
+                                        class="text-[#0D903A] hover:underline"
+                                    >
+                                        support@firstoffice.id
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <Icon
+                                    name="lucide:phone"
+                                    class="w-5 h-5 text-[#0D903A] mt-1 flex-shrink-0"
+                                />
+                                <div>
+                                    <p class="font-semibold mb-1">Phone</p>
+                                    <a
+                                        href="tel:+622150100200"
+                                        class="text-[#0D903A] hover:underline"
+                                    >
+                                        +62 21 5010 0200
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <Icon
+                                    name="lucide:map-pin"
+                                    class="w-5 h-5 text-[#0D903A] mt-1 flex-shrink-0"
+                                />
+                                <div>
+                                    <p class="font-semibold mb-1">Address</p>
+                                    <p class="text-gray-700">
+                                        FirstOffice Indonesia<br />
+                                        Jl. Sudirman No. 123<br />
+                                        Jakarta 12345, Indonesia
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Note -->
+            <div class="mt-12 pt-8 border-t border-gray-200">
+                <p class="text-sm text-gray-500 text-center">
+                    By using FirstOffice services, you acknowledge that you have
+                    read, understood, and agree to be bound by these Terms and
+                    Conditions. These terms are effective as of {lastUpdated}.
+                </p>
+            </div>
+        </div>
+    </section>
+</BaseLayout>
