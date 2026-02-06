@@ -1,7 +1,5 @@
 ---
-import { Image } from "astro:assets";
-import receiptIcon from "../assets/images/icons/receipt-text-black.svg";
-import callBlackIcon from "../assets/images/icons/call-black.svg";
+import { Icon } from "astro-icon/components";
 import bookings from "../data/bookings.json";
 ---
 
@@ -15,7 +13,7 @@ import bookings from "../data/bookings.json";
             <div
                 class="flex items-center rounded-full border border-[#000929] px-5 gap-[10px] transition-all duration-300 focus-within:ring-2 focus-within:ring-[#0D903A]"
             >
-                <Image src={receiptIcon} class="w-6 h-6" alt="icon" />
+                <Icon name="lucide:receipt" class="w-6 h-6" />
                 <input
                     type="text"
                     name="trxId"
@@ -31,7 +29,7 @@ import bookings from "../data/bookings.json";
             <div
                 class="flex items-center rounded-full border border-[#000929] px-5 gap-[10px] transition-all duration-300 focus-within:ring-2 focus-within:ring-[#0D903A]"
             >
-                <Image src={callBlackIcon} class="w-6 h-6" alt="icon" />
+                <Icon name="lucide:phone" class="w-6 h-6" />
                 <input
                     type="tel"
                     name="phone"

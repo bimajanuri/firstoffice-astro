@@ -1,11 +1,6 @@
 ---
 import { Image } from "astro:assets";
-// Import icons
-import clockIcon from "../assets/images/icons/clock.svg";
-import locationIcon from "../assets/images/icons/location.svg";
-import starIcon from "../assets/images/icons/Star 1.svg";
-import wifiIcon from "../assets/images/icons/wifi.svg";
-import securityIcon from "../assets/images/icons/security-user.svg";
+import { Icon } from "astro-icon/components";
 
 const { office } = Astro.props;
 
@@ -50,28 +45,28 @@ const imageSrc = images[imagePath]();
                 </p>
                 <div class="flex items-center justify-end gap-[6px]">
                     <p class="font-semibold">{office.duration} days</p>
-                    <Image src={clockIcon} class="w-6 h-6" alt="icon" />
+                    <Icon name="lucide:clock" class="w-6 h-6" />
                 </div>
             </div>
             <hr class="border-[#F6F5FD]" />
             <div class="flex items-center justify-between">
                 <div class="flex items-center justify-end gap-[6px]">
-                    <Image src={locationIcon} class="w-6 h-6" alt="icon" />
+                    <Icon name="lucide:map-pin" class="w-6 h-6" />
                     <p class="font-semibold">{office.location}</p>
                 </div>
                 <div class="flex items-center justify-end gap-[6px]">
                     <p class="font-semibold">{office.rating}/5</p>
-                    <Image src={starIcon} class="w-6 h-6" alt="icon" />
+                    <Icon name="lucide:star" class="w-6 h-6" />
                 </div>
             </div>
             <hr class="border-[#F6F5FD]" />
             <div class="flex items-center justify-between">
                 <div class="flex items-center justify-end gap-[6px]">
-                    <Image src={wifiIcon} class="w-6 h-6" alt="icon" />
+                    <Icon name="lucide:wifi" class="w-6 h-6" />
                     <p class="font-semibold">Fast-Connection</p>
                 </div>
                 <div class="flex items-center justify-end gap-[6px]">
-                    <Image src={securityIcon} class="w-6 h-6" alt="icon" />
+                    <Icon name="lucide:user-check" class="w-6 h-6" />
                     <p class="font-semibold">Secure 100%</p>
                 </div>
             </div>

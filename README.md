@@ -43,6 +43,137 @@ FirstOffice adalah website yang memungkinkan pengguna untuk menjelajahi berbagai
 - **Carousel**: Swiper v12.1.0
 - **Language**: TypeScript
 
+## 🎨 Icon System
+
+Project ini menggunakan [Astro Icon](https://www.astroicon.dev/) dengan icon set [Lucide](https://lucide.dev/) dari Iconify untuk sistem icon yang optimal dan maintainable.
+
+### Mengapa Astro Icon?
+
+- ✅ **Bundle lebih kecil**: Icon dimuat on-demand dari Iconify
+- ✅ **Konsisten**: Semua icon dari design system yang sama (Lucide)
+- ✅ **Mudah digunakan**: Hanya perlu nama icon, tanpa perlu import SVG
+- ✅ **Fleksibel**: Akses ke 200,000+ icon dari berbagai icon sets
+- ✅ **Performa tinggi**: SVG di-inline otomatis, tanpa request tambahan
+
+### Setup
+
+Icon sudah dikonfigurasi di `astro.config.mjs`:
+
+```js
+import icon from 'astro-icon';
+
+export default defineConfig({
+  integrations: [tailwind(), icon()],
+});
+```
+
+Icon set Lucide sudah terinstall via:
+```bash
+npm install @iconify-json/lucide
+```
+
+### Penggunaan
+
+Import Icon component dan gunakan dengan nama icon dari Lucide:
+
+```astro
+---
+import { Icon } from "astro-icon/components";
+---
+
+<!-- Icon dasar -->
+<Icon name="lucide:star" class="w-6 h-6" />
+
+<!-- Icon dengan warna -->
+<Icon name="lucide:phone" class="w-6 h-6 text-green-600" />
+
+<!-- Icon dengan warna white untuk background gelap -->
+<Icon name="lucide:crown" class="w-5 h-5 text-white" />
+```
+
+### Icon yang Digunakan
+
+Berikut adalah mapping icon yang digunakan di project:
+
+| Lucide Icon | Digunakan Di | Keterangan |
+|------------|-------------|-----------|
+| `lucide:star` | OfficeCard, Office Detail | Rating bintang |
+| `lucide:map-pin` | OfficeCard, Office Detail, Booking Info | Lokasi |
+| `lucide:clock` | OfficeCard | Durasi |
+| `lucide:wifi` | OfficeCard | Fasilitas WiFi |
+| `lucide:user-check` | OfficeCard, Homepage, Office Detail | Privacy/Security |
+| `lucide:phone` | Navbar, BookingForm, Booking Info, Office Detail | Kontak telepon |
+| `lucide:menu` | Navbar | Mobile menu hamburger |
+| `lucide:receipt` | BookingForm | Booking TRX ID |
+| `lucide:calendar` | BookingInformation | Tanggal booking |
+| `lucide:shield-check` | BookingInformation | Privacy badge |
+| `lucide:coffee` | Homepage, Office Detail | Snacks/amenities |
+| `lucide:users` | Homepage, Office Detail | Tim/akses |
+| `lucide:crown` | Homepage | Badge achievement |
+| `lucide:sliders-horizontal` | Homepage, Office Detail | Explore/view details |
+| `lucide:video` | Homepage | Watch story |
+| `lucide:box` | Homepage, Office Detail | Fleksibilitas |
+| `lucide:trophy` | Homepage, Office Detail | Penghargaan |
+| `lucide:trending-up` | Homepage, Office Detail | Business growth |
+| `lucide:check-circle` | Office Detail | Verified benefits |
+| `lucide:bookmark-plus` | Office Detail | Save for later |
+| `lucide:message-circle` | Office Detail | Chat contact |
+
+### Mencari Icon Baru
+
+1. Kunjungi [Lucide Icon Set](https://lucide.dev/icons/)
+2. Cari icon yang diinginkan
+3. Gunakan format `lucide:nama-icon`
+
+Contoh:
+- Icon "home" → `lucide:home`
+- Icon "user" → `lucide:user`
+- Icon "settings" → `lucide:settings`
+
+### Customization
+
+**Ukuran**:
+```astro
+<Icon name="lucide:star" class="w-4 h-4" />  <!-- Small -->
+<Icon name="lucide:star" class="w-6 h-6" />  <!-- Medium -->
+<Icon name="lucide:star" class="w-10 h-10" /> <!-- Large -->
+```
+
+**Warna**:
+```astro
+<!-- Menggunakan Tailwind color classes -->
+<Icon name="lucide:phone" class="text-green-600" />
+<Icon name="lucide:star" class="text-yellow-400" />
+<Icon name="lucide:heart" class="text-red-500" />
+```
+
+**Kombinasi**:
+```astro
+<Icon name="lucide:check" class="w-5 h-5 text-green-600" />
+```
+
+### Menggunakan Icon Set Lain
+
+Jika ingin menggunakan icon set selain Lucide, install package Iconify yang sesuai:
+
+```bash
+# Material Design Icons
+npm install @iconify-json/mdi
+
+# Font Awesome
+npm install @iconify-json/fa6-solid
+
+# Heroicons
+npm install @iconify-json/heroicons
+```
+
+Lalu gunakan dengan prefix yang sesuai:
+```astro
+<Icon name="mdi:account" />
+<Icon name="fa6-solid:user" />
+<Icon name="heroicons:home" />
+```
+
 ## 📦 Instalasi
 
 ### Prasyarat

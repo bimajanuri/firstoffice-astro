@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 import logo from "../assets/images/logos/logo.svg";
-import callIcon from "../assets/images/icons/call.svg";
 ---
 
 <nav class="bg-white relative z-50">
@@ -14,19 +14,7 @@ import callIcon from "../assets/images/icons/call.svg";
 
         <!-- Mobile Menu Button -->
         <button id="mobile-menu-btn" class="lg:hidden p-2">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-8 h-8"
-            >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
-            </svg>
+            <Icon name="lucide:menu" class="w-8 h-8" />
         </button>
 
         <!-- Navigation Links -->
@@ -54,7 +42,7 @@ import callIcon from "../assets/images/icons/call.svg";
                 href="#"
                 class="flex items-center gap-[10px] rounded-full border border-[#000929] py-3 px-5 mt-4 lg:mt-0 w-fit"
             >
-                <Image src={callIcon} class="w-6 h-6" alt="icon" />
+                <Icon name="lucide:phone" class="w-6 h-6" />
                 <span class="font-semibold">Contact Us</span>
             </a>
         </div>

@@ -6,11 +6,9 @@ import OfficeCardSkeleton from "../components/OfficeCardSkeleton.astro";
 import cities from "../data/cities.json";
 import offices from "../data/offices.json";
 import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 
 // Hero Assets
-import crownIcon from "../assets/images/icons/crown-white.svg";
-import sliderIcon from "../assets/images/icons/slider-horizontal-white.svg";
-import videoIcon from "../assets/images/icons/video-octagon.svg";
 import bannerImage from "../assets/images/backgrounds/banner.webp";
 
 // Logos
@@ -19,14 +17,6 @@ import libraLogo from "../assets/images/logos/Libra 2.svg";
 import binanceLogo from "../assets/images/logos/Binance logo.svg";
 import facebookLogo from "../assets/images/logos/Facebook 7.svg";
 import microsoftLogo from "../assets/images/logos/Microsoft 6.svg";
-
-// Benefits Icons
-import securityIcon from "../assets/images/icons/security-user.svg";
-import groupIcon from "../assets/images/icons/group.svg";
-import cubeIcon from "../assets/images/icons/3dcube.svg";
-import cupIcon from "../assets/images/icons/cup.svg";
-import coffeeIcon from "../assets/images/icons/coffee.svg";
-import trendIcon from "../assets/images/icons/home-trend-up.svg";
 
 import "swiper/css";
 
@@ -46,7 +36,7 @@ const title = "FirstOffice - Find Your Dream Office";
                 <div
                     class="flex items-center w-fit rounded-full py-2 px-4 gap-[10px] bg-[#000929]"
                 >
-                    <Image src={crownIcon} class="w-5 h-5" alt="icon" />
+                    <Icon name="lucide:crown" class="w-5 h-5 text-white" />
                     <span class="font-semibold text-white text-sm lg:text-base"
                         >We’ve won top productivity 500 fortunes</span
                     >
@@ -69,10 +59,9 @@ const title = "FirstOffice - Find Your Dream Office";
                         href="#"
                         class="flex items-center justify-center w-full sm:w-auto rounded-full p-[16px_26px] lg:p-[20px_26px] gap-3 bg-[#0D903A]"
                     >
-                        <Image
-                            src={sliderIcon}
-                            class="w-6 h-6 lg:w-[30px] lg:h-[30px]"
-                            alt="icon"
+                        <Icon
+                            name="lucide:sliders-horizontal"
+                            class="w-6 h-6 lg:w-[30px] lg:h-[30px] text-white"
                         />
                         <span
                             class="font-bold text-lg lg:text-xl leading-[30px] text-[#F7F7FD]"
@@ -83,10 +72,9 @@ const title = "FirstOffice - Find Your Dream Office";
                         href="#"
                         class="flex items-center justify-center w-full sm:w-auto rounded-full border border-[#000929] p-[16px_26px] lg:p-[20px_26px] gap-3 bg-white"
                     >
-                        <Image
-                            src={videoIcon}
+                        <Icon
+                            name="lucide:video"
                             class="w-6 h-6 lg:w-[30px] lg:h-[30px]"
-                            alt="icon"
                         />
                         <span
                             class="font-semibold text-lg lg:text-xl leading-[30px]"
@@ -234,11 +222,7 @@ const title = "FirstOffice - Find Your Dream Office";
                 <div
                     class="flex items-center justify-center shrink-0 w-[70px] h-[70px] rounded-[23px] bg-white overflow-hidden"
                 >
-                    <Image
-                        src={securityIcon}
-                        class="w-[34px] h-[34px]"
-                        alt="icon"
-                    />
+                    <Icon name="lucide:user-check" class="w-[34px] h-[34px]" />
                 </div>
                 <div class="flex flex-col gap-[5px]">
                     <p class="font-bold text-lg leading-[27px]">
@@ -254,11 +238,7 @@ const title = "FirstOffice - Find Your Dream Office";
                 <div
                     class="flex items-center justify-center shrink-0 w-[70px] h-[70px] rounded-[23px] bg-white overflow-hidden"
                 >
-                    <Image
-                        src={groupIcon}
-                        class="w-[34px] h-[34px]"
-                        alt="icon"
-                    />
+                    <Icon name="lucide:users" class="w-[34px] h-[34px]" />
                 </div>
                 <div class="flex flex-col gap-[5px]">
                     <p class="font-bold text-lg leading-[27px]">
@@ -274,11 +254,7 @@ const title = "FirstOffice - Find Your Dream Office";
                 <div
                     class="flex items-center justify-center shrink-0 w-[70px] h-[70px] rounded-[23px] bg-white overflow-hidden"
                 >
-                    <Image
-                        src={cubeIcon}
-                        class="w-[34px] h-[34px]"
-                        alt="icon"
-                    />
+                    <Icon name="lucide:box" class="w-[34px] h-[34px]" />
                 </div>
                 <div class="flex flex-col gap-[5px]">
                     <p class="font-bold text-lg leading-[27px]">
@@ -294,7 +270,7 @@ const title = "FirstOffice - Find Your Dream Office";
                 <div
                     class="flex items-center justify-center shrink-0 w-[70px] h-[70px] rounded-[23px] bg-white overflow-hidden"
                 >
-                    <Image src={cupIcon} class="w-[34px] h-[34px]" alt="icon" />
+                    <Icon name="lucide:trophy" class="w-[34px] h-[34px]" />
                 </div>
                 <div class="flex flex-col gap-[5px]">
                     <p class="font-bold text-lg leading-[27px]">
@@ -310,11 +286,7 @@ const title = "FirstOffice - Find Your Dream Office";
                 <div
                     class="flex items-center justify-center shrink-0 w-[70px] h-[70px] rounded-[23px] bg-white overflow-hidden"
                 >
-                    <Image
-                        src={coffeeIcon}
-                        class="w-[34px] h-[34px]"
-                        alt="icon"
-                    />
+                    <Icon name="lucide:coffee" class="w-[34px] h-[34px]" />
                 </div>
                 <div class="flex flex-col gap-[5px]">
                     <p class="font-bold text-lg leading-[27px]">
@@ -330,11 +302,7 @@ const title = "FirstOffice - Find Your Dream Office";
                 <div
                     class="flex items-center justify-center shrink-0 w-[70px] h-[70px] rounded-[23px] bg-white overflow-hidden"
                 >
-                    <Image
-                        src={trendIcon}
-                        class="w-[34px] h-[34px]"
-                        alt="icon"
-                    />
+                    <Icon name="lucide:trending-up" class="w-[34px] h-[34px]" />
                 </div>
                 <div class="flex flex-col gap-[5px]">
                     <p class="font-bold text-lg leading-[27px]">

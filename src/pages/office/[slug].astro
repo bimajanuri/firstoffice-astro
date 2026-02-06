@@ -3,21 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import offices from "../../data/offices.json";
 import bookings from "../../data/bookings.json";
 import { Image } from "astro:assets";
-
-// Icons
-import locationIcon from "../../assets/images/icons/location.svg";
-import starIcon from "../../assets/images/icons/Star 1.svg";
-import securityIcon from "../../assets/images/icons/security-user.svg";
-import cupIcon from "../../assets/images/icons/cup.svg";
-import trendIcon from "../../assets/images/icons/home-trend-up.svg";
-import coffeeIcon from "../../assets/images/icons/coffee.svg";
-import cubeIcon from "../../assets/images/icons/3dcube.svg";
-import groupIcon from "../../assets/images/icons/group.svg";
-import verifyIcon from "../../assets/images/icons/verify.svg";
-import sliderIcon from "../../assets/images/icons/slider-horizontal-white.svg";
-import saveIcon from "../../assets/images/icons/save-add.svg";
-import callIcon from "../../assets/images/icons/call-green.svg";
-import chatIcon from "../../assets/images/icons/chat-green.svg";
+import { Icon } from "astro-icon/components";
 
 // Check photos
 import photo1 from "../../assets/images/photos/photo-1.png";
@@ -129,17 +115,17 @@ const { office, relatedBooking } = Astro.props;
                         {office.name}
                     </h1>
                     <div class="flex items-center gap-[6px] mt-[10px]">
-                        <Image src={locationIcon} class="w-6 h-6" alt="icon" />
+                        <Icon name="lucide:map-pin" class="w-6 h-6" />
                         <p class="font-semibold">{office.location}</p>
                     </div>
                 </div>
                 <div class="flex flex-col gap-[6px]">
                     <div class="flex items-center gap-1">
-                        <Image src={starIcon} class="w-5 h-5" alt="star" />
-                        <Image src={starIcon} class="w-5 h-5" alt="star" />
-                        <Image src={starIcon} class="w-5 h-5" alt="star" />
-                        <Image src={starIcon} class="w-5 h-5" alt="star" />
-                        <Image src={starIcon} class="w-5 h-5" alt="star" />
+                        <Icon name="lucide:star" class="w-5 h-5" />
+                        <Icon name="lucide:star" class="w-5 h-5" />
+                        <Icon name="lucide:star" class="w-5 h-5" />
+                        <Icon name="lucide:star" class="w-5 h-5" />
+                        <Icon name="lucide:star" class="w-5 h-5" />
                     </div>
                     <p class="font-semibold text-left sm:text-right">
                         {office.rating}/5 (19,384)
@@ -155,18 +141,14 @@ const { office, relatedBooking } = Astro.props;
                 class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-[30px]"
             >
                 <div class="flex items-center gap-4">
-                    <Image
-                        src={securityIcon}
-                        class="w-[34px] h-[34px]"
-                        alt="icon"
-                    />
+                    <Icon name="lucide:user-check" class="w-[34px] h-[34px]" />
                     <div class="flex flex-col gap-[2px]">
                         <p class="font-bold text-lg leading-[24px]">Privacy</p>
                         <p class="text-sm leading-[21px]">For Yourself</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-4">
-                    <Image src={cupIcon} class="w-[34px] h-[34px]" alt="icon" />
+                    <Icon name="lucide:trophy" class="w-[34px] h-[34px]" />
                     <div class="flex flex-col gap-[2px]">
                         <p class="font-bold text-lg leading-[24px]">
                             Global Event
@@ -175,11 +157,7 @@ const { office, relatedBooking } = Astro.props;
                     </div>
                 </div>
                 <div class="flex items-center gap-4">
-                    <Image
-                        src={trendIcon}
-                        class="w-[34px] h-[34px]"
-                        alt="icon"
-                    />
+                    <Icon name="lucide:trending-up" class="w-[34px] h-[34px]" />
                     <div class="flex flex-col gap-[2px]">
                         <p class="font-bold text-lg leading-[24px]">
                             Sustainbility
@@ -188,11 +166,7 @@ const { office, relatedBooking } = Astro.props;
                     </div>
                 </div>
                 <div class="flex items-center gap-4">
-                    <Image
-                        src={coffeeIcon}
-                        class="w-[34px] h-[34px]"
-                        alt="icon"
-                    />
+                    <Icon name="lucide:coffee" class="w-[34px] h-[34px]" />
                     <div class="flex flex-col gap-[2px]">
                         <p class="font-bold text-lg leading-[24px]">
                             Extra Snacks
@@ -201,22 +175,14 @@ const { office, relatedBooking } = Astro.props;
                     </div>
                 </div>
                 <div class="flex items-center gap-4">
-                    <Image
-                        src={cubeIcon}
-                        class="w-[34px] h-[34px]"
-                        alt="icon"
-                    />
+                    <Icon name="lucide:box" class="w-[34px] h-[34px]" />
                     <div class="flex flex-col gap-[2px]">
                         <p class="font-bold text-lg leading-[24px]">Compact</p>
                         <p class="text-sm leading-[21px]">Good for Focus</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-4">
-                    <Image
-                        src={groupIcon}
-                        class="w-[34px] h-[34px]"
-                        alt="icon"
-                    />
+                    <Icon name="lucide:users" class="w-[34px] h-[34px]" />
                     <div class="flex flex-col gap-[2px]">
                         <p class="font-bold text-lg leading-[24px]">
                             Free Move
@@ -263,10 +229,9 @@ const { office, relatedBooking } = Astro.props;
                 <hr class="border-[#F6F5FD]" />
                 <div class="flex flex-col gap-5">
                     <div class="flex items-center gap-3">
-                        <Image
-                            src={verifyIcon}
+                        <Icon
+                            name="lucide:check-circle"
                             class="w-[30px] h-[30px]"
-                            alt="icon"
                         />
                         <p class="font-semibold leading-[28px]">
                             Access to the latest learning resources regarding
@@ -274,10 +239,9 @@ const { office, relatedBooking } = Astro.props;
                         </p>
                     </div>
                     <div class="flex items-center gap-3">
-                        <Image
-                            src={verifyIcon}
+                        <Icon
+                            name="lucide:check-circle"
                             class="w-[30px] h-[30px]"
-                            alt="icon"
                         />
                         <p class="font-semibold leading-[28px]">
                             Access to the latest learning resources regarding
@@ -285,10 +249,9 @@ const { office, relatedBooking } = Astro.props;
                         </p>
                     </div>
                     <div class="flex items-center gap-3">
-                        <Image
-                            src={verifyIcon}
+                        <Icon
+                            name="lucide:check-circle"
                             class="w-[30px] h-[30px]"
-                            alt="icon"
                         />
                         <p class="font-semibold leading-[28px]">
                             Access to the latest learning resources regarding
@@ -311,10 +274,9 @@ const { office, relatedBooking } = Astro.props;
                                 href={`/booking/${relatedBooking.bookingTrxId}`}
                                 class="flex items-center justify-center w-full rounded-full p-[16px_26px] gap-3 bg-[#0D903A] font-bold text-[#F7F7FD] hover:bg-[#096b2b] transition-all duration-300"
                             >
-                                <Image
-                                    src={sliderIcon}
-                                    class="w-6 h-6"
-                                    alt="icon"
+                                <Icon
+                                    name="lucide:sliders-horizontal"
+                                    class="w-6 h-6 text-white"
                                 />
                                 <span>View Booking Details</span>
                             </a>
@@ -330,7 +292,7 @@ const { office, relatedBooking } = Astro.props;
                     <button
                         class="flex items-center justify-center w-full rounded-full border border-[#000929] p-[16px_26px] gap-3 bg-white font-semibold"
                     >
-                        <Image src={saveIcon} class="w-6 h-6" alt="icon" />
+                        <Icon name="lucide:bookmark-plus" class="w-6 h-6" />
                         <span>Save for Later</span>
                     </button>
                 </div>
@@ -360,17 +322,15 @@ const { office, relatedBooking } = Astro.props;
                         </div>
                         <div class="flex items-center gap-3">
                             <a href="#">
-                                <Image
-                                    src={callIcon}
-                                    class="w-10 h-10"
-                                    alt="icon"
+                                <Icon
+                                    name="lucide:phone"
+                                    class="w-10 h-10 text-green-600"
                                 />
                             </a>
                             <a href="#">
-                                <Image
-                                    src={chatIcon}
-                                    class="w-10 h-10"
-                                    alt="icon"
+                                <Icon
+                                    name="lucide:message-circle"
+                                    class="w-10 h-10 text-green-600"
                                 />
                             </a>
                         </div>
@@ -395,17 +355,15 @@ const { office, relatedBooking } = Astro.props;
                         </div>
                         <div class="flex items-center gap-3">
                             <a href="#">
-                                <Image
-                                    src={callIcon}
-                                    class="w-10 h-10"
-                                    alt="icon"
+                                <Icon
+                                    name="lucide:phone"
+                                    class="w-10 h-10 text-green-600"
                                 />
                             </a>
                             <a href="#">
-                                <Image
-                                    src={chatIcon}
-                                    class="w-10 h-10"
-                                    alt="icon"
+                                <Icon
+                                    name="lucide:message-circle"
+                                    class="w-10 h-10 text-green-600"
                                 />
                             </a>
                         </div>
