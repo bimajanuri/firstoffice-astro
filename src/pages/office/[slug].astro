@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import offices from "../../data/offices.json";
+import bookings from "../../data/bookings.json";
 import { Image } from "astro:assets";
 
 // Icons
@@ -28,10 +29,17 @@ import gallery2 from "../../assets/images/thumbnails/thumbnail-details-2.png";
 import gallery3 from "../../assets/images/thumbnails/thumbnail-details-3.png";
 
 export async function getStaticPaths() {
-    return offices.map((office) => ({
-        params: { slug: office.slug },
-        props: { office },
-    }));
+    return offices.map((office) => {
+        // Find a booking for this office (if available)
+        const relatedBooking = bookings.find(
+            (booking) => booking.officeSlug === office.slug,
+        );
+
+        return {
+            params: { slug: office.slug },
+            props: { office, relatedBooking },
+        };
+    });
 }
 
 interface Props {
@@ -50,7 +58,7 @@ interface Props {
     };
 }
 
-const { office } = Astro.props;
+const { office, relatedBooking } = Astro.props;
 
 // Dynamic main thumbnail if needed, but here we use gallery
 // We could also dynamically load the office thumbnail if we wanted to show it.
@@ -298,9 +306,9 @@ const { office } = Astro.props;
                             >
                                 <span>Fully Booked</span>
                             </button>
-                        ) : (
+                        ) : relatedBooking ? (
                             <a
-                                href={`/booking/${office.slug}`}
+                                href={`/booking/${relatedBooking.bookingTrxId}`}
                                 class="flex items-center justify-center w-full rounded-full p-[16px_26px] gap-3 bg-[#0D903A] font-bold text-[#F7F7FD] hover:bg-[#096b2b] transition-all duration-300"
                             >
                                 <Image
@@ -308,8 +316,15 @@ const { office } = Astro.props;
                                     class="w-6 h-6"
                                     alt="icon"
                                 />
-                                <span>Book This Office</span>
+                                <span>View Booking Details</span>
                             </a>
+                        ) : (
+                            <button
+                                class="flex items-center justify-center w-full rounded-full p-[16px_26px] gap-3 bg-gray-400 font-bold text-[#F7F7FD] cursor-not-allowed"
+                                disabled
+                            >
+                                <span>No Booking Available</span>
+                            </button>
                         )
                     }
                     <button

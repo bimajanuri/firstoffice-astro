@@ -2,46 +2,119 @@
 import { Image } from "astro:assets";
 import receiptIcon from "../assets/images/icons/receipt-text-black.svg";
 import callBlackIcon from "../assets/images/icons/call-black.svg";
+import bookings from "../data/bookings.json";
 ---
 
 <form
-    action=""
-    class="flex items-end rounded-[20px] border border-[#E0DEF7] p-[30px] gap-[16px] bg-white"
+    id="booking-form"
+    class="flex flex-col gap-4 rounded-[20px] border border-[#E0DEF7] p-[30px] bg-white"
 >
-    <div class="flex flex-col w-full gap-2">
-        <label for="name" class="font-semibold">Booking TRX ID</label>
-        <div
-            class="flex items-center rounded-full border border-[#000929] px-5 gap-[10px] transition-all duration-300 focus-within:ring-2 focus-within:ring-[#0D903A]"
-        >
-            <Image src={receiptIcon} class="w-6 h-6" alt="icon" />
-            <input
-                type="text"
-                name="name"
-                id="name"
-                class="appearance-none outline-none w-full py-3 font-semibold placeholder:font-normal placeholder:text-[#000929]"
-                placeholder="Write your booking trx id"
-            />
+    <div class="flex flex-col sm:flex-row items-end gap-[16px]">
+        <div class="flex flex-col w-full gap-2">
+            <label for="trxId" class="font-semibold">Booking TRX ID</label>
+            <div
+                class="flex items-center rounded-full border border-[#000929] px-5 gap-[10px] transition-all duration-300 focus-within:ring-2 focus-within:ring-[#0D903A]"
+            >
+                <Image src={receiptIcon} class="w-6 h-6" alt="icon" />
+                <input
+                    type="text"
+                    name="trxId"
+                    id="trxId"
+                    class="appearance-none outline-none w-full py-3 font-semibold placeholder:font-normal placeholder:text-[#000929]"
+                    placeholder="Write your booking trx id"
+                    required
+                />
+            </div>
         </div>
-    </div>
-    <div class="flex flex-col w-full gap-2">
-        <label for="phone" class="font-semibold">Phone Number</label>
-        <div
-            class="flex items-center rounded-full border border-[#000929] px-5 gap-[10px] transition-all duration-300 focus-within:ring-2 focus-within:ring-[#0D903A]"
-        >
-            <Image src={callBlackIcon} class="w-6 h-6" alt="icon" />
-            <input
-                type="tel"
-                name="phone"
-                id="phone"
-                class="appearance-none outline-none w-full py-3 font-semibold placeholder:font-normal placeholder:text-[#000929]"
-                placeholder="Write your valid number"
-            />
+        <div class="flex flex-col w-full gap-2">
+            <label for="phone" class="font-semibold">Phone Number</label>
+            <div
+                class="flex items-center rounded-full border border-[#000929] px-5 gap-[10px] transition-all duration-300 focus-within:ring-2 focus-within:ring-[#0D903A]"
+            >
+                <Image src={callBlackIcon} class="w-6 h-6" alt="icon" />
+                <input
+                    type="tel"
+                    name="phone"
+                    id="phone"
+                    class="appearance-none outline-none w-full py-3 font-semibold placeholder:font-normal placeholder:text-[#000929]"
+                    placeholder="Write your valid number"
+                    required
+                />
+            </div>
         </div>
+        <button
+            type="submit"
+            class="flex items-center justify-center rounded-full p-[12px_30px] gap-3 bg-[#0D903A] font-bold text-[#F7F7FD] hover:bg-[#096b2b] transition-all duration-300 w-full sm:w-auto"
+        >
+            <span class="text-nowrap">Check Booking</span>
+        </button>
     </div>
-    <button
-        type="submit"
-        class="flex items-center justify-center rounded-full p-[12px_30px] gap-3 bg-[#0D903A] font-bold text-[#F7F7FD]"
-    >
-        <span class="text-nowrap">Check Booking</span>
-    </button>
+
+    <!-- Error/Success Message -->
+    <div id="form-message" class="hidden p-4 rounded-lg text-sm font-semibold">
+    </div>
 </form>
+
+<script define:vars={{ bookings }}>
+    const form = document.getElementById("booking-form");
+    const messageDiv = document.getElementById("form-message");
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const trxIdInput = document.getElementById("trxId");
+        const phoneInput = document.getElementById("phone");
+
+        const trxId = trxIdInput.value.trim();
+        const phone = phoneInput.value.trim();
+
+        // Clear previous messages
+        messageDiv.classList.add("hidden");
+        messageDiv.textContent = "";
+
+        // Validation: Check if fields are empty
+        if (!trxId || !phone) {
+            showMessage(
+                "Please fill in both Booking TRX ID and Phone Number.",
+                "error",
+            );
+            return;
+        }
+
+        // Find matching booking
+        const booking = bookings.find(
+            (b) => b.bookingTrxId === trxId && b.customerPhone === phone,
+        );
+
+        if (booking) {
+            // Booking found - navigate to booking page
+            showMessage("Booking found! Redirecting...", "success");
+            setTimeout(() => {
+                window.location.href = `/booking/${booking.bookingTrxId}`;
+            }, 1000);
+        } else {
+            // Booking not found
+            showMessage(
+                "Booking not found. Please check your TRX ID and Phone Number.",
+                "error",
+            );
+        }
+    });
+
+    function showMessage(message, type) {
+        messageDiv.textContent = message;
+        messageDiv.classList.remove(
+            "hidden",
+            "bg-red-100",
+            "text-red-700",
+            "bg-green-100",
+            "text-green-700",
+        );
+
+        if (type === "error") {
+            messageDiv.classList.add("bg-red-100", "text-red-700");
+        } else if (type === "success") {
+            messageDiv.classList.add("bg-green-100", "text-green-700");
+        }
+    }
+</script>

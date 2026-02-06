@@ -1,0 +1,144 @@
+---
+import { Image } from "astro:assets";
+import bookings from "../data/bookings.json";
+import offices from "../data/offices.json";
+
+// Get payment status styling
+const getPaymentStatusStyle = (status: string) => {
+    switch (status) {
+        case "Paid":
+            return "bg-[#0D903A] text-[#F7F7FD]";
+        case "Pending":
+            return "bg-[#FF852D] text-[#F7F7FD]";
+        case "Failed":
+            return "bg-[#F44336] text-[#F7F7FD]";
+        default:
+            return "bg-gray-500 text-white";
+    }
+};
+
+// Format dates
+const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+    };
+    return date.toLocaleDateString("en-US", options);
+};
+
+// Load all images
+const images = import.meta.glob<{ default: ImageMetadata }>(
+    "../assets/images/thumbnails/*.{png,jpg,jpeg,webp}",
+);
+
+// Get office info and image for each booking
+const bookingsWithOffice = await Promise.all(
+    bookings.map(async (booking) => {
+        const office = offices.find((o) => o.slug === booking.officeSlug);
+        const imagePath = `../assets/images/thumbnails/${office?.thumbnail}`;
+        let imageSrc = null;
+
+        if (images[imagePath]) {
+            const imageModule = await images[imagePath]();
+            imageSrc = imageModule.default;
+        }
+
+        return {
+            ...booking,
+            office,
+            imageSrc,
+        };
+    }),
+);
+---
+
+<div
+    class="flex flex-col gap-[30px] rounded-[20px] border border-[#E0DEF7] p-[30px] bg-white"
+>
+    <div class="flex items-center justify-between">
+        <h2 class="font-bold text-xl">All Bookings</h2>
+        <p class="text-sm text-gray-600">
+            {bookings.length} booking{bookings.length !== 1 ? "s" : ""} found
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {
+            bookingsWithOffice.map((booking) => (
+                <a
+                    href={`/booking/${booking.bookingTrxId}`}
+                    class="flex flex-col rounded-[20px] border border-[#E0DEF7] overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] bg-white group"
+                >
+                    {/* Thumbnail */}
+                    {booking.imageSrc && (
+                        <div class="w-full h-[160px] overflow-hidden bg-gray-100">
+                            <Image
+                                src={booking.imageSrc}
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                alt={booking.office?.name || "Office"}
+                            />
+                        </div>
+                    )}
+
+                    {/* Content */}
+                    <div class="flex flex-col p-5 gap-3">
+                        {/* Transaction ID & Status */}
+                        <div class="flex items-start justify-between gap-2">
+                            <div class="flex-1 min-w-0">
+                                <p class="font-bold text-sm truncate">
+                                    {booking.bookingTrxId}
+                                </p>
+                            </div>
+                            <span
+                                class={`rounded-full px-3 py-1 text-xs font-bold whitespace-nowrap ${getPaymentStatusStyle(booking.paymentStatus)}`}
+                            >
+                                {booking.paymentStatus.toUpperCase()}
+                            </span>
+                        </div>
+
+                        {/* Office Name */}
+                        <h3 class="font-bold text-lg leading-[24px] line-clamp-2">
+                            {booking.office?.name || "Unknown Office"}
+                        </h3>
+
+                        {/* Customer Info */}
+                        <div class="flex flex-col gap-1 text-sm">
+                            <p class="font-semibold text-gray-700">
+                                {booking.customerName}
+                            </p>
+                            <p class="text-gray-500">{booking.customerPhone}</p>
+                        </div>
+
+                        {/* Dates */}
+                        <div class="flex flex-col gap-1 pt-2 border-t border-[#F6F5FD]">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="text-gray-600">Start:</span>
+                                <span class="font-semibold">
+                                    {formatDate(booking.startedAt)}
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="text-gray-600">End:</span>
+                                <span class="font-semibold">
+                                    {formatDate(booking.endedAt)}
+                                </span>
+                            </div>
+                        </div>
+
+                        {/* Price */}
+                        {booking.office?.price && (
+                            <div class="flex items-center justify-between pt-2 border-t border-[#F6F5FD]">
+                                <span class="text-sm text-gray-600">Total</span>
+                                <span class="font-bold text-[#0D903A]">
+                                    {booking.office.price}
+                                </span>
+                            </div>
+                        )}
+                    </div>
+                </a>
+            ))
+        }
+    </div>
+</div>

@@ -12,13 +12,27 @@ FirstOffice adalah website yang memungkinkan pengguna untuk menjelajahi berbagai
 
 ## 🚀 Fitur Utama
 
+### Pencarian & Katalog
 - 🏢 Katalog kantor dengan berbagai kategori
 - 🔍 Fitur pencarian dengan fuzzy search menggunakan Fuse.js
+- 📍 Filter berdasarkan lokasi/kota
+- ⭐ Halaman office populer
+- 🏷️ Halaman categories (Serviced, Virtual, Shell & Core, Managed)
+
+### Booking System
+- 📋 Detail booking dengan informasi lengkap
+- 🔐 Pencarian booking berdasarkan TRX ID dan Phone Number
+- 📊 Halaman My Booking dengan daftar semua booking
+- 💳 Status pembayaran (Paid, Pending, Failed)
+- 📅 Tracking periode booking (Started At - Ended At)
+
+### UI/UX
 - 📱 Desain responsive dan mobile-friendly
 - 🎨 UI/UX modern dengan Tailwind CSS
-- 🖼️ Galeri gambar dengan Swiper
+- 🖼️ Galeri gambar dengan Swiper carousel
 - ⚡ Performa tinggi dengan static site generation
 - 🎯 Navigasi yang intuitif dan mudah digunakan
+- 🎭 Hover effects dan micro-interactions
 
 ## 🛠️ Teknologi
 
@@ -72,10 +86,35 @@ npm run dev
 firstoffice-astro/
 ├── src/
 │   ├── assets/          # Gambar, banner, dan aset media
+│   │   ├── images/
+│   │   │   ├── banners/       # Hero banners
+│   │   │   ├── thumbnails/    # Office thumbnails
+│   │   │   └── icons/         # Icon SVG
 │   ├── components/      # Komponen Astro yang dapat digunakan kembali
-│   ├── data/            # Data statis (offices.json, cities.json)
+│   │   ├── BookingForm.astro        # Form pencarian booking
+│   │   ├── BookingList.astro        # Daftar semua booking
+│   │   ├── BookingInformation.astro # Detail booking information
+│   │   ├── OfficeCard.astro         # Card untuk display office
+│   │   ├── CityCard.astro           # Card untuk display kota
+│   │   └── Navbar.astro             # Navigation bar
+│   ├── data/            # Data statis
+│   │   ├── offices.json   # Data 60+ kantor
+│   │   ├── cities.json    # Data kota
+│   │   └── bookings.json  # Data 34 booking dummy
 │   ├── layouts/         # Layout template
+│   │   └── BaseLayout.astro  # Layout utama
 │   ├── pages/           # File-file halaman (routing otomatis)
+│   │   ├── index.astro           # Homepage
+│   │   ├── browse.astro          # Browse offices
+│   │   ├── popular.astro         # Popular offices
+│   │   ├── categories.astro      # Categories page
+│   │   ├── my-booking.astro      # My Booking page
+│   │   ├── office/
+│   │   │   └── [slug].astro     # Office detail (dynamic)
+│   │   ├── city/
+│   │   │   └── [slug].astro     # City page (dynamic)
+│   │   └── booking/
+│   │       └── [slug].astro     # Booking detail (dynamic)
 │   ├── input.css        # CSS input untuk Tailwind
 │   └── output.css       # CSS yang sudah diproses
 ├── public/              # Aset statis yang tidak diproses
@@ -87,11 +126,56 @@ firstoffice-astro/
 └── package.json         # Dependencies dan scripts
 ```
 
+## 📑 Halaman yang Tersedia
+
+| Route | Deskripsi |
+|-------|----------|
+| `/` | Homepage dengan hero, popular offices, dan cities |
+| `/browse` | Browse semua kantor dengan search dan filter |
+| `/popular` | Daftar kantor populer |
+| `/categories` | Kantor dikelompokkan berdasarkan kategori |
+| `/my-booking` | Halaman My Booking dengan search dan list |
+| `/office/[slug]` | Detail office dengan galeri dan informasi lengkap |
+| `/city/[slug]` | Daftar kantor berdasarkan kota |
+| `/booking/[trxId]` | Detail booking berdasarkan Transaction ID |
+
 ## 🎨 Customization
 
 ### Menambah Data Kantor
 
-Edit file `src/data/offices.json` untuk menambahkan atau mengubah data kantor.
+Edit file `src/data/offices.json` untuk menambahkan atau mengubah data kantor. Format:
+
+```json
+{
+  "slug": "office-name",
+  "name": "Office Name",
+  "price": "Rp X.XXX.XXX",
+  "duration": 20,
+  "location": "City Name",
+  "rating": 4.5,
+  "thumbnail": "thumbnail.png",
+  "isPopular": true,
+  "status": "Available",
+  "category": "Serviced Office",
+  "description": "..."
+}
+```
+
+### Menambah Data Booking
+
+Edit file `src/data/bookings.json` untuk menambahkan booking baru:
+
+```json
+{
+  "bookingTrxId": "TRX-YYYY-XXX-LOC",
+  "paymentStatus": "Paid",
+  "officeSlug": "office-slug",
+  "customerName": "Customer Name",
+  "customerPhone": "+62 XXX-XXXX-XXXX",
+  "startedAt": "2026-MM-DD",
+  "endedAt": "2026-MM-DD"
+}
+```
 
 ### Mengubah Styling
 
@@ -152,11 +236,11 @@ Hapus folder `.astro/` dan `node_modules/`, kemudian install ulang dependencies.
 
 ## 📄 License
 
-[Sesuaikan dengan lisensi Anda]
+MIT License
 
 ## 👤 Author
 
-[Nama Anda]
+Muhammad Bima Januri
 
 ## 🤝 Contributing
 

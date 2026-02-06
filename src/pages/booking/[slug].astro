@@ -3,19 +3,25 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import BookingForm from "../../components/BookingForm.astro";
 import BookingInformation from "../../components/BookingInformation.astro";
 import { Image } from "astro:assets";
+import bookings from "../../data/bookings.json";
 import offices from "../../data/offices.json";
 
 // Assets
 import thumbnailDetails5 from "../../assets/images/thumbnails/thumbnail-details-5.png";
 
 export async function getStaticPaths() {
-    return offices.map((office) => ({
-        params: { slug: office.slug },
-        props: { office },
-    }));
+    return bookings.map((booking) => {
+        // Find the related office by officeSlug
+        const office = offices.find((o) => o.slug === booking.officeSlug);
+
+        return {
+            params: { slug: booking.bookingTrxId },
+            props: { booking, office },
+        };
+    });
 }
 
-const { office } = Astro.props;
+const { booking, office } = Astro.props;
 const title = "Booking Details - FirstOffice";
 ---
 
@@ -44,6 +50,6 @@ const title = "Booking Details - FirstOffice";
         class="relative flex flex-col w-full max-w-[930px] shrink-0 gap-[30px] mx-auto mb-[100px] z-20 px-4"
     >
         <BookingForm />
-        <BookingInformation office={office} />
+        <BookingInformation booking={booking} office={office} />
     </section>
 </BaseLayout>

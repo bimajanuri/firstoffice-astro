@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BookingForm from "../components/BookingForm.astro";
+import BookingList from "../components/BookingList.astro";
+import { Image } from "astro:assets";
+
+// Assets
+import thumbnailDetails5 from "../assets/images/thumbnails/thumbnail-details-5.png";
+
+const title = "My Bookings - FirstOffice";
+---
+
+<BaseLayout title={title}>
+    <div
+        id="Banner"
+        class="relative w-full h-[240px] flex items-center shrink-0 overflow-hidden -mb-[50px]"
+    >
+        <h1
+            class="text-center mx-auto font-extrabold text-[40px] leading-[60px] text-white mb-5 z-20"
+        >
+            My Bookings
+        </h1>
+        <div
+            class="absolute w-full h-full bg-[linear-gradient(180deg,_rgba(0,0,0,0)_0%,#000000_91.83%)] z-10"
+        >
+        </div>
+        <Image
+            src={thumbnailDetails5}
+            class="absolute w-full h-full object-cover object-top"
+            alt="banner"
+        />
+    </div>
+
+    <section
+        id="My-Booking"
+        class="relative flex flex-col w-full max-w-[1200px] shrink-0 gap-[30px] mx-auto mb-[100px] z-20 px-4"
+    >
+        <!-- Search Form -->
+        <BookingForm />
+
+        <!-- Bookings List -->
+        <BookingList />
+    </section>
+</BaseLayout>
