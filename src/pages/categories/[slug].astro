@@ -7,6 +7,8 @@ import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import bannerImage from "../../assets/images/backgrounds/banner.webp";
 
+export const prerender = true;
+
 // Get category from params
 const { slug } = Astro.params;
 

@@ -9,6 +9,8 @@ import offices from "../../data/offices.json";
 // Assets
 import thumbnailDetails5 from "../../assets/images/thumbnails/thumbnail-details-5.png";
 
+export const prerender = true;
+
 export async function getStaticPaths() {
     return bookings.map((booking) => {
         // Find the related office by officeSlug

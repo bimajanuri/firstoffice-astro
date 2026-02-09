@@ -6,6 +6,8 @@ import offices from "../../data/offices.json";
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 
+export const prerender = true;
+
 export async function getStaticPaths() {
     return cities.map((city) => ({
         params: { slug: city.slug },

@@ -14,6 +14,8 @@ import gallery1 from "../../assets/images/thumbnails/thumbnail-details-1.png";
 import gallery2 from "../../assets/images/thumbnails/thumbnail-details-2.png";
 import gallery3 from "../../assets/images/thumbnails/thumbnail-details-3.png";
 
+export const prerender = true;
+
 export async function getStaticPaths() {
     return offices.map((office) => {
         // Find a booking for this office (if available)
@@ -41,6 +43,10 @@ interface Props {
         status: string;
         description: string;
         address: string;
+    };
+    relatedBooking?: {
+        bookingTrxId: string;
+        officeSlug: string;
     };
 }
 
