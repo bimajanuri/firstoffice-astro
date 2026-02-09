@@ -514,7 +514,7 @@ npx wrangler pages dev ./dist
 
 2. **Deploy menggunakan Wrangler**:
    ```bash
-   npx wrangler pages deploy ./dist
+   npm run deploy
    ```
 
 Atau hubungkan repository GitHub Anda ke Cloudflare Pages dan set build command:

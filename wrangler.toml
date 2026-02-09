@@ -1,0 +1,4 @@
+name = "firstoffice-astro"
+compatibility_date = "2025-02-09"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "dist"

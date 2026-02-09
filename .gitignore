@@ -77,3 +77,7 @@ temp/
 
 # Netlify
 .netlify
+
+# Cloudflare
+.wrangler/
+.dev.vars
