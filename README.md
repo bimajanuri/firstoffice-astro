@@ -564,3 +564,11 @@ Kontribusi, issues, dan feature requests sangat diterima!
 ---
 
 Dibuat dengan ❤️ menggunakan [Astro](https://astro.build/)
+
+## 🔒 Security
+
+This project implements standard security practices for static sites:
+
+- **Security Headers**: Configured in `public/_headers` (HSTS, X-Content-Type-Options, etc.) for Cloudflare Pages.
+- **Dependencies**: Regular `npm audit` checks are recommended.
+- **Environment**: Sensitive variables should be stored in Cloudflare Pages environment variables, not committed to the repo.
