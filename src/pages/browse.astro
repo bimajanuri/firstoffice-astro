@@ -4,6 +4,7 @@ import OfficeCard from "../components/OfficeCard.astro";
 import offices from "../data/offices.json";
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
+import cities from "../data/cities.json";
 import bannerImage from "../assets/images/backgrounds/banner.webp";
 
 // Get search query from URL parameter
@@ -100,29 +101,144 @@ const title = searchQuery
         id="Results-Section"
         class="flex flex-col gap-[30px] w-full max-w-screen-xl mx-auto mt-10 lg:mt-[50px] mb-10 lg:mb-[120px] px-4"
     >
-        <div
-            class="flex flex-col md:flex-row items-center justify-between gap-4 hidden"
-            id="results-header"
-        >
-            <h2 class="font-bold text-xl leading-[30px] text-[#000929]">
-                Showing <span id="result-count" class="text-[#0D903A]">0</span> Offices
-            </h2>
-            <div class="flex items-center gap-3">
-                <span class="text-[#000929] font-medium">Sort by:</span>
-                <div class="relative">
-                    <select
-                        id="sort-select"
-                        class="appearance-none bg-white border border-[#E0DEF7] rounded-full px-5 py-3 pr-10 text-[#000929] font-semibold focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+        <div class="flex flex-col gap-4 hidden" id="results-header">
+            <div
+                class="flex flex-col md:flex-row items-center justify-between gap-4"
+            >
+                <h2 class="font-bold text-xl leading-[30px] text-[#000929]">
+                    Showing <span id="result-count" class="text-[#0D903A]"
+                        >0</span
+                    > Offices
+                </h2>
+                <div class="flex items-center gap-3">
+                    <span class="text-[#000929] font-medium">Sort by:</span>
+                    <div class="relative">
+                        <select
+                            id="sort-select"
+                            class="appearance-none bg-white border border-[#E0DEF7] rounded-full px-5 py-3 pr-10 text-[#000929] font-semibold focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+                        >
+                            <option value="recommended">Recommended</option>
+                            <option value="price-low">Lowest Price</option>
+                            <option value="price-high">Highest Price</option>
+                            <option value="rating">Highest Rating</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]"
+                        >
+                            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-5 rounded-[20px] border border-[#E0DEF7] bg-white"
+            >
+                <!-- City Filter -->
+                <div class="flex flex-col gap-2">
+                    <label for="filter-city" class="font-bold text-[#000929]"
+                        >City</label
                     >
-                        <option value="recommended">Recommended</option>
-                        <option value="price-low">Lowest Price</option>
-                        <option value="price-high">Highest Price</option>
-                        <option value="rating">Highest Rating</option>
-                    </select>
-                    <div
-                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]"
+                    <div class="relative">
+                        <select
+                            id="filter-city"
+                            class="w-full appearance-none bg-white border border-[#E0DEF7] rounded-full px-4 py-2 pr-10 text-[#000929] font-medium focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+                        >
+                            <option value="">All Cities</option>
+                            {
+                                cities.map((city) => (
+                                    <option value={city.name}>
+                                        {city.name}
+                                    </option>
+                                ))
+                            }
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]"
+                        >
+                            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category Filter -->
+                <div class="flex flex-col gap-2">
+                    <label
+                        for="filter-category"
+                        class="font-bold text-[#000929]">Category</label
                     >
-                        <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                    <div class="relative">
+                        <select
+                            id="filter-category"
+                            class="w-full appearance-none bg-white border border-[#E0DEF7] rounded-full px-4 py-2 pr-10 text-[#000929] font-medium focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+                        >
+                            <option value="">All Categories</option>
+                            <option value="Serviced Office"
+                                >Serviced Office</option
+                            >
+                            <option value="Virtual Office"
+                                >Virtual Office</option
+                            >
+                            <option value="Managed Office"
+                                >Managed Office</option
+                            >
+                            <option value="Shell and Core">Shell & Core</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]"
+                        >
+                            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price Filter -->
+                <div class="flex flex-col gap-2">
+                    <label for="filter-price" class="font-bold text-[#000929]"
+                        >Max Price</label
+                    >
+                    <div class="relative">
+                        <select
+                            id="filter-price"
+                            class="w-full appearance-none bg-white border border-[#E0DEF7] rounded-full px-4 py-2 pr-10 text-[#000929] font-medium focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+                        >
+                            <option value="">Any Price</option>
+                            <option value="10000000">&lt; Rp 10.000.000</option>
+                            <option value="20000000">&lt; Rp 20.000.000</option>
+                            <option value="50000000">&lt; Rp 50.000.000</option>
+                            <option value="100000000"
+                                >&lt; Rp 100.000.000</option
+                            >
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]"
+                        >
+                            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rating Filter -->
+                <div class="flex flex-col gap-2">
+                    <label for="filter-rating" class="font-bold text-[#000929]"
+                        >Rating</label
+                    >
+                    <div class="relative">
+                        <select
+                            id="filter-rating"
+                            class="w-full appearance-none bg-white border border-[#E0DEF7] rounded-full px-4 py-2 pr-10 text-[#000929] font-medium focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+                        >
+                            <option value="">Any Rating</option>
+                            <option value="4.5">4.5+ Stars</option>
+                            <option value="4">4+ Stars</option>
+                            <option value="3">3+ Stars</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]"
+                        >
+                            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -137,6 +253,10 @@ const title = searchQuery
                     <div
                         class="office-card-item hidden"
                         data-slug={office.slug}
+                        data-category={office.category}
+                        data-location={office.location}
+                        data-price={office.price}
+                        data-rating={office.rating}
                     >
                         <OfficeCard office={office} />
                     </div>
@@ -163,17 +283,34 @@ const title = searchQuery
 <script>
     import Fuse from "fuse.js";
 
-    const searchInput = document.getElementById("search-input");
+    const searchInput = document.getElementById(
+        "search-input",
+    ) as HTMLInputElement;
     const noResultsMsg = document.getElementById("no-results-msg");
     const initialMsg = document.getElementById("initial-msg");
     const allCards = document.querySelectorAll(".office-card-item");
-    const sortSelect = document.getElementById("sort-select");
+    const sortSelect = document.getElementById(
+        "sort-select",
+    ) as HTMLSelectElement;
     const resultsHeader = document.getElementById("results-header");
     const resultCount = document.getElementById("result-count");
     const resultsGrid = document.getElementById("results-grid");
 
-    // Store current search results to allow sorting
-    let currentResults = [];
+    const filterCity = document.getElementById(
+        "filter-city",
+    ) as HTMLSelectElement;
+    const filterCategory = document.getElementById(
+        "filter-category",
+    ) as HTMLSelectElement;
+    const filterPrice = document.getElementById(
+        "filter-price",
+    ) as HTMLSelectElement;
+    const filterRating = document.getElementById(
+        "filter-rating",
+    ) as HTMLSelectElement;
+
+    // Store current search results to allow sorting/filtering
+    let currentResults: any[] = [];
 
     // Initialize Fuse with the data passed from the server
     // @ts-ignore
@@ -183,63 +320,126 @@ const title = searchQuery
     });
 
     // Helper to parse price string "Rp 18.560.000" -> 18560000
-    const parsePrice = (priceStr) => {
+    const parsePrice = (priceStr: string) => {
         if (!priceStr) return 0;
         return parseInt(priceStr.replace(/[^0-9]/g, ""));
     };
 
     const renderResults = () => {
-        const criteria = sortSelect.value;
-        let sortedResults = [...currentResults];
+        if (
+            !sortSelect ||
+            !filterCity ||
+            !filterCategory ||
+            !filterPrice ||
+            !filterRating
+        )
+            return;
 
-        // Apply sorting
+        const criteria = sortSelect.value;
+        const cityFilter = filterCity.value;
+        const categoryFilter = filterCategory.value;
+        const priceFilter = filterPrice.value;
+        const ratingFilter = filterRating.value;
+
+        // 1. Start with search results
+        let processedResults = [...currentResults];
+
+        // 2. Apply Filters
+        if (cityFilter) {
+            processedResults = processedResults.filter(
+                (r) => r.item.location === cityFilter,
+            );
+        }
+        if (categoryFilter) {
+            processedResults = processedResults.filter(
+                (r) => r.item.category === categoryFilter,
+            );
+        }
+        if (priceFilter) {
+            const maxPrice = parseInt(priceFilter);
+            processedResults = processedResults.filter(
+                (r) => parsePrice(r.item.price) <= maxPrice,
+            );
+        }
+        if (ratingFilter) {
+            const minRating = parseFloat(ratingFilter);
+            processedResults = processedResults.filter(
+                (r) => r.item.rating >= minRating,
+            );
+        }
+
+        // 3. Apply Sorting
         if (criteria === "price-low") {
-            sortedResults.sort(
+            processedResults.sort(
                 (a, b) => parsePrice(a.item.price) - parsePrice(b.item.price),
             );
         } else if (criteria === "price-high") {
-            sortedResults.sort(
+            processedResults.sort(
                 (a, b) => parsePrice(b.item.price) - parsePrice(a.item.price),
             );
         } else if (criteria === "rating") {
-            sortedResults.sort((a, b) => b.item.rating - a.item.rating);
+            processedResults.sort((a, b) => b.item.rating - a.item.rating);
         }
-        // 'recommended' uses original order from Fuse
+        // 'recommended' uses original order from Fuse (which is already in processedResults)
 
-        if (sortedResults.length === 0) {
-            noResultsMsg.classList.remove("hidden");
-            resultsHeader.classList.add("hidden");
-            allCards.forEach((card) => card.classList.add("hidden"));
-        } else {
-            noResultsMsg.classList.add("hidden");
-            resultsHeader.classList.remove("hidden");
-            if (resultCount)
-                resultCount.textContent = sortedResults.length.toString();
+        if (noResultsMsg && resultsHeader && resultsGrid) {
+            if (processedResults.length === 0) {
+                // If search query was empty, we hide everything (handled in input listener).
+                // If we are here, currentResults has items (or is empty and we handled it? No wait.)
 
-            // Reorder DOM
-            // First, map available cards (we have them in allCards)
-            const cardMap = {};
-            allCards.forEach((card) => {
-                const slug = card.getAttribute("data-slug");
-                if (slug) cardMap[slug] = card;
-                // Detach all cards initially (or just the ones we are about to move?
-                // Appending moves them, so it's fine).
-                // But we need to hide the ones not in results.
-                card.classList.add("hidden");
-            });
-
-            // Append/Show in sorted order
-            sortedResults.forEach((r) => {
-                const card = cardMap[r.item.slug];
-                if (card) {
-                    card.classList.remove("hidden");
-                    resultsGrid.appendChild(card);
+                if (currentResults.length === 0) {
+                    // Fuse found nothing
+                    resultsHeader.classList.add("hidden");
+                    noResultsMsg.classList.remove("hidden");
+                    noResultsMsg.textContent =
+                        "No offices found matching your search.";
+                } else {
+                    // Fuse found things, but filters hidden them
+                    resultsHeader.classList.remove("hidden");
+                    noResultsMsg.classList.remove("hidden");
+                    noResultsMsg.textContent =
+                        "No offices found matching the selected filters.";
                 }
-            });
+
+                allCards.forEach((card) => card.classList.add("hidden"));
+            } else {
+                noResultsMsg.classList.add("hidden");
+                resultsHeader.classList.remove("hidden");
+                if (resultCount)
+                    resultCount.textContent =
+                        processedResults.length.toString();
+
+                // Reorder DOM
+                // First, map available cards (we have them in allCards)
+                const cardMap: Record<string, Element> = {};
+                allCards.forEach((card) => {
+                    const slug = card.getAttribute("data-slug");
+                    if (slug) cardMap[slug] = card;
+                    card.classList.add("hidden");
+                });
+
+                // Append/Show in sorted order
+                processedResults.forEach((r) => {
+                    const card = cardMap[r.item.slug];
+                    if (card) {
+                        card.classList.remove("hidden");
+                        resultsGrid.appendChild(card);
+                    }
+                });
+            }
         }
     };
 
-    if (searchInput && initialMsg && noResultsMsg && sortSelect) {
+    if (
+        searchInput &&
+        initialMsg &&
+        noResultsMsg &&
+        sortSelect &&
+        filterCity &&
+        filterCategory &&
+        filterPrice &&
+        filterRating
+    ) {
         // Read query from URL parameters (client-side)
         const urlParams = new URLSearchParams(window.location.search);
         const queryFromUrl = urlParams.get("q") || "";
@@ -247,7 +447,7 @@ const title = searchQuery
         // Auto-search if query parameter exists
         if (queryFromUrl && queryFromUrl.length > 0) {
             // Set the input value
-            (searchInput as HTMLInputElement).value = queryFromUrl;
+            searchInput.value = queryFromUrl;
 
             initialMsg.classList.add("hidden");
 
@@ -263,8 +463,9 @@ const title = searchQuery
                 // Empty state: Show initial message, hide results
                 initialMsg.classList.remove("hidden");
                 noResultsMsg.classList.add("hidden");
-                resultsHeader.classList.add("hidden");
+                if (resultsHeader) resultsHeader.classList.add("hidden");
                 allCards.forEach((card) => card.classList.add("hidden"));
+                currentResults = []; // Clear results
                 return;
             }
 
@@ -275,9 +476,11 @@ const title = searchQuery
         });
 
         sortSelect.addEventListener("change", () => {
-            if (currentResults.length > 0) {
-                renderResults();
-            }
+            renderResults();
         });
+        filterCity.addEventListener("change", renderResults);
+        filterCategory.addEventListener("change", renderResults);
+        filterPrice.addEventListener("change", renderResults);
+        filterRating.addEventListener("change", renderResults);
     }
 </script>

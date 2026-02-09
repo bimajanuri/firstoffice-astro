@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import OfficeCard from "../components/OfficeCard.astro";
 
 import offices from "../data/offices.json";
+import cities from "../data/cities.json";
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 
@@ -59,30 +60,144 @@ const title = "Popular Offices - FirstOffice";
         id="Popular-Offices"
         class="flex flex-col gap-[30px] w-full max-w-screen-xl mx-auto mt-10 lg:mt-[70px] mb-10 lg:mb-[120px] px-4"
     >
-        <div
-            class="flex flex-col md:flex-row items-center justify-between gap-4"
-        >
-            <h2
-                class="font-bold text-[28px] lg:text-[32px] leading-[40px] lg:leading-[48px] text-nowrap text-center lg:text-left"
+        <div class="flex flex-col gap-4">
+            <div
+                class="flex flex-col md:flex-row items-center justify-between gap-4"
             >
-                Browse Popular Offices
-            </h2>
-            <div class="flex items-center gap-3">
-                <span class="text-[#000929] font-medium">Sort by:</span>
-                <div class="relative">
-                    <select
-                        id="sort-select"
-                        class="appearance-none bg-white border border-[#E0DEF7] rounded-full px-5 py-3 pr-10 text-[#000929] font-semibold focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+                <h2
+                    class="font-bold text-[28px] lg:text-[32px] leading-[40px] lg:leading-[48px] text-nowrap text-center lg:text-left"
+                >
+                    Browse Popular Offices
+                </h2>
+                <div class="flex items-center gap-3">
+                    <span class="text-[#000929] font-medium">Sort by:</span>
+                    <div class="relative">
+                        <select
+                            id="sort-select"
+                            class="appearance-none bg-white border border-[#E0DEF7] rounded-full px-5 py-3 pr-10 text-[#000929] font-semibold focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+                        >
+                            <option value="recommended">Recommended</option>
+                            <option value="price-low">Lowest Price</option>
+                            <option value="price-high">Highest Price</option>
+                            <option value="rating">Highest Rating</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]"
+                        >
+                            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-5 rounded-[20px] border border-[#E0DEF7] bg-white"
+            >
+                <!-- City Filter -->
+                <div class="flex flex-col gap-2">
+                    <label for="filter-city" class="font-bold text-[#000929]"
+                        >City</label
                     >
-                        <option value="recommended">Recommended</option>
-                        <option value="price-low">Lowest Price</option>
-                        <option value="price-high">Highest Price</option>
-                        <option value="rating">Highest Rating</option>
-                    </select>
-                    <div
-                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]"
+                    <div class="relative">
+                        <select
+                            id="filter-city"
+                            class="w-full appearance-none bg-white border border-[#E0DEF7] rounded-full px-4 py-2 pr-10 text-[#000929] font-medium focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+                        >
+                            <option value="">All Cities</option>
+                            {
+                                cities.map((city) => (
+                                    <option value={city.name}>
+                                        {city.name}
+                                    </option>
+                                ))
+                            }
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]"
+                        >
+                            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category Filter -->
+                <div class="flex flex-col gap-2">
+                    <label
+                        for="filter-category"
+                        class="font-bold text-[#000929]">Category</label
                     >
-                        <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                    <div class="relative">
+                        <select
+                            id="filter-category"
+                            class="w-full appearance-none bg-white border border-[#E0DEF7] rounded-full px-4 py-2 pr-10 text-[#000929] font-medium focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+                        >
+                            <option value="">All Categories</option>
+                            <option value="Serviced Office"
+                                >Serviced Office</option
+                            >
+                            <option value="Virtual Office"
+                                >Virtual Office</option
+                            >
+                            <option value="Managed Office"
+                                >Managed Office</option
+                            >
+                            <option value="Shell and Core">Shell & Core</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]"
+                        >
+                            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price Filter -->
+                <div class="flex flex-col gap-2">
+                    <label for="filter-price" class="font-bold text-[#000929]"
+                        >Max Price</label
+                    >
+                    <div class="relative">
+                        <select
+                            id="filter-price"
+                            class="w-full appearance-none bg-white border border-[#E0DEF7] rounded-full px-4 py-2 pr-10 text-[#000929] font-medium focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+                        >
+                            <option value="">Any Price</option>
+                            <option value="10000000">&lt; Rp 10.000.000</option>
+                            <option value="20000000">&lt; Rp 20.000.000</option>
+                            <option value="50000000">&lt; Rp 50.000.000</option>
+                            <option value="100000000"
+                                >&lt; Rp 100.000.000</option
+                            >
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]"
+                        >
+                            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rating Filter -->
+                <div class="flex flex-col gap-2">
+                    <label for="filter-rating" class="font-bold text-[#000929]"
+                        >Rating</label
+                    >
+                    <div class="relative">
+                        <select
+                            id="filter-rating"
+                            class="w-full appearance-none bg-white border border-[#E0DEF7] rounded-full px-4 py-2 pr-10 text-[#000929] font-medium focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+                        >
+                            <option value="">Any Rating</option>
+                            <option value="4.5">4.5+ Stars</option>
+                            <option value="4">4+ Stars</option>
+                            <option value="3">3+ Stars</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]"
+                        >
+                            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -98,6 +213,8 @@ const title = "Popular Offices - FirstOffice";
                             class={`office-card-item ${index >= 9 ? "hidden" : ""}`}
                             data-price={office.price}
                             data-rating={office.rating}
+                            data-location={office.location}
+                            data-category={office.category}
                         >
                             <OfficeCard office={office} />
                         </div>
@@ -112,13 +229,19 @@ const title = "Popular Offices - FirstOffice";
 
         {
             popularOffices.length > 9 && (
-                <div class="flex justify-center mt-10">
+                <div id="load-more-container" class="flex justify-center mt-10">
                     <button
                         id="load-more-btn"
                         class="px-8 py-4 bg-white border border-[#E0DEF7] rounded-full font-bold text-[#000929] hover:bg-gray-50 transition-colors"
                     >
                         View More Offices
                     </button>
+                    <p
+                        id="no-results-msg"
+                        class="hidden text-center text-xl text-gray-500"
+                    >
+                        No offices found matching your filters.
+                    </p>
                 </div>
             )
         }
@@ -130,13 +253,36 @@ const title = "Popular Offices - FirstOffice";
         ) as HTMLSelectElement;
         const officeGrid = document.getElementById("office-grid");
         const loadMoreBtn = document.getElementById("load-more-btn");
+        const loadMoreContainer = document.getElementById(
+            "load-more-container",
+        );
+        const noResultsMsg = document.getElementById("no-results-msg");
+
+        const filterCity = document.getElementById(
+            "filter-city",
+        ) as HTMLSelectElement;
+        const filterCategory = document.getElementById(
+            "filter-category",
+        ) as HTMLSelectElement;
+        const filterPrice = document.getElementById(
+            "filter-price",
+        ) as HTMLSelectElement;
+        const filterRating = document.getElementById(
+            "filter-rating",
+        ) as HTMLSelectElement;
 
         let visibleCount = 9;
         const ITEMS_PER_PAGE = 9;
 
-        if (sortSelect && officeGrid) {
+        if (
+            sortSelect &&
+            officeGrid &&
+            filterCity &&
+            filterCategory &&
+            filterPrice &&
+            filterRating
+        ) {
             // Collect all card elements once
-            // Note: The children are div.office-card-item
             const cards = Array.from(
                 officeGrid.querySelectorAll(".office-card-item"),
             ) as HTMLElement[];
@@ -147,91 +293,120 @@ const title = "Popular Offices - FirstOffice";
                 return parseInt(priceStr.replace(/[^0-9]/g, ""));
             };
 
-            const updateVisibility = (sortedCards: HTMLElement[]) => {
-                // Clear grid content (conceptually)
-                // Actually we just re-append them in order, which moves them.
-
-                sortedCards.forEach((card, index) => {
-                    officeGrid.appendChild(card);
-                    if (index < visibleCount) {
-                        card.classList.remove("hidden");
-                    } else {
-                        card.classList.add("hidden");
-                    }
-                });
-
-                // Update Load More Button
-                if (loadMoreBtn) {
-                    if (visibleCount >= sortedCards.length) {
-                        loadMoreBtn.classList.add("hidden");
-                    } else {
-                        loadMoreBtn.classList.remove("hidden");
-                    }
-                }
-            };
-
-            const sortAndRender = () => {
+            const filterSortAndRender = () => {
                 const criteria = sortSelect.value;
-                const currentCards = [...cards]; // Copy original array references
+                const cityFilter = filterCity.value;
+                const categoryFilter = filterCategory.value;
+                const priceFilter = filterPrice.value;
+                const ratingFilter = filterRating.value;
 
+                let processedCards = [...cards];
+
+                // 1. Filter
+                if (cityFilter) {
+                    processedCards = processedCards.filter(
+                        (c) => c.getAttribute("data-location") === cityFilter,
+                    );
+                }
+                if (categoryFilter) {
+                    processedCards = processedCards.filter(
+                        (c) =>
+                            c.getAttribute("data-category") === categoryFilter,
+                    );
+                }
+                if (priceFilter) {
+                    const maxPrice = parseInt(priceFilter);
+                    processedCards = processedCards.filter(
+                        (c) =>
+                            parsePrice(c.getAttribute("data-price") || "") <=
+                            maxPrice,
+                    );
+                }
+                if (ratingFilter) {
+                    const minRating = parseFloat(ratingFilter);
+                    processedCards = processedCards.filter(
+                        (c) =>
+                            parseFloat(c.getAttribute("data-rating") || "0") >=
+                            minRating,
+                    );
+                }
+
+                // 2. Sort
                 if (criteria === "price-low") {
-                    currentCards.sort((a, b) => {
-                        const priceA = parsePrice(
-                            a.getAttribute("data-price") || "0",
+                    processedCards.sort((a, b) => {
+                        return (
+                            parsePrice(a.getAttribute("data-price") || "0") -
+                            parsePrice(b.getAttribute("data-price") || "0")
                         );
-                        const priceB = parsePrice(
-                            b.getAttribute("data-price") || "0",
-                        );
-                        return priceA - priceB;
                     });
                 } else if (criteria === "price-high") {
-                    currentCards.sort((a, b) => {
-                        const priceA = parsePrice(
-                            a.getAttribute("data-price") || "0",
+                    processedCards.sort((a, b) => {
+                        return (
+                            parsePrice(b.getAttribute("data-price") || "0") -
+                            parsePrice(a.getAttribute("data-price") || "0")
                         );
-                        const priceB = parsePrice(
-                            b.getAttribute("data-price") || "0",
-                        );
-                        return priceB - priceA;
                     });
                 } else if (criteria === "rating") {
-                    currentCards.sort((a, b) => {
-                        const ratingA = parseFloat(
-                            a.getAttribute("data-rating") || "0",
+                    processedCards.sort((a, b) => {
+                        return (
+                            parseFloat(b.getAttribute("data-rating") || "0") -
+                            parseFloat(a.getAttribute("data-rating") || "0")
                         );
-                        const ratingB = parseFloat(
-                            b.getAttribute("data-rating") || "0",
-                        );
-                        return ratingB - ratingA;
                     });
                 }
-                // 'recommended' - use original DOM order (which matches 'cards' array index since we grabbed it initially)
-                // No sorting needed on currentCards in that case.
 
-                // Reset visible count on sort change?
-                // Usually good UX to reset to page 1 to show top results.
-                // Or keep current visible count?
-                // Let's keep current visible count to avoid "collapsing" the list if user loaded more.
-                // But if they sort by "lowest price", the lowest might be hidden if we don't reset or re-evaluate.
-                // Actually, logic above: "if index < visibleCount -> remove hidden".
-                // So the *top* sorted items will be visible. This is correct.
+                // 3. Render / Update Visibility
+                if (processedCards.length === 0) {
+                    if (noResultsMsg) noResultsMsg.classList.remove("hidden");
+                    if (loadMoreBtn) loadMoreBtn.classList.add("hidden");
 
-                updateVisibility(currentCards);
+                    // Hide all cards
+                    cards.forEach((c) => c.classList.add("hidden"));
+                } else {
+                    if (noResultsMsg) noResultsMsg.classList.add("hidden");
+
+                    processedCards.forEach((card, index) => {
+                        officeGrid.appendChild(card);
+                        if (index < visibleCount) {
+                            card.classList.remove("hidden");
+                        } else {
+                            card.classList.add("hidden");
+                        }
+                    });
+
+                    // Hide excluded cards
+                    const processedSet = new Set(processedCards);
+                    cards.forEach((card) => {
+                        if (!processedSet.has(card)) {
+                            card.classList.add("hidden");
+                        }
+                    });
+
+                    if (loadMoreBtn) {
+                        if (visibleCount >= processedCards.length) {
+                            loadMoreBtn.classList.add("hidden");
+                        } else {
+                            loadMoreBtn.classList.remove("hidden");
+                        }
+                    }
+                }
             };
 
-            sortSelect.addEventListener("change", () => {
-                // Should we reset visibleCount on sort?
-                // User expects to see the top sorted items.
-                // If they loaded 50 items, they probably want to see the 50 sorted items.
-                // If they only loaded 9, they see top 9 sorted.
-                // So keeping visibleCount seems safer/better UX than resetting to 9.
-                sortAndRender();
-            });
+            const onFilterChange = () => {
+                visibleCount = ITEMS_PER_PAGE;
+                filterSortAndRender();
+            };
+
+            sortSelect.addEventListener("change", filterSortAndRender);
+            filterCity.addEventListener("change", onFilterChange);
+            filterCategory.addEventListener("change", onFilterChange);
+            filterPrice.addEventListener("change", onFilterChange);
+            filterRating.addEventListener("change", onFilterChange);
 
             if (loadMoreBtn) {
                 loadMoreBtn.addEventListener("click", () => {
                     visibleCount += ITEMS_PER_PAGE;
-                    sortAndRender(); // Re-run visibility logic (sorting order stays same because select value hasn't changed)
+                    filterSortAndRender(); // Re-run visibility logic
                 });
             }
         }

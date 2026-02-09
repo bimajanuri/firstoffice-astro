@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import OfficeCard from "../../components/OfficeCard.astro";
 import offices from "../../data/offices.json";
+import cities from "../../data/cities.json";
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import bannerImage from "../../assets/images/backgrounds/banner.webp";
@@ -112,37 +113,105 @@ export async function getStaticPaths() {
     >
         {
             filteredOffices.length > 0 && (
-                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div
+            class="flex flex-col gap-4"
+        >
+            <div
+                class="flex flex-col md:flex-row items-center justify-between gap-4"
+            >
+                <div class="flex items-center gap-2">
                     <h2 class="font-bold text-xl leading-[30px] text-[#000929]">
-                        Showing{" "}
-                        <span id="result-count" class="text-[#0D903A]">
-                            {filteredOffices.length}
-                        </span>{" "}
-                        Offices
+                        Showing <span id="result-count" class="text-[#0D903A]">{filteredOffices.length}</span> Offices
                     </h2>
-                    <div class="flex items-center gap-3">
-                        <span class="text-[#000929] font-medium">Sort by:</span>
-                        <div class="relative">
-                            <select
-                                id="sort-select"
-                                class="appearance-none bg-white border border-[#E0DEF7] rounded-full px-5 py-3 pr-10 text-[#000929] font-semibold focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
-                            >
-                                <option value="recommended">Recommended</option>
-                                <option value="price-low">Lowest Price</option>
-                                <option value="price-high">
-                                    Highest Price
-                                </option>
-                                <option value="rating">Highest Rating</option>
-                            </select>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]">
-                                <Icon
-                                    name="lucide:chevron-down"
-                                    class="w-4 h-4"
-                                />
-                            </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="text-[#000929] font-medium">Sort by:</span>
+                    <div class="relative">
+                        <select
+                            id="sort-select"
+                            class="appearance-none bg-white border border-[#E0DEF7] rounded-full px-5 py-3 pr-10 text-[#000929] font-semibold focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+                        >
+                            <option value="recommended">Recommended</option>
+                            <option value="price-low">Lowest Price</option>
+                            <option value="price-high">Highest Price</option>
+                            <option value="rating">Highest Rating</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]"
+                        >
+                            <Icon name="lucide:chevron-down" class="w-4 h-4" />
                         </div>
                     </div>
                 </div>
+            </div>
+
+             <!-- Filters -->
+             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-5 rounded-[20px] border border-[#E0DEF7] bg-white">
+                <!-- City Filter -->
+                <div class="flex flex-col gap-2">
+                    <label for="filter-city" class="font-bold text-[#000929]">City</label>
+                    <div class="relative">
+                         <select
+                            id="filter-city"
+                            class="w-full appearance-none bg-white border border-[#E0DEF7] rounded-full px-4 py-2 pr-10 text-[#000929] font-medium focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+                        >
+                            <option value="">All Cities</option>
+                            {cities.map((city) => (
+                                <option value={city.name}>{city.name}</option>
+                            ))}
+                        </select>
+                         <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]"
+                        >
+                            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price Filter -->
+                <div class="flex flex-col gap-2">
+                    <label for="filter-price" class="font-bold text-[#000929]">Max Price</label>
+                    <div class="relative">
+                         <select
+                            id="filter-price"
+                            class="w-full appearance-none bg-white border border-[#E0DEF7] rounded-full px-4 py-2 pr-10 text-[#000929] font-medium focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+                        >
+                            <option value="">Any Price</option>
+                            <option value="10000000">&lt; Rp 10.000.000</option>
+                            <option value="20000000">&lt; Rp 20.000.000</option>
+                            <option value="50000000">&lt; Rp 50.000.000</option>
+                            <option value="100000000">&lt; Rp 100.000.000</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]"
+                        >
+                            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rating Filter -->
+                 <div class="flex flex-col gap-2">
+                    <label for="filter-rating" class="font-bold text-[#000929]">Rating</label>
+                    <div class="relative">
+                         <select
+                            id="filter-rating"
+                            class="w-full appearance-none bg-white border border-[#E0DEF7] rounded-full px-4 py-2 pr-10 text-[#000929] font-medium focus:outline-none focus:ring-2 focus:ring-[#0D903A] cursor-pointer"
+                        >
+                            <option value="">Any Rating</option>
+                            <option value="4.5">4.5+ Stars</option>
+                            <option value="4">4+ Stars</option>
+                            <option value="3">3+ Stars</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#000929]"
+                        >
+                            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
             )
         }
         {
@@ -152,16 +221,31 @@ export async function getStaticPaths() {
                         id="office-grid"
                         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px]"
                     >
-                        {filteredOffices.map((office) => (
+                        {filteredOffices.map((office, index) => (
                             <div
-                                class="office-card-item"
+                                class={`office-card-item ${index >= 9 ? "hidden" : ""}`}
                                 data-price={office.price}
                                 data-rating={office.rating}
+                                data-location={office.location}
+                                data-category={office.category}
                             >
                                 <OfficeCard office={office} />
                             </div>
                         ))}
                     </div>
+                     {filteredOffices.length > 9 && (
+                        <div id="load-more-container" class="flex justify-center mt-10">
+                            <button
+                                id="load-more-btn"
+                                class="px-8 py-4 bg-white border border-[#E0DEF7] rounded-full font-bold text-[#000929] hover:bg-gray-50 transition-colors"
+                            >
+                                View More Offices
+                            </button>
+                        </div>
+                    )}
+                     <p id="no-results-msg" class="hidden text-center text-xl text-gray-500 mt-10">
+                        No offices found matching your filters.
+                    </p>
                 </>
             ) : (
                 <div class="flex flex-col items-center justify-center py-20 gap-4">
@@ -184,72 +268,120 @@ export async function getStaticPaths() {
 </BaseLayout>
 
 <script>
-    const sortSelect = document.getElementById(
-        "sort-select",
-    ) as HTMLSelectElement;
+    const sortSelect = document.getElementById("sort-select") as HTMLSelectElement;
     const officeGrid = document.getElementById("office-grid");
+    const loadMoreBtn = document.getElementById("load-more-btn");
+    const loadMoreContainer = document.getElementById("load-more-container");
+    const noResultsMsg = document.getElementById("no-results-msg");
+    const resultCount = document.getElementById("result-count");
 
-    if (sortSelect && officeGrid) {
+    const filterCity = document.getElementById("filter-city") as HTMLSelectElement;
+    const filterPrice = document.getElementById("filter-price") as HTMLSelectElement;
+    const filterRating = document.getElementById("filter-rating") as HTMLSelectElement;
+
+    let visibleCount = 9;
+    const ITEMS_PER_PAGE = 9;
+
+    if (sortSelect && officeGrid && filterCity && filterPrice && filterRating) {
         // Collect all card elements once
         const cards = Array.from(officeGrid.children) as HTMLElement[];
 
-        // Helper to parse price string "Rp 18.560.000" -> 18560000
+         // Helper to parse price string "Rp 18.560.000" -> 18560000
         const parsePrice = (priceStr: string) => {
             if (!priceStr) return 0;
             return parseInt(priceStr.replace(/[^0-9]/g, ""));
         };
 
-        const sortCards = () => {
-            const criteria = sortSelect.value;
-            const sortedCards = [...cards];
+        const filterSortAndRender = () => {
+             const criteria = sortSelect.value;
+            const cityFilter = filterCity.value;
+            const priceFilter = filterPrice.value;
+            const ratingFilter = filterRating.value;
 
+            let processedCards = [...cards];
+
+             // 1. Filter
+            if (cityFilter) {
+                processedCards = processedCards.filter(c => c.getAttribute("data-location") === cityFilter);
+            }
+            if (priceFilter) {
+                const maxPrice = parseInt(priceFilter);
+                processedCards = processedCards.filter(c => parsePrice(c.getAttribute("data-price") || "") <= maxPrice);
+            }
+            if (ratingFilter) {
+                const minRating = parseFloat(ratingFilter);
+                 processedCards = processedCards.filter(c => parseFloat(c.getAttribute("data-rating") || "0") >= minRating);
+            }
+
+            // 2. Sort
             if (criteria === "price-low") {
-                sortedCards.sort((a, b) => {
-                    const priceA = parsePrice(
-                        a.getAttribute("data-price") || "0",
-                    );
-                    const priceB = parsePrice(
-                        b.getAttribute("data-price") || "0",
-                    );
-                    return priceA - priceB;
+                processedCards.sort((a, b) => {
+                    return parsePrice(a.getAttribute("data-price") || "0") - parsePrice(b.getAttribute("data-price") || "0");
                 });
             } else if (criteria === "price-high") {
-                sortedCards.sort((a, b) => {
-                    const priceA = parsePrice(
-                        a.getAttribute("data-price") || "0",
-                    );
-                    const priceB = parsePrice(
-                        b.getAttribute("data-price") || "0",
-                    );
-                    return priceB - priceA;
+                processedCards.sort((a, b) => {
+                    return parsePrice(b.getAttribute("data-price") || "0") - parsePrice(a.getAttribute("data-price") || "0");
                 });
             } else if (criteria === "rating") {
-                sortedCards.sort((a, b) => {
-                    const ratingA = parseFloat(
-                        a.getAttribute("data-rating") || "0",
-                    );
-                    const ratingB = parseFloat(
-                        b.getAttribute("data-rating") || "0",
-                    );
-                    return ratingB - ratingA;
+                processedCards.sort((a, b) => {
+                    return parseFloat(b.getAttribute("data-rating") || "0") - parseFloat(a.getAttribute("data-rating") || "0");
                 });
             }
-            // 'recommended' - use original DOM order?
-            // Since we captured `cards` from initial DOM state, if we sort by index in `cards` array
-            // we can restore original order.
-            else {
-                // Restore original order based on initial `cards` array index
-                // Actually `cards` IS the original order array.
-                // So just use `cards` directly.
-                // But wait, `sortedCards` was initialized with `[...cards]`, so if criteria is recommended,
-                // it stays as is (original order).
-            }
 
-            // Re-append in new order
-            // Note: If criteria is 'recommended', sortedCards is a copy of cards in original order.
-            sortedCards.forEach((card) => officeGrid.appendChild(card));
+            // 3. Render / Update Visibility
+             if (processedCards.length === 0) {
+                 if (noResultsMsg) noResultsMsg.classList.remove("hidden");
+                 if (loadMoreBtn) loadMoreBtn.classList.add("hidden");
+                 
+                 // Hide all cards
+                 cards.forEach(c => c.classList.add("hidden"));
+                 if (resultCount) resultCount.textContent = "0";
+            } else {
+                if (noResultsMsg) noResultsMsg.classList.add("hidden");
+                if (resultCount) resultCount.textContent = processedCards.length.toString();
+                
+                processedCards.forEach((card, index) => {
+                    officeGrid.appendChild(card);
+                    if (index < visibleCount) {
+                        card.classList.remove("hidden");
+                    } else {
+                        card.classList.add("hidden");
+                    }
+                });
+
+                // Hide excluded cards
+                 const processedSet = new Set(processedCards);
+                 cards.forEach(card => {
+                     if (!processedSet.has(card)) {
+                         card.classList.add("hidden");
+                     }
+                 });
+
+                if (loadMoreBtn) {
+                    if (visibleCount >= processedCards.length) {
+                         loadMoreBtn.classList.add("hidden");
+                    } else {
+                         loadMoreBtn.classList.remove("hidden");
+                    }
+                }
+            }
         };
 
-        sortSelect.addEventListener("change", sortCards);
+        const onFilterChange = () => {
+            visibleCount = ITEMS_PER_PAGE;
+            filterSortAndRender();
+        };
+
+        sortSelect.addEventListener("change", filterSortAndRender);
+        filterCity.addEventListener("change", onFilterChange);
+        filterPrice.addEventListener("change", onFilterChange);
+        filterRating.addEventListener("change", onFilterChange);
+
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener("click", () => {
+                visibleCount += ITEMS_PER_PAGE;
+                filterSortAndRender(); 
+            });
+        }
     }
 </script>
