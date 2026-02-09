@@ -8,7 +8,7 @@ import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://firstoffice.weorbit.id', // Placeholder until user provides real domain
+    site: 'https://firstoffice-astro.weorbit.id/', // Placeholder until user provides real domain
     output: 'server',
     adapter: cloudflare(),
     integrations: [tailwind(), icon(), sitemap()],
