@@ -41,13 +41,13 @@ if (!images[imagePath])
 const imageSrc = images[imagePath]();
 ---
 
-<div id="Result" class="grid grid-cols-2 gap-[30px]">
+<div id="Result" class="grid grid-cols-1 md:grid-cols-2 gap-[30px]">
     <div
-        class="flex flex-col h-fit shrink-0 rounded-[20px] border border-[#E0DEF7] p-[30px] gap-[30px] bg-white"
+        class="flex flex-col h-fit shrink-0 rounded-[20px] border border-[#E0DEF7] p-5 md:p-[30px] gap-[30px] bg-white"
     >
         <div class="flex items-center gap-4">
             <div
-                class="flex shrink-0 w-[140px] h-[100px] rounded-[20px] overflow-hidden"
+                class="flex shrink-0 w-[100px] h-[80px] md:w-[140px] md:h-[100px] rounded-[20px] overflow-hidden"
             >
                 <Image
                     src={imageSrc}
@@ -112,7 +112,7 @@ const imageSrc = images[imagePath]();
         </div>
     </div>
     <div
-        class="flex flex-col h-fit shrink-0 rounded-[20px] border border-[#E0DEF7] p-[30px] gap-[30px] bg-white"
+        class="flex flex-col h-fit shrink-0 rounded-[20px] border border-[#E0DEF7] p-5 md:p-[30px] gap-[30px] bg-white"
     >
         <h2 class="font-bold">Order Details</h2>
         <div class="flex flex-col gap-5">
@@ -141,7 +141,7 @@ const imageSrc = images[imagePath]();
         </div>
         <hr class="border-[#F6F5FD]" />
         <h2 class="font-bold">Bonus Packages For You</h2>
-        <div class="flex justify-between">
+        <div class="flex flex-col gap-4 sm:flex-row sm:justify-between">
             <div class="flex items-center gap-4">
                 <Icon name="lucide:coffee" class="w-[34px] h-[34px]" />
                 <div class="flex flex-col gap-[2px]">
