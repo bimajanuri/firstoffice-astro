@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://firstoffice-astro.pages.dev/sitemap-index.xml
+Sitemap: https://firstoffice-astro.weorbit.id/sitemap-index.xml
