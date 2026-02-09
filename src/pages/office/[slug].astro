@@ -68,6 +68,9 @@ const { office, relatedBooking } = Astro.props;
                             src={gallery1}
                             class="w-full h-full object-cover"
                             alt="thumbnail"
+                            loading="eager"
+                            widths={[320, 640, 768]}
+                            sizes="(max-width: 640px) 100vw, 700px"
                         />
                     </div>
                 </div>
@@ -79,6 +82,9 @@ const { office, relatedBooking } = Astro.props;
                             src={gallery2}
                             class="w-full h-full object-cover"
                             alt="thumbnail"
+                            loading="eager"
+                            widths={[320, 640, 768]}
+                            sizes="(max-width: 640px) 100vw, 700px"
                         />
                     </div>
                 </div>
@@ -90,6 +96,9 @@ const { office, relatedBooking } = Astro.props;
                             src={gallery3}
                             class="w-full h-full object-cover"
                             alt="thumbnail"
+                            loading="eager"
+                            widths={[320, 640, 768]}
+                            sizes="(max-width: 640px) 100vw, 700px"
                         />
                     </div>
                 </div>

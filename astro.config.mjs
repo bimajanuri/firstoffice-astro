@@ -10,6 +10,8 @@ import icon from 'astro-icon';
 export default defineConfig({
     site: 'https://firstoffice-astro.pages.dev/',
     output: 'server',
-    adapter: cloudflare(),
+    adapter: cloudflare({
+        imageService: 'compile',
+    }),
     integrations: [tailwind(), icon(), sitemap()],
 });

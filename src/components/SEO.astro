@@ -9,13 +9,13 @@ export interface Props {
 const {
     title,
     description,
-    image = "/images/logo.png",
+    image = "/images/og-image.webp",
     article = false,
 } = Astro.props;
 
 const siteUrl = Astro.site
     ? Astro.site.href
-    : "https://firstoffice-astro.pages.dev/";
+    : "https://firstoffice-astro.weorbit.id";
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 const socialImageURL = new URL(image, siteUrl);
 ---
@@ -37,6 +37,7 @@ const socialImageURL = new URL(image, siteUrl);
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={article ? "article" : "website"} />
 <meta property="og:url" content={Astro.url} />
+<meta property="og:site_name" content="FirstOffice" />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={socialImageURL} />

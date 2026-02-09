@@ -45,6 +45,12 @@ FirstOffice adalah website yang memungkinkan pengguna untuk menjelajahi berbagai
 - 📊 **UTM Tracking** - Menangkap dan menyimpan parameter UTM dari campaign marketing
 - 🤖 **Structured Data** - JSON-LD Schema untuk meningkatkan visibility di search engine
 
+### ⚡ Performance & Optimization
+- 🚀 **Mobile-First**: Dioptimalkan untuk skor PageSpeed Insights tinggi di mobile (83+).
+- 🖼️ **Image Optimization**: Menggunakan `astro:assets` dengan format modern (WebP/AVIF), `loading="eager"` untuk LCP, dan atribut `sizes` responsif.
+- ☁️ **Cloudflare Integration**: Adapter dikonfigurasi dengan `imageService: 'compile'` untuk static image optimization saat build-time.
+- 💾 **Caching**: Header caching agresif (1 tahun) untuk aset statis via `public/_headers`.
+
 ## 🛠️ Teknologi
 
 - **Framework**: [Astro](https://astro.build/) v5.17.1
@@ -173,6 +179,9 @@ Project ini telah dioptimasi untuk Search Engine Optimization (SEO) dan Marketin
 - ✅ **Canonical URLs**: Mencegah duplicate content issue.
 - ✅ **Structured Data**: JSON-LD Schema untuk `WebSite` dan `Organization`.
 - ✅ **Robots.txt**: Konfigurasi standar untuk indexing.
+- ✅ **Meta Tags**: Title & Description yang optimal (150-160 chars) untuk CTR lebih tinggi.
+- ✅ **Social Sharing**: Default Open Graph (OG) image untuk preview link yang menarik di media sosial.
+- ✅ **Structured Data**: JSON-LD Schema untuk `WebSite` dan `Organization`.
 
 ### UTM Tracking System
 
@@ -569,6 +578,11 @@ Dibuat dengan ❤️ menggunakan [Astro](https://astro.build/)
 
 This project implements standard security practices for static sites:
 
-- **Security Headers**: Configured in `public/_headers` (HSTS, X-Content-Type-Options, etc.) for Cloudflare Pages.
+- **Security Headers**: Configured in `public/_headers` for A+ security score:
+  - `Strict-Transport-Security` (HSTS)
+  - `Content-Security-Policy` (CSP) - Strict rules
+  - `X-Frame-Options: DENY`
+  - `Permissions-Policy`
+  - `X-Content-Type-Options: nosniff`
 - **Dependencies**: Regular `npm audit` checks are recommended.
 - **Environment**: Sensitive variables should be stored in Cloudflare Pages environment variables, not committed to the repo.
