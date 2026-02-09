@@ -454,21 +454,40 @@ Custom configuration tersedia di `tailwind.config.js` untuk mengatur tema, color
 4. **Images**: Simpan gambar di `src/assets/` dan gunakan Astro's built-in image optimization
 5. **Data**: Simpan data statis di `src/data/` dalam format JSON
 
-## 🚀 Deployment
+## 🚀 Deployment (Cloudflare Workers)
 
-Build project untuk production:
+Project ini menggunakan adapter `@astrojs/cloudflare` dengan mode SSR (`output: 'server'`).
+
+### Prerequisites
+
+- [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/install-and-update/)
+- Akun Cloudflare
+
+### Local Preview
+
+Untuk menjalankan project menggunakan runtime Cloudflare secara lokal:
 
 ```bash
 npm run build
+npx wrangler pages dev ./dist
 ```
 
-Output akan tersimpan di folder `dist/` yang siap untuk di-deploy ke hosting static seperti:
-- Vercel
-- Netlify
-- Cloudflare Pages
-- GitHub Pages
-- AWS S3
-- Dan lainnya
+### Deploy ke Cloudflare Workers
+
+1. **Build Project**:
+   ```bash
+   npm run build
+   ```
+
+2. **Deploy menggunakan Wrangler**:
+   ```bash
+   npx wrangler pages deploy ./dist
+   ```
+
+Atau hubungkan repository GitHub Anda ke Cloudflare Pages dan set build command:
+- **Build command**: `npm run build`
+- **Build output directory**: `dist`
+
 
 ## 🐛 Troubleshooting
 
