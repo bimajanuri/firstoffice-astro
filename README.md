@@ -18,7 +18,7 @@ FirstOffice adalah website yang memungkinkan pengguna untuk menjelajahi berbagai
 - 🔗 **Query Parameter Auto-Fill** - URL dengan query parameter otomatis mengisi search dan menampilkan hasil
 - 📱 **Mobile-Ready Search** - Search bar tersedia di semua ukuran layar
 - 🎯 Fuzzy search menggunakan Fuse.js untuk hasil yang akurat
-- 📍 Filter berdasarkan lokasi/kota
+- 📍 **Advanced Filtering** - Filter komprehensif berdasarkan City, Category, Price, dan Rating
 - ⭐ Halaman office populer
 - 🏷️ Halaman categories (Serviced, Virtual, Shell & Core, Managed)
 - 🏷️ Halaman categories (Serviced, Virtual, Shell & Core, Managed)
@@ -123,7 +123,38 @@ Project ini sekarang dilengkapi dengan sistem sorting yang komprehensif di selur
 ### Teknologi
 - **Client-Side Sorting**: Sorting dilakukan instan di sisi client tanpa reload halaman
 - **DOM Manipulation**: Reordering elemen HTML secara efisien
-- **State Preservation**: Mempertahankan hasil pencarian saat melakukan sorting
+- State Preservation: Mempertahankan hasil pencarian saat melakukan sorting
+
+## 🎛️ Advanced Filtering System
+
+Selain sorting, user juga dapat melakukan filtering data secara spesifik untuk menemukan kantor yang sesuai kebutuhan.
+
+### Filter Options
+
+1. **City (Lokasi)**
+   - Filter kantor berdasarkan kota pilihan
+   - Data dinamis dari `cities.json`
+
+2. **Category (Jenis Kantor)**
+   - **Serviced Office**: Kantor full-service siap pakai
+   - **Virtual Office**: Alamat bisnis prestisius
+   - **Managed Office**: Kantor dikelola profesional
+   - **Shell & Core**: Space kosong untuk custom design
+
+3. **Price Range (Budget)**
+   - Filter berdasarkan batas harga maksimal (Max Price)
+   - Opsi: < 10 Juta, < 20 Juta, < 50 Juta, < 100 Juta
+
+4. **Rating (Kualitas)**
+   - Filter berdasarkan rating minimum
+   - Opsi: 4.5+ Stars, 4+ Stars, 3+ Stars
+
+### Fitur Filtering
+
+- **Real-time Filtering**: Hasil langsung berubah saat filter dipilih tanpa reload
+- **Combined Filters**: Bisa menggabungkan multiple filter sekaligus (contoh: "Serviced Office" di "Jakarta Selatan" dengan harga "< 20 Juta")
+- **Integration with Search**: Filter bekerja di atas hasil pencarian (search query)
+- **Zero Results Handling**: Menampilkan pesan ramah jika kombinasi filter tidak menemukan hasil
 
 ## 🎨 Icon System
 
