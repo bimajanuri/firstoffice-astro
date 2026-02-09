@@ -40,6 +40,11 @@ FirstOffice adalah website yang memungkinkan pengguna untuk menjelajahi berbagai
 - 🎯 Navigasi yang intuitif dan mudah digunakan
 - 🎭 Hover effects dan micro-interactions
 
+### SEO & Tracking
+- 📈 **SEO Optimization** - Meta tags dinamis, sitemap, dan canonical URL
+- 📊 **UTM Tracking** - Menangkap dan menyimpan parameter UTM dari campaign marketing
+- 🤖 **Structured Data** - JSON-LD Schema untuk meningkatkan visibility di search engine
+
 ## 🛠️ Teknologi
 
 - **Framework**: [Astro](https://astro.build/) v5.17.1
@@ -47,6 +52,7 @@ FirstOffice adalah website yang memungkinkan pengguna untuk menjelajahi berbagai
 - **Icons**: Astro Icon dengan Iconify
 - **Search**: Fuse.js v7.1.0
 - **Carousel**: Swiper v12.1.0
+- **SEO**: @astrojs/sitemap
 - **Language**: TypeScript
 
 ## 🔍 Navbar Search Bar
@@ -155,6 +161,33 @@ Selain sorting, user juga dapat melakukan filtering data secara spesifik untuk m
 - **Combined Filters**: Bisa menggabungkan multiple filter sekaligus (contoh: "Serviced Office" di "Jakarta Selatan" dengan harga "< 20 Juta")
 - **Integration with Search**: Filter bekerja di atas hasil pencarian (search query)
 - **Zero Results Handling**: Menampilkan pesan ramah jika kombinasi filter tidak menemukan hasil
+
+## 📈 SEO & Tracking System
+
+Project ini telah dioptimasi untuk Search Engine Optimization (SEO) dan Marketing Tracking.
+
+### SEO Features
+
+- ✅ **Dynamic Meta Tags**: Title, Description, dan Open Graph (OG) tags otomatis sesuai konten halaman.
+- ✅ **Sitemap Generation**: Otomatis membuat `sitemap-index.xml` dan `sitemap-0.xml` saat build.
+- ✅ **Canonical URLs**: Mencegah duplicate content issue.
+- ✅ **Structured Data**: JSON-LD Schema untuk `WebSite` dan `Organization`.
+- ✅ **Robots.txt**: Konfigurasi standar untuk indexing.
+
+### UTM Tracking System
+
+Sistem tracking otomatis menangkap parameter UTM dari URL dan menyimpannya untuk keperluan analytics.
+
+1. **Capture**: Script `src/scripts/utm-handler.ts` menangkap parameter berikut dari URL:
+   - `utm_source`
+   - `utm_medium`
+   - `utm_campaign`
+   - `utm_term`
+   - `utm_content`
+
+2. **Storage**: Data disimpan di `sessionStorage` browser.
+
+3. **Injection**: Saat user membuka halaman Booking (`/booking/...`) atau form, data UTM otomatis mengisi hidden fields di form booking.
 
 ## 🎨 Icon System
 

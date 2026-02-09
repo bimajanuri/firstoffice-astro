@@ -48,10 +48,33 @@ import bookings from "../data/bookings.json";
         </button>
     </div>
 
+    <!-- Hidden UTM Fields -->
+    <input type="hidden" name="utm_source" id="utm_source" />
+    <input type="hidden" name="utm_medium" id="utm_medium" />
+    <input type="hidden" name="utm_campaign" id="utm_campaign" />
+    <input type="hidden" name="utm_term" id="utm_term" />
+    <input type="hidden" name="utm_content" id="utm_content" />
+
     <!-- Error/Success Message -->
     <div id="form-message" class="hidden p-4 rounded-lg text-sm font-semibold">
     </div>
 </form>
+
+<script>
+    import { getUTMParams } from "../scripts/utm-handler";
+
+    // Populate UTM fields on load
+    const utmParams = getUTMParams();
+    if (utmParams) {
+        (Object.keys(utmParams) as Array<keyof typeof utmParams>).forEach(
+            (key) => {
+                const input = document.getElementById(key);
+                if (input)
+                    (input as HTMLInputElement).value = utmParams[key] || "";
+            },
+        );
+    }
+</script>
 
 <script define:vars={{ bookings }}>
     const form = document.getElementById("booking-form");
