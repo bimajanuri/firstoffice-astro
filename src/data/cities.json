@@ -4,7 +4,7 @@
         "name": "Jakarta Pusat",
         "slug": "jakarta-pusat",
         "count": 9,
-        "thumbnail": "thumbnails-2.png",
+        "thumbnail": "thumbnails-2.webp",
         "description": "The heart of Indonesia's capital, offering premium office spaces surrounded by major business districts and government institutions."
     },
     {
@@ -12,7 +12,7 @@
         "name": "Jakarta Selatan",
         "slug": "jakarta-selatan",
         "count": 9,
-        "thumbnail": "thumbnails-1.png",
+        "thumbnail": "thumbnails-1.webp",
         "description": "A trendy business hub with a perfect blend of modern skyscrapers, lush residential areas, and vibrant lifestyle centers."
     },
     {
@@ -20,7 +20,7 @@
         "name": "Bandung Utara",
         "slug": "bandung-utara",
         "count": 9,
-        "thumbnail": "thumbnails-3.png",
+        "thumbnail": "thumbnails-3.webp",
         "description": "Enjoy a refreshing work environment in the cooler northern part of Bandung, known for its creative atmosphere and scenic views."
     },
     {
@@ -28,7 +28,7 @@
         "name": "Jakarta Barat",
         "slug": "jakarta-barat",
         "count": 9,
-        "thumbnail": "thumbnails-4.png",
+        "thumbnail": "thumbnails-4.webp",
         "description": "A bustling commercial center with rapid development, providing accessible office locations and diverse business opportunities."
     },
     {
@@ -36,7 +36,7 @@
         "name": "Bandung Selatan",
         "slug": "bandung-selatan",
         "count": 9,
-        "thumbnail": "thumbnails-5.png",
+        "thumbnail": "thumbnails-5.webp",
         "description": "A growing economic zone offering affordable and flexible workspace options in the southern region of Bandung."
     },
     {
@@ -44,7 +44,7 @@
         "name": "Jakarta Timur",
         "slug": "jakarta-timur",
         "count": 9,
-        "thumbnail": "thumbnails-6.png",
+        "thumbnail": "thumbnails-6.webp",
         "description": "An emerging industrial and business area with great connectivity and plenty of potential for growing enterprises."
     },
     {
@@ -52,7 +52,7 @@
         "name": "Bandung Wetan",
         "slug": "bandung-wetan",
         "count": 9,
-        "thumbnail": "thumbnails-7.png",
+        "thumbnail": "thumbnails-7.webp",
         "description": "Located in the city center, offering easy access to heritage sites, government offices, and vibrant culinary scenes."
     }
 ]
