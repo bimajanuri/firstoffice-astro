@@ -30,8 +30,10 @@ const imageSrc = images[imagePath]();
             <Image
                 src={imageSrc}
                 class="w-full h-full object-cover"
-                alt="thumbnails"
-                width={600}
+                alt={office.name}
+                widths={[320, 640]}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                quality={80}
                 format="webp"
             />
         </div>

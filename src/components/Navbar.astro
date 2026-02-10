@@ -9,11 +9,15 @@ import logo from "../assets/images/logos/logo.svg";
         class="flex flex-wrap items-center justify-between w-full max-w-[1130px] py-[22px] px-4 mx-auto"
     >
         <a href="/">
-            <Image src={logo} alt="logo" />
+            <Image src={logo} alt="FirstOffice Home" class="object-contain" />
         </a>
 
         <!-- Mobile Menu Button -->
-        <button id="mobile-menu-btn" class="lg:hidden p-2">
+        <button
+            id="mobile-menu-btn"
+            class="lg:hidden p-2"
+            aria-label="Mobile Menu"
+        >
             <Icon name="lucide:menu" class="w-8 h-8" />
         </button>
 

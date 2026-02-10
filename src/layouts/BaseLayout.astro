@@ -3,6 +3,13 @@ import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import SEO from "../components/SEO.astro";
 import "../input.css";
+// Supports weights 100-900
+import "@fontsource/poppins/400.css";
+import "@fontsource/poppins/500.css";
+import "@fontsource/poppins/600.css";
+import "@fontsource/poppins/700.css";
+import "@fontsource/poppins/800.css";
+import "@fontsource/poppins/900.css";
 
 export interface Props {
     title: string;
@@ -46,12 +53,6 @@ const schemaAPIStr = JSON.stringify({
         />
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
-            rel="stylesheet"
-        />
 
         <!-- JSON-LD -->
         <script type="application/ld+json" set:html={schemaAPIStr} />
@@ -63,7 +64,9 @@ const schemaAPIStr = JSON.stringify({
     </head>
     <body>
         <Navbar />
-        <slot />
+        <main>
+            <slot />
+        </main>
         <Footer />
     </body>
 </html>

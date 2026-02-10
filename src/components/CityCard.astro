@@ -29,8 +29,10 @@ const imageSrc = images[imagePath]();
         <Image
             src={imageSrc}
             class="absolute w-full h-full object-cover"
-            alt="thumbnails"
-            width={400}
+            alt={city.name}
+            widths={[300, 460]}
+            sizes="(max-width: 640px) 100vw, 300px"
+            quality={80}
             format="webp"
         />
     </div>

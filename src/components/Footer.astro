@@ -15,7 +15,11 @@ const currentYear = new Date().getFullYear();
         >
             <div class="flex flex-col gap-[30px]">
                 <a href="/" class="shrink-0">
-                    <Image src={logo} alt="FirstOffice Logo" />
+                    <Image
+                        src={logo}
+                        alt="FirstOffice Logo"
+                        class="object-contain"
+                    />
                 </a>
                 <p class="text-[#000929] text-base leading-8 max-w-[360px]">
                     FirstOffice provides thousands of the best workspaces for
@@ -25,24 +29,28 @@ const currentYear = new Date().getFullYear();
                     <a
                         href="https://www.facebook.com/firstoffice.id"
                         class="w-[45px] h-[45px] flex shrink-0 items-center justify-center rounded-full border border-[#E0DEF7] hover:border-[#0D903A] transition-all duration-300"
+                        aria-label="Facebook"
                     >
                         <Icon name="simple-icons:facebook" class="w-6 h-6" />
                     </a>
                     <a
                         href="https://www.instagram.com/firstoffice.id/"
                         class="w-[45px] h-[45px] flex shrink-0 items-center justify-center rounded-full border border-[#E0DEF7] hover:border-[#0D903A] transition-all duration-300"
+                        aria-label="Instagram"
                     >
                         <Icon name="simple-icons:instagram" class="w-6 h-6" />
                     </a>
                     <a
                         href="https://x.com/firstofficeid"
                         class="w-[45px] h-[45px] flex shrink-0 items-center justify-center rounded-full border border-[#E0DEF7] hover:border-[#0D903A] transition-all duration-300"
+                        aria-label="X (formerly Twitter)"
                     >
                         <Icon name="simple-icons:x" class="w-6 h-6" />
                     </a>
                     <a
                         href="https://www.tiktok.com/@firstoffice.id"
                         class="w-[45px] h-[45px] flex shrink-0 items-center justify-center rounded-full border border-[#E0DEF7] hover:border-[#0D903A] transition-all duration-300"
+                        aria-label="TikTok"
                     >
                         <Icon name="simple-icons:tiktok" class="w-6 h-6" />
                     </a>
