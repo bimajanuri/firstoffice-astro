@@ -35,6 +35,8 @@ const imageSrc = images[imagePath]();
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 quality={80}
                 format="webp"
+                loading="lazy"
+                decoding="async"
             />
         </div>
         <div class="card-detail-container flex flex-col p-5 pb-[30px] gap-4">
