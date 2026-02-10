@@ -14,7 +14,7 @@ export default defineConfig({
         inlineStylesheets: 'always',
     },
     adapter: cloudflare({
-        imageService: 'compile',
+        imageService: 'passthrough',
     }),
     integrations: [tailwind(), icon(), sitemap()],
 });
