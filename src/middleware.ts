@@ -24,9 +24,9 @@ export const onRequest = defineMiddleware(async (context, next) => {
     // Adjust as needed for stricter security.
     const csp = [
         "default-src 'self'",
-        "script-src 'self' 'unsafe-inline'",
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-        "img-src 'self' data: https://*.googleusercontent.com",
+        "img-src 'self' data: blob: https://*.googleusercontent.com",
         "font-src 'self' https://fonts.gstatic.com",
         "frame-src 'self' https://www.google.com",
         "connect-src 'self'",
