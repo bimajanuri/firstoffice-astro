@@ -220,7 +220,7 @@ const { office, relatedBooking } = Astro.props;
                     <iframe
                         class="h-full w-full border-0"
                         frameborder="0"
-                        src={`https://www.google.com/maps/embed/v1/place?q=${office.address ? encodeURIComponent(office.address) : "Monumen+Nasional,+DKI+Jakarta"}&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`}
+                        src={`https://www.google.com/maps/embed/v1/place?q=${office.address ? encodeURIComponent(office.address) : "Monumen+Nasional,+DKI+Jakarta"}&key=${import.meta.env.PUBLIC_GOOGLE_API_KEY}`}
                     ></iframe>
                 </div>
             </div>
